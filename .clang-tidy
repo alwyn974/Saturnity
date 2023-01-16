@@ -208,7 +208,7 @@ readability-uppercase-literal-suffix,
 readability-use-anyofallof'
 CheckOptions:
   # Readability Identifier
-  - { key: readability-identifier-naming.AbstractClassCase, value: CamelCase } # Abstract Class
+#  - { key: readability-identifier-naming.AbstractClassCase, value: CamelCase } # Abstract Class
   - { key: readability-identifier-naming.AbstractClassPrefix, value: Abstract } # Abstract Class Prefix
   - { key: readability-identifier-naming.AggressiveDependentMemberLookup, value: 'true' } # refactoring agressively
   - { key: readability-identifier-naming.ClassConstantCase, value: UPPER_CASE } # static const
