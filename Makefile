@@ -10,10 +10,11 @@ INCLUDE = -I./include
 BIN_NAME = server
 
 SRC = main.cpp \
-	comm.pb.cc
+		src/*.cpp \
+		src/packets/*.cpp
 
 all:
-	g++ -std=c++20 $(SRC) $(INCLUDE) -o $(BIN_NAME) `pkg-config --cflags --libs protobuf` -lpthread
+	g++ -std=c++20 $(SRC) $(INCLUDE) -o $(BIN_NAME) -lpthread
 
 client:
-	g++ -std=c++20 client.cpp comm.pb.cc -I./include -o client `pkg-config --cflags --libs protobuf` -lpthread
+	g++ -std=c++20 client.cpp -o client -lpthread
