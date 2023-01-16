@@ -25,8 +25,48 @@
 *.la
 *.a
 *.lib
+*.pdb
 
 # Executables
 *.exe
 *.out
 *.app
+
+# Unwanted files
+*.txt
+*.log
+
+# Temporary Files
+*~
+*#
+\#*
+
+# Valgrind
+vgcore*
+*.report
+
+# Criterion
+*.gc*
+unit*
+
+# Visual Studio
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# IDEs and editors
+.idea/
+.fleet/
+.vscode/
+.vs/
+
+# Build dirs
+out/
+Cmake*
+CMake*
+cmake-build-*/
+build/
+dist/
+
+# Include cmake
+!CMakeLists.txt
