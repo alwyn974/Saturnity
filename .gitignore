@@ -70,3 +70,5 @@ dist/
 
 # Include cmake
 !CMakeLists.txt
+!cmake/
+!*.cmake
