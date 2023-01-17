@@ -12,9 +12,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_DEBUG_POSTFIX "-debug")
 set(PROJECT_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-add_executable(${PROJECT_NAME} main.cpp #TODO: replace this with add_library
-        src/Saturnity.cpp
-)
+add_library(${PROJECT_NAME})
+target_sources(${PROJECT_NAME} PUBLIC src/Saturnity.cpp)
 # Include all headers directories
 target_include_directories(${PROJECT_NAME}
         PRIVATE
@@ -24,7 +23,7 @@ target_include_directories(${PROJECT_NAME}
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-find_package(spdlog REQUIRED)
+find_package(spdlog 1.11.1 REQUIRED)
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
