@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.20)
 project(test)
 
 set(CMAKE_CXX_STANDARD 17)
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+set(SRC_FILES ${SOURCES})
 
 #include(FetchContent)
 #FetchContent_Declare(
@@ -15,7 +17,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
 
-add_subdirectory(src)
 add_subdirectory(tests)
 
 #add_executable(mainTest tests/main_test.cpp)

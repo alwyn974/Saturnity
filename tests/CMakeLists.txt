@@ -9,11 +9,10 @@ FetchContent_MakeAvailable(googletest)
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest_main)
 
-add_executable(main_test main_test.cpp)
+add_executable(main_test main_test.cpp ${SRC_FILES})
 
 target_link_libraries(main_test
  PRIVATE
-  GTest::GTest
-  main)
+  GTest::GTest)
 
 add_test(main_gtests main_test)
