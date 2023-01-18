@@ -7,20 +7,23 @@ project(
 )
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
 # Make project-provided Find modules available
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-set(CMAKE_DEBUG_POSTFIX "-debug")
-set(PROJECT_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(PROJECT_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include") # TODO remove this
 
+option(SATURNITY_BUILD_TESTS "Build tests" OFF)
+
+#add_executable(${PROJECT_NAME} main.cpp)
 add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PUBLIC src/Saturnity.cpp)
 # Include all headers directories
 target_include_directories(${PROJECT_NAME}
         PRIVATE
-            ${CMAKE_CURRENT_SOURCE_DIR}/src
+            "${CMAKE_CURRENT_SOURCE_DIR}/src"
         PUBLIC
-            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
+            "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 
 find_package(spdlog 1.11.1 REQUIRED)
@@ -35,6 +38,10 @@ target_compile_options(${PROJECT_NAME} PRIVATE
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>: -Wall -Wextra>
         $<$<CXX_COMPILER_ID:MSVC>: /W4>
 )
+
+# Set some properties
+set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "-debug")
 
 # Add install target
 #install(TARGETS ${PROJECT_NAME} EXPORT SaturnityTargets
@@ -66,6 +73,10 @@ if (MSVC)
     message(STATUS "Setting startup project to ${PROJECT_NAME}")
 endif (MSVC)
 
-# Enable Tests
-enable_testing() # TODO: add an option to disable tests
-add_subdirectory(tests)
+if (SATURNITY_BUILD_TESTS)
+    message(STATUS "Generating tests")
+    enable_testing()
+    add_subdirectory(tests)
+endif ()
+
+# TODO: check spdlog CPack/CMake
