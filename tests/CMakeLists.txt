@@ -24,5 +24,7 @@ add_executable(${BINARY_NAME} ${SOURCES_FILES} MainTest.cpp
         )
 # Create an executable for the tests, link it to the sources files
 
-target_link_libraries(${BINARY_NAME} PRIVATE GTest::GTest ${PROJECT_DEPENDENCIES}) # Link the executable to the google test library
+get_target_property(linked_targets Saturnity INTERFACE_LINK_LIBRARIES)
+message(STATUS "Tests Linked targets: ${linked_targets}")
+target_link_libraries(${BINARY_NAME} PRIVATE GTest::GTest ${linked_targets}) # Link the executable to the google test library
 add_test(main_gtests ${BINARY_NAME}) # Add the test to the test suite
