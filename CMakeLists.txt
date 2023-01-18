@@ -10,9 +10,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 # Make project-provided Find modules available
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-set(PROJECT_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include") # TODO remove this
 
 option(SATURNITY_BUILD_TESTS "Build tests" OFF)
+option(SATURNITY_INSTALL "Install Saturnity" ON)
 
 #add_executable(${PROJECT_NAME} main.cpp)
 add_library(${PROJECT_NAME})
@@ -30,7 +30,7 @@ find_package(spdlog 1.11.1 REQUIRED)
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
-            spdlog
+            spdlog::spdlog
 )
 
 # Enable warnings, will not work on header only libraries
@@ -42,6 +42,35 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 # Set some properties
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "-debug")
+
+# Set the startup project in Visual Studio
+if (MSVC)
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+    message(STATUS "Setting startup project to ${PROJECT_NAME}")
+endif (MSVC)
+
+if (SATURNITY_BUILD_TESTS)
+    message(STATUS "Generating tests")
+    enable_testing()
+    add_subdirectory(tests)
+endif ()
+
+if (SATURNITY_INSTALL)
+    # Specify the files to be installed
+    message(STATUS "Installing Saturnity")
+    install(TARGETS ${PROJECT_NAME}
+            EXPORT ${PROJECT_NAME}-targets
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    )
+    #[[install(EXPORT ${PROJECT_NAME}-targets
+            FILE ${PROJECT_NAME}-config.cmake
+            NAMESPACE ${PROJECT_NAME}::
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+    )]]
+endif ()
 
 # Add install target
 #install(TARGETS ${PROJECT_NAME} EXPORT SaturnityTargets
@@ -66,17 +95,3 @@ set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "-debug")
 #        DESTINATION lib/cmake/Saturnity
 #)
 #include(CPack)
-
-# Set the startup project in Visual Studio
-if (MSVC)
-    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
-    message(STATUS "Setting startup project to ${PROJECT_NAME}")
-endif (MSVC)
-
-if (SATURNITY_BUILD_TESTS)
-    message(STATUS "Generating tests")
-    enable_testing()
-    add_subdirectory(tests)
-endif ()
-
-# TODO: check spdlog CPack/CMake
