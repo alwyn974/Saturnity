@@ -13,6 +13,5 @@ if (NOT ${LIBRARY_NAME}_FOUND)
     FetchContent_MakeAvailable(${LIBRARY_NAME})
     set(${LIBRARY_NAME}_FOUND TRUE)
     message(STATUS "${LIBRARY_NAME} is available now")
-    list(APPEND PROJECT_DEPENDENCIES "${LIBRARY_NAME}")
 endif ()
 
