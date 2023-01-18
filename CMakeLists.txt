@@ -27,10 +27,12 @@ target_include_directories(${PROJECT_NAME}
 )
 
 find_package(spdlog 1.11.1 REQUIRED)
+find_package(SFML 2.5.1 REQUIRED COMPONENTS graphics audio system window)
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
             spdlog::spdlog
+            sfml-graphics sfml-audio sfml-system sfml-window
 )
 
 # Enable warnings, will not work on header only libraries
