@@ -27,7 +27,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 find_package(spdlog 1.11.1 REQUIRED)
-find_package(SFML 2.5.1 REQUIRED COMPONENTS graphics audio system window)
+find_package(SFML 2.5.1 REQUIRED COMPONENTS graphics window)
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
