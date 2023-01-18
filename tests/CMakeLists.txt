@@ -18,7 +18,8 @@ add_library(GTest::GTest INTERFACE IMPORTED) # Create a library for google test
 target_link_libraries(GTest::GTest INTERFACE gtest_main) # Link the library to gtest_main
 
 # FILE(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false *.cpp) # Get all the files with .cpp extensions
-include_directories(${PROJECT_INCLUDE_DIRECTORIES}) # Include the project include directories #TODO: need to be reworked
+get_target_property(library_includes Saturnity INCLUDE_DIRECTORIES) # Get the include directories of Saturnity
+include_directories(${library_includes}) # Include the project include directories #TODO: need to be reworked
 add_executable(${BINARY_NAME} ${SOURCES_FILES} MainTest.cpp
         binary/TestEncoding.cpp
         )
