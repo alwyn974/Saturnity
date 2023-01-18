@@ -22,6 +22,12 @@ TEST(MultiplyTests, TestIntegerZero_One)
     ASSERT_EQ(actual, expected);
 }
 
+TEST(SfmlTests, TestWindow)
+{
+    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    ASSERT_TRUE(window.isOpen());
+}
+
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
