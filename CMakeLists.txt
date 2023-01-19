@@ -13,6 +13,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(SATURNITY_BUILD_TESTS "Build tests" OFF)
 option(SATURNITY_INSTALL "Install Saturnity" ON)
+option(USE_CLANG_TIDY "Use clang-tidy" OFF)
+option(USE_CLANG_FORMAT "Use clang-format" OFF)
 
 #add_executable(${PROJECT_NAME} main.cpp)
 add_library(${PROJECT_NAME})
@@ -26,13 +28,15 @@ target_include_directories(${PROJECT_NAME}
             "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 
-find_package(spdlog 1.11.1 REQUIRED)
-find_package(SFML 2.5.1 REQUIRED COMPONENTS graphics window)
+find_package(spdlog REQUIRED)
+find_package(SFML REQUIRED COMPONENTS graphics window)
+find_package(Boost REQUIRED COMPONENTS asio)
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
             spdlog::spdlog
             sfml-graphics sfml-audio sfml-system sfml-window
+            Boost::asio
 )
 
 # Enable warnings, will not work on header only libraries
@@ -55,6 +59,20 @@ if (SATURNITY_BUILD_TESTS)
     message(STATUS "Generating tests")
     enable_testing()
     add_subdirectory(tests)
+endif ()
+
+if (USE_CLANG_TIDY)
+    find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+    if (NOT CLANG_TIDY_EXE)
+        message(WARNING "clang-tidy not found.")
+    else ()
+        message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+        set_target_properties(${PROJECT_NAME} PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
+    endif ()
+endif ()
+
+if (USE_CLANG_FORMAT)
+
 endif ()
 
 if (SATURNITY_INSTALL)
