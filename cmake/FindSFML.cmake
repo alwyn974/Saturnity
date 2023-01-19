@@ -13,11 +13,9 @@ FetchContent_Declare(
         GIT_SHALLOW 1 # Only fetch the head commit
 )
 FetchContent_MakeAvailable(${LIBRARY_NAME})
+FetchContent_GetProperties(${LIBRARY_NAME})
 
-# Add the SFML components that you want to use in your project
-# For example, to use the graphics, window and system modules
-FetchContent_GetProperties(sfml)
-message(STATUS "${LIBRARY_NAME} is available now ${${LIBRARY_NAME}_FIND_COMPONENTS}")
+message(STATUS "${LIBRARY_NAME} is available now")
 
 set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "")
 set(SFML_BUILD_DOC OFF CACHE BOOL "")
