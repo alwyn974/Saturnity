@@ -13,4 +13,5 @@ FetchContent_Declare(
         GIT_SHALLOW 1 # Only fetch the head commit
 )
 FetchContent_MakeAvailable(${LIBRARY_NAME})
+FetchContent_GetProperties(${LIBRARY_NAME})
 message(STATUS "${LIBRARY_NAME} is available now")

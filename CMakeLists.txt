@@ -30,7 +30,61 @@ target_include_directories(${PROJECT_NAME}
 
 find_package(spdlog REQUIRED)
 find_package(SFML REQUIRED COMPONENTS graphics window)
-find_package(Boost REQUIRED COMPONENTS asio)
+find_package(Boost REQUIRED COMPONENTS asio
+        algorithm
+        align
+        array
+        assert
+        bind
+        chrono
+        concept_check
+        config
+        container
+        container_hash
+        context
+        conversion
+        core
+        coroutine
+        date_time
+        detail
+        describe
+        exception
+        function
+        functional
+        function_types
+        fusion
+        integer
+        intrusive
+        io
+        iterator
+        lexical_cast
+        move
+        mp11
+        mpl
+        numeric_conversion
+        optional
+        pool
+        predef
+        preprocessor
+        range
+        ratio
+        rational
+        regex
+        smart_ptr
+        static_assert
+        system
+        throw_exception
+        tokenizer
+        tuple
+        type_index
+        type_traits
+        typeof
+        unordered
+        utility
+        variant2
+        winapi
+)
+
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
