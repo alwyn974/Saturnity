@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.17)
 set(LIBRARY_NAME spdlog)
 
 Include(FetchContent)
-set(FETCHCONTENT_QUIET NO)
+if (NOT ${LIBRARY_NAME}_FIND_QUIETLY)
+    set(FETCHCONTENT_QUIET OFF)
+endif ()
 FetchContent_Declare(
         ${LIBRARY_NAME}
         GIT_REPOSITORY https://github.com/gabime/spdlog.git
