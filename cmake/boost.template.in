@@ -1,22 +1,21 @@
 cmake_minimum_required(VERSION 3.17)
 
 set(LIBRARY_NAME @library@)
-set(LIBRARY_REPO_NAME @library@)
-string(REGEX REPLACE "boost_" "" LIBRARY_REPO_NAME ${LIBRARY_REPO_NAME})
 
 Include(FetchContent)
 if (NOT ${LIBRARY_NAME}_FIND_QUIETLY)
     set(FETCHCONTENT_QUIET OFF)
 endif ()
 
+# set the timestamps of extracted contents to the time of extraction
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
 message(STATUS "Fetching ${LIBRARY_NAME}")
 FetchContent_Declare(
         ${LIBRARY_NAME}
-        GIT_REPOSITORY https://github.com/boostorg/${LIBRARY_REPO_NAME}.git
-        GIT_TAG boost-1.81.0
-        GIT_SHALLOW 1 # Only fetch the head commit
-        GIT_PROGRESS TRUE
-        CACHE
+        URL https://github.com/boostorg/@library_repo@/archive/refs/tags/boost-1.81.0.tar.gz
 )
 FetchContent_MakeAvailable(${LIBRARY_NAME})
 FetchContent_GetProperties(${LIBRARY_NAME})
