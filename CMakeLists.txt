@@ -29,9 +29,9 @@ target_include_directories(${PROJECT_NAME}
             "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 
-find_package(spdlog REQUIRED)
-find_package(SFML REQUIRED COMPONENTS graphics window)
-find_package(Boost REQUIRED)
+find_package(spdlog 1.11.1 REQUIRED)
+find_package(SFML 2.6 REQUIRED COMPONENTS graphics window)
+find_package(Boost 1.81.0 REQUIRED COMPONENTS asio json iostreams)
 
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
@@ -97,7 +97,9 @@ if (SATURNITY_INSTALL)
     )
 
     #[[get_target_property(linked_targets ${PROJECT_NAME} INTERFACE_LINK_LIBRARIES) # Get the linked libraries
-    message(STATUS "Linked libraries: ${linked_targets}")
+    export(TARGETS spdlog FILE ${PROJECT_NAME}-targets.cmake) # Export the linked libraries]]
+
+    #[[message(STATUS "Linked libraries: ${linked_targets}")
     set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
     export(PACKAGE ${PROJECT_NAME})]]
 
@@ -113,8 +115,3 @@ endif ()
 if (SATURNITY_CPACK)
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CPackConfig.cmake)
 endif ()
-
-# Add install target
-#install(FILES SaturnityConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/SaturnityConfigVersion.cmake
-#        DESTINATION lib/cmake/Saturnity
-#)
