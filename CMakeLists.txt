@@ -38,7 +38,7 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC
             spdlog
             sfml-graphics sfml-audio sfml-system sfml-window
-            Boost
+            Boost::asio Boost::json Boost::iostreams
 )
 
 # Enable warnings, will not work on header only libraries
