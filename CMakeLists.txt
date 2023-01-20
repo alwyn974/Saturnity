@@ -13,6 +13,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(SATURNITY_BUILD_TESTS "Build tests" OFF)
 option(SATURNITY_INSTALL "Install Saturnity" ON)
+option(SATURNITY_CPACK "Create the installer" OFF)
 option(USE_CLANG_TIDY "Use clang-tidy" OFF)
 option(USE_CLANG_FORMAT "Use clang-format" OFF)
 
@@ -30,14 +31,14 @@ target_include_directories(${PROJECT_NAME}
 
 find_package(spdlog REQUIRED)
 find_package(SFML REQUIRED COMPONENTS graphics window)
-find_package(Boost REQUIRED COMPONENTS asio)
+find_package(Boost REQUIRED)
 
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
-            spdlog::spdlog
+            spdlog
             sfml-graphics sfml-audio sfml-system sfml-window
-            Boost::asio
+            Boost
 )
 
 # Enable warnings, will not work on header only libraries
@@ -58,6 +59,7 @@ endif (MSVC)
 
 if (SATURNITY_BUILD_TESTS)
     message(STATUS "Generating tests")
+    include(GoogleTest)
     enable_testing()
     add_subdirectory(tests)
 endif ()
@@ -86,33 +88,33 @@ if (SATURNITY_INSTALL)
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
+    # Setup the version file
+    include(CMakePackageConfigHelpers)
+    write_basic_package_version_file(
+            ${PROJECT_NAME}ConfigVersion.cmake
+            VERSION ${PROJECT_VERSION}
+            COMPATIBILITY AnyNewerVersion
+    )
+
+    #[[get_target_property(linked_targets ${PROJECT_NAME} INTERFACE_LINK_LIBRARIES) # Get the linked libraries
+    message(STATUS "Linked libraries: ${linked_targets}")
+    set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
+    export(PACKAGE ${PROJECT_NAME})]]
+
     #[[install(EXPORT ${PROJECT_NAME}-targets
-            FILE ${PROJECT_NAME}-config.cmake
+            FILE ${PROJECT_NAME}Targets.cmake
             NAMESPACE ${PROJECT_NAME}::
             DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
     )]]
+
+    # TODO: config more for the install & do cpack
+endif ()
+
+if (SATURNITY_CPACK)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CPackConfig.cmake)
 endif ()
 
 # Add install target
-#install(TARGETS ${PROJECT_NAME} EXPORT SaturnityTargets
-#        LIBRARY DESTINATION lib
-#        ARCHIVE DESTINATION lib
-#        RUNTIME DESTINATION bin
-#        INCLUDES DESTINATION include
-#)
-#install(EXPORT SaturnityTargets
-#        FILE SaturnityTargets.cmake
-#        NAMESPACE Saturnity::
-#        DESTINATION lib/cmake/Saturnity
-#)
-#
-#include(CMakePackageConfigHelpers)
-#write_basic_package_version_file(
-#        SaturnityConfigVersion.cmake
-#        VERSION ${PROJECT_VERSION}
-#        COMPATIBILITY SameMajorVersion
-#)
 #install(FILES SaturnityConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/SaturnityConfigVersion.cmake
 #        DESTINATION lib/cmake/Saturnity
 #)
-#include(CPack)
