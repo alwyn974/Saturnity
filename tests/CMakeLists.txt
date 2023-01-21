@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(BINARY_NAME "unit_test")
 
 include(FetchContent) # Add FetchContent
-
 # Fetch google test from github
 FetchContent_Declare(
         googletest

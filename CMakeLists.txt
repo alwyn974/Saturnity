@@ -38,7 +38,7 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC
             spdlog
             sfml-graphics sfml-audio sfml-system sfml-window
-            #Boost::asio Boost::json Boost::iostreams
+            Boost::asio Boost::json Boost::iostreams
 )
 
 # Enable warnings, will not work on header only libraries
@@ -94,19 +94,6 @@ if (SATURNITY_INSTALL)
             ${PROJECT_NAME}ConfigVersion.cmake
             VERSION ${PROJECT_VERSION}
             COMPATIBILITY AnyNewerVersion
-    )
-
-    #[[get_target_property(linked_targets ${PROJECT_NAME} INTERFACE_LINK_LIBRARIES) # Get the linked libraries
-    export(TARGETS spdlog FILE ${PROJECT_NAME}-targets.cmake) # Export the linked libraries]]
-
-    #[[message(STATUS "Linked libraries: ${linked_targets}")
-    set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
-    export(PACKAGE ${PROJECT_NAME})]]
-
-    install(EXPORT ${PROJECT_NAME}-targets
-            FILE ${PROJECT_NAME}Targets.cmake
-            NAMESPACE ${PROJECT_NAME}::
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
     )
 
     # TODO: config more for the install & do cpack
