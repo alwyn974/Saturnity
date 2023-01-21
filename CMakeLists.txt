@@ -3,6 +3,7 @@ project(
         Saturnity
         VERSION 0.0.1.0
         DESCRIPTION "Saturnity is a library to handle networking"
+        HOMEPAGE_URL "https://github.com/alwyn974/Saturnity"
         LANGUAGES CXX
 )
 
@@ -13,13 +14,12 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(SATURNITY_BUILD_TESTS "Build tests" OFF)
 option(SATURNITY_INSTALL "Install Saturnity" ON)
-option(SATURNITY_CPACK "Create the installer" OFF)
+option(SATURNITY_CPACK "Create the installer" ON)
 option(USE_CLANG_TIDY "Use clang-tidy" OFF)
 option(USE_CLANG_FORMAT "Use clang-format" OFF)
 
 #add_executable(${PROJECT_NAME} main.cpp)
-add_library(${PROJECT_NAME})
-target_sources(${PROJECT_NAME} PUBLIC src/Saturnity.cpp)
+add_library(${PROJECT_NAME} src/Saturnity.cpp)
 # Include all headers directories
 target_include_directories(${PROJECT_NAME}
         PRIVATE
@@ -38,7 +38,7 @@ target_link_libraries(${PROJECT_NAME}
         PUBLIC
             spdlog
             sfml-graphics sfml-audio sfml-system sfml-window
-            Boost::asio Boost::json Boost::iostreams
+            #Boost::asio Boost::json Boost::iostreams
 )
 
 # Enable warnings, will not work on header only libraries
@@ -103,13 +103,14 @@ if (SATURNITY_INSTALL)
     set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
     export(PACKAGE ${PROJECT_NAME})]]
 
-    #[[install(EXPORT ${PROJECT_NAME}-targets
+    install(EXPORT ${PROJECT_NAME}-targets
             FILE ${PROJECT_NAME}Targets.cmake
             NAMESPACE ${PROJECT_NAME}::
             DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
-    )]]
+    )
 
     # TODO: config more for the install & do cpack
+    # TODO: remove this don't thinks is usefull, add real cpack & clang-{format,tidy}
 endif ()
 
 if (SATURNITY_CPACK)
