@@ -14,7 +14,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(SATURNITY_BUILD_TESTS "Build tests" OFF)
 option(SATURNITY_INSTALL "Install Saturnity" ON)
-option(SATURNITY_CPACK "Create the installer" ON)
+option(SATURNITY_CPACK "Create the installer" ON) # TODO: change this to OFF
 option(USE_CLANG_TIDY "Use clang-tidy" OFF)
 option(USE_CLANG_FORMAT "Use clang-format" OFF)
 
@@ -31,7 +31,13 @@ target_include_directories(${PROJECT_NAME}
 
 find_package(spdlog 1.11.1 REQUIRED)
 find_package(SFML 2.6 REQUIRED COMPONENTS graphics window)
-find_package(Boost 1.81.0 REQUIRED #[[COMPONENTS asio align array assert bind chrono config core coroutine date_time function regex smart_ptr system throw_exception type_traits utility]])
+find_package(Boost 1.81.0 REQUIRED COMPONENTS asio
+    algorithm align array assert bind chrono concept_check config container container_hash context conversion
+    core coroutine date_time describe detail exception function function_types functional fusion integer intrusive
+    io iterator lexical_cast move mp11 mpl numeric/conversion optional pool predef preprocessor range ratio rational
+    regex smart_ptr static_assert system throw_exception tokenizer tuple type_index type_traits typeof unordered
+    utility variant2 winapi
+)
 
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
