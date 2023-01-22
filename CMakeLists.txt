@@ -31,14 +31,23 @@ target_include_directories(${PROJECT_NAME}
 
 find_package(spdlog 1.11.1 REQUIRED)
 find_package(SFML 2.6 REQUIRED COMPONENTS graphics window)
-find_package(Boost 1.81.0 REQUIRED COMPONENTS asio json iostreams)
+find_package(Boost 1.81.0 REQUIRED #[[COMPONENTS asio align array assert bind chrono config core coroutine date_time function regex smart_ptr system throw_exception type_traits utility]])
 
 # Link all libraries
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
             spdlog
             sfml-graphics sfml-audio sfml-system sfml-window
-            Boost::asio Boost::json Boost::iostreams
+            boost_asio # Dependencies of boost asio T_T
+                boost_algorithm boost_align boost_array boost_assert boost_bind boost_chrono boost_concept_check
+                boost_config boost_container boost_container_hash boost_context boost_conversion boost_core
+                boost_coroutine boost_date_time boost_describe boost_detail boost_exception boost_function
+                boost_function_types boost_functional boost_fusion boost_integer boost_intrusive boost_io
+                boost_iterator boost_lexical_cast boost_move boost_mp11 boost_mpl boost_numeric_conversion
+                boost_optional boost_pool boost_predef boost_preprocessor boost_range boost_ratio boost_rational
+                boost_regex boost_smart_ptr boost_static_assert boost_system boost_throw_exception boost_tokenizer
+                boost_tuple boost_type_index boost_type_traits boost_typeof boost_unordered boost_utility
+                boost_variant2 boost_winapi
 )
 
 # Enable warnings, will not work on header only libraries
@@ -75,19 +84,28 @@ if (USE_CLANG_TIDY)
 endif ()
 
 if (USE_CLANG_FORMAT)
-
+    # TODO: add clang-{format,tidy}
 endif ()
 
 if (SATURNITY_INSTALL)
     # Specify the files to be installed
-    message(STATUS "Installing Saturnity")
-    install(TARGETS ${PROJECT_NAME}
-            EXPORT ${PROJECT_NAME}-targets
+    message(STATUS "Installing ${PROJECT_NAME}")
+    get_target_property(${PROJECT_NAME}_deps ${PROJECT_NAME} INTERFACE_LINK_LIBRARIES)
+
+    install(TARGETS ${PROJECT_NAME} ${${PROJECT_NAME}_deps}
+            EXPORT ${PROJECT_NAME}Targets
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     )
+
+    install(EXPORT ${PROJECT_NAME}Targets
+            FILE ${PROJECT_NAME}Targets.cmake
+            NAMESPACE ${PROJECT_NAME}::
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+    )
+
     # Setup the version file
     include(CMakePackageConfigHelpers)
     write_basic_package_version_file(
@@ -96,8 +114,22 @@ if (SATURNITY_INSTALL)
             COMPATIBILITY AnyNewerVersion
     )
 
-    # TODO: config more for the install & do cpack
-    # TODO: remove this don't thinks is usefull, add real cpack & clang-{format,tidy}
+    # generate the config file that is includes the exports
+    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in
+            "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+            INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
+            NO_SET_AND_CHECK_MACRO
+            NO_CHECK_REQUIRED_COMPONENTS_MACRO
+    )
+
+    install(FILES
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+    )
+
+    export(EXPORT ${PROJECT_NAME}Targets FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake")
+
 endif ()
 
 if (SATURNITY_CPACK)
