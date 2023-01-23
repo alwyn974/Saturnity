@@ -132,10 +132,10 @@ IndentWrappedFunctionNames: true
 InsertBraces: false
 InsertNewlineAtEOF: true
 InsertTrailingCommas: None # Only for JS
-IntegerLiteralSeparator:
-  Binary: 0
-  Decimal: 3 # Will add separators after 3 digits (like 1'000)
-  Hex: -1
+#IntegerLiteralSeparator: # Little buggy (when only 3 digits warn about missing separator)
+#  Binary: 0
+#  Decimal: 3 # Will add separators after 3 digits (like 1'000)
+#  Hex: -1
 JavaScriptQuotes: Leave
 JavaScriptWrapImports: true
 KeepEmptyLinesAtTheStartOfBlocks: false

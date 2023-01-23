@@ -7,6 +7,7 @@
 
 #include <gtest/gtest.h>
 #include <spdlog/spdlog.h>
+
 #include <boost/array.hpp>
 
 TEST(Encoding, TestEncodingInteger)

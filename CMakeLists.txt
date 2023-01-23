@@ -15,12 +15,14 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 option(SATURNITY_BUILD_TESTS "Build tests" OFF)
 option(SATURNITY_INSTALL "Install Saturnity" ON)
 option(SATURNITY_CPACK "Create the installer" ON) # TODO: change this to OFF
-option(USE_CLANG_TIDY "Use clang-tidy" ON)
-option(USE_CLANG_FORMAT "Use clang-format" ON)
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(USE_CLANG_TIDY "Use clang-tidy" OFF) # Used by the CI
+option(USE_CLANG_TIDY_WITH_ERRORS "Use clang tidy but all warnings are errors" OFF) # Used by the CI
+option(USE_CLANG_TIDY_WITH_FIX "Use clang-tidy with fix" OFF) # Used by the CI
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF) # Fix dll issues on Windows
 
-#add_executable(${PROJECT_NAME} main.cpp)
 add_library(${PROJECT_NAME} src/Saturnity.cpp)
+add_executabl   e(${PROJECT_NAME}-exe main.cpp)
+target_link_libraries(${PROJECT_NAME}-exe PRIVATE ${PROJECT_NAME}) # TODO: remove this later
 # Include all headers directories
 target_include_directories(${PROJECT_NAME}
         PRIVATE
@@ -80,19 +82,21 @@ if (SATURNITY_BUILD_TESTS)
     add_subdirectory(tests)
 endif ()
 
-if (USE_CLANG_TIDY)
-    find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+if (USE_CLANG_TIDY OR USE_CLANG_TIDY_WITH_ERRORS OR USE_CLANG_TIDY_WITH_FIX)
+    find_program(CLANG_TIDY_EXE NAMES "clang-tidy-16")
     if (NOT CLANG_TIDY_EXE)
         message(WARNING "clang-tidy not found.")
     else ()
         message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
-        set(CLANG_TIDY_COMMMAND "${CLANG_TIDY_EXE} --config-file=${CMAKE_CURRENT_SOURCE_DIR}/.clang-tidy -- -std=c++20")
+        if (USE_CLANG_TIDY_WITH_FIX)
+            set(CLANG_TIDY_COMMMAND "${CLANG_TIDY_EXE}" "--fix" "--config-file=${CMAKE_CURRENT_SOURCE_DIR}/.clang-tidy")
+        elseif (USE_CLANG_TIDY_WITH_ERRORS)
+            set(CLANG_TIDY_COMMMAND "${CLANG_TIDY_EXE}" "--warnings-as-errors=*" "--config-file=${CMAKE_CURRENT_SOURCE_DIR}/.clang-tidy")
+        else ()
+            set(CLANG_TIDY_COMMMAND "${CLANG_TIDY_EXE}" "--config-file=${CMAKE_CURRENT_SOURCE_DIR}/.clang-tidy")
+        endif ()
         set_target_properties(${PROJECT_NAME} PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_COMMMAND}")
     endif ()
-endif ()
-
-if (USE_CLANG_FORMAT)
-    # TODO: add clang-{format,tidy}
 endif ()
 
 if (SATURNITY_INSTALL)
