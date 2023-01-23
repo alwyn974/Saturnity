@@ -17,6 +17,7 @@ option(SATURNITY_INSTALL "Install Saturnity" ON)
 option(SATURNITY_CPACK "Create the installer" ON) # TODO: change this to OFF
 option(USE_CLANG_TIDY "Use clang-tidy" OFF)
 option(USE_CLANG_FORMAT "Use clang-format" OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
 #add_executable(${PROJECT_NAME} main.cpp)
 add_library(${PROJECT_NAME} src/Saturnity.cpp)
