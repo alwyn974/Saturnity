@@ -99,17 +99,22 @@ if (USE_CLANG_TIDY OR USE_CLANG_TIDY_WITH_ERRORS OR USE_CLANG_TIDY_WITH_FIX)
     endif ()
 endif ()
 
-if (SATURNITY_INSTALL)
+if (SATURNITY_INSTALL OR SATURNITY_CPACK)
     # Specify the files to be installed
     message(STATUS "Installing ${PROJECT_NAME}")
     get_target_property(${PROJECT_NAME}_deps ${PROJECT_NAME} INTERFACE_LINK_LIBRARIES)
 
     install(TARGETS ${PROJECT_NAME} ${${PROJECT_NAME}_deps}
             EXPORT ${PROJECT_NAME}Targets
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT archive
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT runtime
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT headers
+    )
+
+    install(DIRECTORY include
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/../ # Remove the extra include directory
+            COMPONENT headers
     )
 
     install(EXPORT ${PROJECT_NAME}Targets
@@ -145,5 +150,28 @@ if (SATURNITY_INSTALL)
 endif ()
 
 if (SATURNITY_CPACK)
+    cpack_add_component(headers
+            DISPLAY_NAME "Headers"
+            DESCRIPTION "C++ Header files"
+            GROUP "Development"
+            REQUIRED
+    )
+    cpack_add_component(archive
+            DISPLAY_NAME "Archive"
+            DESCRIPTION "Static library"
+            GROUP "Development"
+            REQUIRED
+    )
+    cpack_add_component(library
+            DISPLAY_NAME "Library"
+            DESCRIPTION "Shared library"
+            GROUP "Runtime"
+            REQUIRED
+    )
+    cpack_add_component_group(Development
+            EXPANDED
+            DESCRIPTION
+            "All of the tools you'll ever need to develop software"
+    )
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CPackConfig.cmake)
 endif ()
