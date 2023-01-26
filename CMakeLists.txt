@@ -150,6 +150,7 @@ if (SATURNITY_INSTALL OR SATURNITY_CPACK)
 endif ()
 
 if (SATURNITY_CPACK)
+    include(CPackComponent)
     cpack_add_component(headers
             DISPLAY_NAME "Headers"
             DESCRIPTION "C++ Header files"
