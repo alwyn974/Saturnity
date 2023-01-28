@@ -41,6 +41,5 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackDEB.cmake) # DEB
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackIFW.cmake) # Qt Installer Framework
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackNSIS.cmake) # NSIS
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackRPM.cmake) # RPM
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackWIX.cmake) # WIX
 
 include(CPack)

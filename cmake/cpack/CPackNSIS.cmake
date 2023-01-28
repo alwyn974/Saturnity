@@ -30,3 +30,4 @@ set(CPACK_NSIS_MUI_HEADERIMAGE_NOSTRETCH ON) # Don't stretch the header image
 set(CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP "${CMAKE_CURRENT_SOURCE_DIR}/assets\\\\nsis-wizard.bmp") # Left image
 set(CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP_NOSTRETCH ON) # Don't stretch the left image
 set(CPACK_NSIS_BRANDING_TEXT "${CPACK_PACKAGE_NAME} ${PROJECT_VERSION}") # Text at the bottom of the install window
+set(CPACK_NSIS_IGNORE_LICENSE_PAGE OFF) # Disable the license page
