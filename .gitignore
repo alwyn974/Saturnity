@@ -72,3 +72,6 @@ dist/
 !CMakeLists.txt
 !cmake/
 !*.cmake
+
+# Include license
+!LICENSE.txt
