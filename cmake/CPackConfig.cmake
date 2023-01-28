@@ -32,9 +32,36 @@ if (TARGET_TYPE STREQUAL "EXECUTABLE")
     install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/assets/logo.ico" DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT runtime) # Install the logo.ico file
 endif ()
 
+# Components
+
+#[[include(CPackComponent)
+cpack_add_component(headers
+        DISPLAY_NAME "Headers"
+        DESCRIPTION "C++ Header files"
+        GROUP "Development"
+        REQUIRED
+)
+cpack_add_component(archive
+        DISPLAY_NAME "Archive"
+        DESCRIPTION "Static library"
+        GROUP "Development"
+        REQUIRED
+)
+cpack_add_component(library
+        DISPLAY_NAME "Library"
+        DESCRIPTION "Shared library"
+        GROUP "Runtime"
+        REQUIRED
+)
+cpack_add_component_group(Development
+        EXPANDED
+        DESCRIPTION
+        "All of the tools you'll ever need to develop software"
+)]]
+
 # Source package generator
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PROJECT_VERSION}-src")
-set(CPACK_SOURCE_GENERATOR "7Z;DEB;IFW;NSIS;NSIS64;NUGET;STGZ:TGZ;TXZ;WIX;ZIP")
+set(CPACK_SOURCE_GENERATOR "7Z;DEB;IFW;NSIS;NSIS64;NUGET;STGZ:TGZ;TXZ;ZIP")
 set(CPACK_SOURCE_IGNORE_FILES ".git;build;out;dist;cmake-*")
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackDEB.cmake) # DEB

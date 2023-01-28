@@ -150,29 +150,5 @@ if (SATURNITY_INSTALL OR SATURNITY_CPACK)
 endif ()
 
 if (SATURNITY_CPACK)
-    include(CPackComponent)
-    cpack_add_component(headers
-            DISPLAY_NAME "Headers"
-            DESCRIPTION "C++ Header files"
-            GROUP "Development"
-            REQUIRED
-    )
-    cpack_add_component(archive
-            DISPLAY_NAME "Archive"
-            DESCRIPTION "Static library"
-            GROUP "Development"
-            REQUIRED
-    )
-    cpack_add_component(library
-            DISPLAY_NAME "Library"
-            DESCRIPTION "Shared library"
-            GROUP "Runtime"
-            REQUIRED
-    )
-    cpack_add_component_group(Development
-            EXPANDED
-            DESCRIPTION
-            "All of the tools you'll ever need to develop software"
-    )
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CPackConfig.cmake)
 endif ()
