@@ -33,7 +33,8 @@ if (TARGET_TYPE STREQUAL "EXECUTABLE")
 endif ()
 
 # Components
-
+# TODO: create component for library (shared/static) and headers
+# TODO: create component for only the dll/so
 #[[include(CPackComponent)
 cpack_add_component(headers
         DISPLAY_NAME "Headers"
