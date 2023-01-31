@@ -3,7 +3,7 @@ name: "\U0001F41B Bug report"
 about: Create a report to help us improve
 title: "[BUG]: "
 labels: "\U0001F41B bug"
-assignees: alwyn974, Masutayunikon, ChatDo
+assignees: alwyn974, ChatDo, Masutayunikon
 
 ---
 
