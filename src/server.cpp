@@ -9,15 +9,7 @@
 #include <boost/asio.hpp>
 using namespace saturnity;
 
-std::string read_(boost::asio::ip::tcp::socket& socket)
-{
-    boost::asio::streambuf buf;
-    boost::asio::read_until(socket, buf, "\n");
-    std::string data = boost::asio::buffer_cast<const char*>(buf.data());
-    return data;
-}
-
-int Server::createSocket()
+int TcpServer::createSocket()
 {
     boost::asio::io_service io_service;
 
@@ -32,8 +24,8 @@ int Server::createSocket()
         // waiting for connection
 
         // read operation
-        std::string message = read_(socket_);
-        std::cout << message << std::endl;
+//        std::string message = read(socket_);
+//        std::cout << message << std::endl;
         // write operation
         char temp[50];
         std::cin >> temp;
@@ -42,15 +34,11 @@ int Server::createSocket()
     return 0;
 }
 
-bool Server::handshake() {
+bool TcpServer::handshake() {
 
     return 1;
 }
 
-void Server::sendPacket(Packet toSend) {}
+void TcpServer::receive() {}
 
-void Server::addPlayer() {}
-
-void Server::disconnectPlayer() {}
-
-void Server::movePlayer() {}
+void TcpServer::send(Packet toSend) {}

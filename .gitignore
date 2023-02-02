@@ -34,3 +34,4 @@
 .vscode
 server
 client
+cmake-build-debug/

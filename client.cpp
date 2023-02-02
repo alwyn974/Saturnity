@@ -14,26 +14,22 @@ using ip::tcp;
 using std::endl;
 using std::string;
 
-string read(tcp::socket& socket)
-{
-    boost::asio::streambuf buf;
-    boost::asio::read_until(socket, buf, "\n");
-    string data = boost::asio::buffer_cast<const char*>(buf.data());
-    return data;
+void readTcp(tcp::socket socket) {
+    // getting response from server
+    boost::system::error_code error;
+    boost::asio::streambuf receive_buffer;
+    // TODO: Fix it
+     boost::asio::read(socket, receive_buffer, boost::asio::transfer_all(), error);
+    if (error && error != boost::asio::error::eof) {
+        std::cout << "receive failed: " << error.message() << endl;
+    } else {
+        const char* data = boost::asio::buffer_cast<const char*>(receive_buffer.data());
+        std::cout << "Received: " << data << endl;
+    }
 }
 
-int tcpClient()
-{
-    boost::asio::io_service io_service;
-
-    // socket creation
-    tcp::socket socket(io_service);
-
-    // connection
-    socket.connect(tcp::endpoint(boost::asio::ip::address::from_string("127.0.0.1"), 1234));
-
+void sendTcp(tcp::socket socket, const std::string& msg) {
     // request/message from client
-    const string msg = "Hello from Client!\n";
     boost::system::error_code error;
     boost::asio::write(socket, boost::asio::buffer(msg), error);
     if (!error) {
@@ -41,49 +37,74 @@ int tcpClient()
     } else {
         std::cout << "send failed: " << error.message() << endl;
     }
-
-    // getting response from server
-    boost::asio::streambuf receive_buffer;
-    boost::asio::read(socket, receive_buffer, boost::asio::transfer_all(), error);
-    if (error && error != boost::asio::error::eof) {
-        std::cout << "receive failed: " << error.message() << endl;
-    } else {
-        const char* data = boost::asio::buffer_cast<const char*>(receive_buffer.data());
-        std::cout << "Received: " << data << endl;
-    }
-    return 0;
 }
 
-int udpClient(std::string arg)
+tcp::socket tcpClient(std::string address, int port)
 {
+    // socket creation
+    boost::asio::io_service io_service;
+    tcp::socket socket(io_service);
+
+    // connection
+    socket.connect(tcp::endpoint(boost::asio::ip::address::from_string(address), port));
+    return socket;
+}
+
+void readUdp(boost::asio::ip::udp::socket &socket, boost::asio::ip::udp::endpoint receiver_endpoint) {
+    char recv_buf[1024];
+    socket.async_receive_from(boost::asio::buffer(recv_buf), receiver_endpoint, [&] (boost::system::error_code error, std::size_t len) {
+        std::cout << "Received: " << recv_buf << " and size: " << len << std::endl;
+    });
+
+    //    Blocking call
+    //    size_t len = socket.receive_from(boost::asio::buffer(recv_buf), sender_endpoint);
+}
+
+void sendUdp(boost::asio::ip::udp::socket socket, boost::asio::ip::udp::endpoint receiver_endpoint, std::string msg) {
+    std::cout << receiver_endpoint << std::endl;
+    socket.send_to(boost::asio::buffer(msg), receiver_endpoint);
+}
+
+void udpClient(std::string address, std::string port)
+{
+    setvbuf(stdout, nullptr, _IONBF, 0);
 
     try {
         boost::asio::io_service io_service;
         boost::asio::ip::udp::resolver resolver(io_service);
-        boost::asio::ip::udp::resolver::query query(boost::asio::ip::udp::v4(), "192.168.74.93", "25565");
+        boost::asio::ip::udp::resolver::query query(boost::asio::ip::udp::v4(), address, "25565");
         boost::asio::ip::udp::endpoint receiver_endpoint = *resolver.resolve(query);
 
-        boost::asio::ip::udp::socket socket(io_service);
-        socket.open(boost::asio::ip::udp::v4());
+        boost::asio::ip::udp::socket msocket(io_service);
+        msocket.open(boost::asio::ip::udp::v4());
 
-        std::cout << receiver_endpoint << std::endl;
-        socket.send_to(boost::asio::buffer("test"), receiver_endpoint);
+        while (1) {
+            std::string input;
+            std::cin >> input;
+            readUdp(msocket, receiver_endpoint);
+            msocket.async_send_to(boost::asio::buffer(input.c_str(), input.length()), receiver_endpoint, [&] (boost::system::error_code error, std::size_t len){
+                std::cout << "Sent: " << input << " and size: " << len << std::endl;
+            });
+            io_service.run();
+//            msocket.send_to(boost::asio::buffer(input, input.size()), receiver_endpoint);
+        }
 
-        boost::array<char, 128> recv_buf;
-        boost::asio::ip::udp::endpoint sender_endpoint;
-        size_t len = socket.receive_from(boost::asio::buffer(recv_buf), sender_endpoint);
-
-        std::cout << recv_buf.data() << " AND " << len << std::endl;
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 
-    return 0;
+    return;
 }
 
 int main(int ac, char** av)
 {
-    udpClient(av[1]);
+     udpClient("192.168.0.106", "25565");
+//     tcp::socket tcpSocket = tcpClient("127.0.0.1", 1234);
+//    while (1) {
+//        std::string input;
+//        std::cin >> input;
+//        readTcp();
+//         tcpSocket.send(input)
+//    }
 
-    // tcpClient();
 }
