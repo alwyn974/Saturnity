@@ -61,9 +61,9 @@ int main()
 //    ioContext.run();
 
     // UDP class
-//    boost::asio::io_context ioContext;
+    boost::asio::io_context ioContext;
     saturnity::UdpServer const server(25565);
-//    ioContext.run();
+    ioContext.run();
 
     // TCP
 //    saturnity::Server server = saturnity::Server();

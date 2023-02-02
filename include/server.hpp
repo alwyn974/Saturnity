@@ -13,7 +13,7 @@
 #include <boost/asio.hpp>
 #include <list>
 
-#define BUFF_SIZE 1024
+#define BUFF_SIZE 1
 
 namespace saturnity {
     class UdpServer {
@@ -24,7 +24,7 @@ namespace saturnity {
         bool handshake();
         void send();
         void receive();
-        void handleReceive(const boost::system::error_code& error, std::array<char, BUFF_SIZE> recvBuffer);
+        void handleReceive(const boost::system::error_code& error);
         void handleSend(const boost::system::error_code& error, std::array<char, BUFF_SIZE> sendBuffer);
         void clearBuff(std::array<char, BUFF_SIZE> buffer);
 
