@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z "$(whereis fdfind)" ]; then
+if [ -z "$(which fdfind)" ]; then
   echo "fdfind not found, please install it"
   read -r -p "The script can install it? [y/N] " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
@@ -12,7 +12,8 @@ fi
 
 echo "Running clang-format..."
 
-if [ "$(fdfind -E "cmake-*/" -i -e cpp -e hpp | xargs clang-format-16 -style=file --verbose --dry-run --Werror)" ]; then
+code="$(fdfind -E "cmake-*/" -i -e cpp -e hpp | xargs clang-format-16 -style=file --verbose --dry-run --Werror)"
+if [ "$?" -eq 0 ]; then
   echo "No files to format"
   exit 0
 else
