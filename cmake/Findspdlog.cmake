@@ -12,13 +12,15 @@ if(POLICY CMP0135)
     cmake_policy(SET CMP0135 NEW)
 endif()
 
-FetchContent_Declare(
-        ${LIBRARY_NAME}
-        URL https://github.com/gabime/spdlog/archive/refs/tags/v1.11.0.zip
-       #[[ GIT_REPOSITORY https://github.com/gabime/spdlog.git
-        GIT_TAG v1.11.0
-        GIT_SHALLOW 1 # Only fetch the head commit]]
-)
-FetchContent_MakeAvailable(${LIBRARY_NAME})
-FetchContent_GetProperties(${LIBRARY_NAME})
-message(STATUS "${LIBRARY_NAME} is available now")
+if (NOT ${LIBRARY_NAME}_FOUND)
+    FetchContent_Declare(
+            ${LIBRARY_NAME}
+            URL https://github.com/gabime/spdlog/archive/refs/tags/v1.11.0.zip
+            #[[ GIT_REPOSITORY https://github.com/gabime/spdlog.git
+             GIT_TAG v1.11.0
+             GIT_SHALLOW 1 # Only fetch the head commit]]
+    )
+    FetchContent_MakeAvailable(${LIBRARY_NAME})
+    FetchContent_GetProperties(${LIBRARY_NAME})
+    message(STATUS "${LIBRARY_NAME} is available now")
+endif ()
