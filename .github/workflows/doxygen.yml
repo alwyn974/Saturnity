@@ -3,10 +3,12 @@ name: Doxygen Action
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  files_changed:
+  doxygen_files_changed:
     if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
@@ -25,14 +27,14 @@ jobs:
           for file in ${{ steps.changed_files.outputs.all_modified_files }}; do
             echo ""$file" was changed"
             if [ ! -z "$(echo $file | grep -E "*.cpp|*.hpp")" ]; then
-              echo ::set-output name=files_changed::true
+              echo "FILES_CHANGED=true" >> $GITHUB_OUTPUT
               break
             fi
           done;
 
   doxygen:
-    needs: files_changed
-    if: always() && (needs.files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
+    needs: doxygen_files_changed
+    if: always() #&& (needs.doxygen_files_changed.outputs.FILES_CHANGED == 'True' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -46,7 +48,8 @@ jobs:
           enable-latex: true
 
       - name: Create .nojekyll (ensures pages with underscores work on gh pages)
-        run: touch doc/html/.nojekyll
+        run: |
+          echo "" > ./docs/doc/html/.nojekyll
         shell: bash
 
       - name: Deploy
