@@ -46,7 +46,7 @@ jobs:
           enable-latex: true
 
       - name: Create .nojekyll (ensures pages with underscores work on gh pages)
-        run: touch docs/doc/html/.nojekyll
+        run: touch doc/html/.nojekyll
         shell: bash
 
       - name: Deploy
