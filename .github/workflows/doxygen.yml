@@ -45,6 +45,10 @@ jobs:
           doxyfile-path: "./Doxyfile"
           enable-latex: true
 
+      - name: Create .nojekyll (ensures pages with underscores work on gh pages)
+        run: "touch ./docs/doc/html/.nojekyll"
+        shell: bash
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
