@@ -163,15 +163,15 @@ For more information on the **GitHub fork** and **pull-request processes**, [ple
 The list of outstanding feature requests and bugs can be found on our on our [GitHub issue tracker][issues].
 Pick an unassigned issue that you think you can accomplish and add a comment that you are attempting to do it.
 
-> `👌good first issue` labeled issues are deemed to be good low-hanging fruit for newcomers to the project
-> `🆘 help wanted` labeled issues may be more difficult than `starter` and may include new feature development
-> `📚 documentation` labeled issues must only touch documentation or the wiki
-> `🚧 W.I.P` labeled issues are issues that are currently being worked on
-> `✨ feature` labeled issues are feature requests that need to be implemented
-> `🐛 bug` labeled issues are bugs that need to be fixed
-> `🔃duplicate` labeled issues are duplicates of other issues
-> `🚫 wontfix` labeled issues are issues that will not be fixed
-> `🚫 invalid` labeled issues are issues that are invalid
+- `👌good first issue` labeled issues are deemed to be good low-hanging fruit for newcomers to the project
+- `🆘 help wanted` labeled issues may be more difficult than `starter` and may include new feature development
+- `📚 documentation` labeled issues must only touch documentation or the wiki
+- `🚧 W.I.P` labeled issues are issues that are currently being worked on
+- `✨ feature` labeled issues are feature requests that need to be implemented
+- `🐛 bug` labeled issues are bugs that need to be fixed
+- `🔃duplicate` labeled issues are duplicates of other issues
+- `🚫 wontfix` labeled issues are issues that will not be fixed
+- `🚫 invalid` labeled issues are issues that are invalid
 
 ### Development Process
 
