@@ -75,3 +75,6 @@ dist/
 
 # Include license
 !LICENSE.txt
+
+# Exclude doxygen directory
+doc/
