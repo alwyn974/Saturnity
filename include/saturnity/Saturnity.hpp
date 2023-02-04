@@ -16,6 +16,9 @@ namespace sa {
     public:
         Test() = default;
 
+        /**
+         * @brief Test function
+         */
         inline void test() const
         {
             spdlog::info("Test");

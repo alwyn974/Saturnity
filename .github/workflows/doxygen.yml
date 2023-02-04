@@ -42,11 +42,11 @@ jobs:
         uses: mattnotmitt/doxygen-action@v1.9.5
         with:
           working-directory: "./"
-          doxyfile-path: "./Doxyfile"
+          doxyfile-path: "./docs/Doxyfile"
           enable-latex: true
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./doc/html
+          publish_dir: ./docs/doc/html
