@@ -34,7 +34,7 @@ jobs:
 
   doxygen:
     needs: doxygen_files_changed
-    if: always() #&& (needs.doxygen_files_changed.outputs.FILES_CHANGED == 'True' || github.event_name == 'workflow_dispatch')
+    if: always() && (needs.doxygen_files_changed.outputs.FILES_CHANGED == 'True' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -46,11 +46,6 @@ jobs:
           working-directory: "./docs"
           doxyfile-path: "./Doxyfile"
           enable-latex: true
-
-      - name: Create .nojekyll (ensures pages with underscores work on gh pages)
-        run: |
-          echo "" > ./docs/doc/html/.nojekyll
-        shell: bash
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
