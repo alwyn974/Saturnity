@@ -82,7 +82,7 @@ Major Changes that you wish to contribute to the project should be discussed fir
 
 Small Changes can directly be crafted and submitted to the GitHub Repository as a [Pull Request][pr]. See the section about [Pull Request Submission Guidelines](#pull-request-process), and for detailed information the core development documentation.
 
-> Note
+> **Note**
 > Please use the issue template when submitting an issue.
 
 ## Reporting Bugs
@@ -93,7 +93,7 @@ Before you submit your issue, please [search the issue archive][issues] - maybe 
  
 If you find a bug in the source code, you can help us by [submitting an issue to our GitHub issue tracker][issues]. Even better, you can submit a [Pull Request][pr] with a fix.
 
-> Note
+> **Note**
 > Please use the issue template when submitting an issue.
 
 ## Improving Documentation
@@ -133,7 +133,7 @@ Install these dependencies:
 - CMake at least 3.17
 - C++20 compiler (GCC 10, Clang 10, MSVC 19.26)
 
-> Note
+> **Note**
 > The dependencies in this project are self-contained, so you don't need to install them globally.
 
 You will need to [fork] the main repository to work on your changes. 
@@ -296,7 +296,7 @@ Examples:
 
 When you are ready to generate a pull request, either for preliminary review, or for consideration of merging into the project you must first push your local topic branch back up to GitHub:
 
-> Note
+> **Note**
 > If you are working on a fork, you will need to push your branch to your fork on GitHub. 
 > Please follow the [Branch names](#branch-names) section.
 
