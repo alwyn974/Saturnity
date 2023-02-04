@@ -6,9 +6,34 @@ on:
   workflow_dispatch:
 
 jobs:
-  doxygen:
+  files_changed:
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
+    outputs:
+      files_changed: ${{ steps.check_changed_files.outputs.files_changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
+      - name: Get changed files
+        uses: tj-actions/changed-files@v35
+        id: changed_files
+
+      - name: Check changed files
+        id: check_changed_files
+        run: |
+          for file in ${{ steps.changed_files.outputs.all_modified_files }}; do
+            echo ""$file" was changed"
+            if [ ! -z "$(echo $file | grep -E "*.cpp|*.hpp")" ]; then
+              echo ::set-output name=files_changed::true
+              break
+            fi
+          done;
+
+  doxygen:
+    needs: files_changed
+    if: always() && (needs.files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
