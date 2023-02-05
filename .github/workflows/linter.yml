@@ -112,7 +112,7 @@ jobs:
           echo "y" | ./lint.sh
 
       - name: Commit changes
-        if: steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success'
+        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
         uses: EndBug/add-and-commit@v9
         with:
           committer_name: Linter
