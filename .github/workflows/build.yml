@@ -35,7 +35,7 @@ jobs:
     needs: build_files_changed
     if: always() && (needs.build_files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
-    container: docker://alwyn974/indie-ubuntu:latest
+    container: docker://alwyn974/rtype-build:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
