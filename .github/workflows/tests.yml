@@ -1,4 +1,4 @@
-name: Tests Action
+name: Test Action
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ./build/_deps
-          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
 
       - name: Configure CMake
         shell: bash
