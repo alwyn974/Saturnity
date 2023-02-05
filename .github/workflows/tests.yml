@@ -12,7 +12,7 @@ jobs:
     if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
-      files_changed: ${{ steps.check_changed_files.outputs.files_changed }}
+      files_changed: ${{ steps.check_changed_files.outputs.FILES_CHANGED }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -27,7 +27,7 @@ jobs:
           for file in ${{ steps.changed_files.outputs.all_modified_files }}; do
             echo ""$file" was changed"
             if [ ! -z "$(echo $file | grep -E "*.cpp|*.hpp|CMakeLists.txt")" ]; then
-              echo ::set-output name=files_changed::true
+              echo "FILES_CHANGED=true" >> $GITHUB_OUTPUT
               break
             fi
           done;
