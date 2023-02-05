@@ -43,7 +43,7 @@ jobs:
           committer_name: Linter
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: '♻️ Apply Linter (clang-tidy/format)'
-          add: '.'
+          add: $PWD
           push: true
 
   linter_files_changed:
@@ -118,5 +118,5 @@ jobs:
           committer_name: Linter
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: '♻️ Apply Linter (clang-tidy/format)'
-          add: '.'
+          add: $PWD
           push: false
