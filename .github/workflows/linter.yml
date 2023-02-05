@@ -85,11 +85,31 @@ jobs:
           key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
 
       - name: Try to run clang-tidy as error
+        id: clang-tidy
         run: |
           cmake -B ./build -S . -DUSE_CLANG_TIDY=ON -DUSE_CLANG_TIDY_WITH_ERRORS=ON
+          cmake --build ./build --config Release -j`nproc`
+
+      - name: Apply clang-tidy
+        if: failure() && steps.clang-tidy.conclusion == 'failure'
+        run: |
+          cmake -B ./build -S . -DUSE_CLANG_TIDY=ON -DUSE_CLANG_TIDY_WITH_FIX=ON
           cmake --build ./build --config Release -j`nproc`
 
       - name: Try to run clang-format as error
         if: always()
         run: |
           echo "n" | ./lint.sh
+
+      - name: Apply clang-format
+        if: failure() && steps.clang-format.conclusion == 'failure'
+        run: |
+          echo "y" | ./lint.sh
+
+#      - name: Commit changes
+#        uses: EndBug/add-and-commit@v9
+#        with:
+#          committer_name: Linter
+#          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+#          message: '♻️ Apply Linter (clang-tidy/format)'
+#          add: '.'
