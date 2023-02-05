@@ -14,7 +14,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 option(SATURNITY_BUILD_TESTS "Build tests" OFF)
 option(SATURNITY_INSTALL "Install Saturnity" ON)
-option(SATURNITY_CPACK "Create the installer" ON) # TODO: change this to OFF
+option(SATURNITY_CPACK "Create the installer" OFF)
 option(USE_CLANG_TIDY "Use clang-tidy" OFF) # Used by the CI
 option(USE_CLANG_TIDY_WITH_ERRORS "Use clang tidy but all warnings are errors" OFF) # Used by the CI
 option(USE_CLANG_TIDY_WITH_FIX "Use clang-tidy with fix" OFF) # Used by the CI
@@ -33,7 +33,6 @@ target_include_directories(${PROJECT_NAME}
 )
 
 find_package(spdlog 1.11.1 REQUIRED)
-find_package(SFML 2.6 REQUIRED COMPONENTS graphics window)
 find_package(Boost 1.81.0 REQUIRED COMPONENTS asio
     algorithm align array assert bind chrono concept_check config container container_hash context conversion
     core coroutine date_time describe detail exception function function_types functional fusion integer intrusive
@@ -46,7 +45,6 @@ find_package(Boost 1.81.0 REQUIRED COMPONENTS asio
 target_link_libraries(${PROJECT_NAME}
         PUBLIC
             spdlog
-            sfml-graphics sfml-audio sfml-system sfml-window
             boost_asio # Dependencies of boost asio T_T
                 boost_algorithm boost_align boost_array boost_assert boost_bind boost_chrono boost_concept_check
                 boost_config boost_container boost_container_hash boost_context boost_conversion boost_core
