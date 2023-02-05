@@ -111,25 +111,26 @@ jobs:
         run: |
           echo "y" | ./lint.sh
 
-      - name: Commit changes
-        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_user_name: Linter
-          commit_message: '♻️ Apply Linter (clang-tidy/format)'
-          repository: .
-
-#      - name: Add safedirectory
-#        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
-#        run: |
-#          git config --global --add safe.directory $PWD
-#
 #      - name: Commit changes
 #        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
-#        uses: EndBug/add-and-commit@v9
+#        uses: stefanzweifel/git-auto-commit-action@v4
 #        with:
-#          committer_name: Linter
-#          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
-#          message: '♻️ Apply Linter (clang-tidy/format)'
-#          add: '.'
-#          push: true
+#          commit_user_name: Linter
+#          commit_message: '♻️ Apply Linter (clang-tidy/format)'
+#          repository: .
+
+      - name: Add safedirectory
+        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
+        run: |
+          ls -la
+          # git config --global --add safe.directory $PWD
+
+      - name: Commit changes
+        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
+        uses: EndBug/add-and-commit@v9
+        with:
+          committer_name: Linter
+          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: '♻️ Apply Linter (clang-tidy/format)'
+          add: '.'
+          push: true
