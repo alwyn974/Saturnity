@@ -1,0 +1,122 @@
+name: Build Action
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main, dev ]
+  workflow_dispatch:
+
+jobs:
+  build_files_changed:
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      files_changed: ${{ steps.check_changed_files.outputs.FILES_CHANGED }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Get changed files
+        uses: tj-actions/changed-files@v35
+        id: changed_files
+
+      - name: Check changed files
+        id: check_changed_files
+        run: |
+          for file in ${{ steps.changed_files.outputs.all_modified_files }}; do
+            echo ""$file" was changed"
+            if [ ! -z "$(echo $file | grep -E "*.cpp|*.hpp|CMakeLists.txt")" ]; then
+              echo "FILES_CHANGED=true" >> $GITHUB_OUTPUT
+              break
+            fi
+          done;
+  build_linux:
+    needs: build_files_changed
+    if: always() && (needs.build_files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    container: docker://alwyn974/indie-ubuntu:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Cache libraries
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: ./build/_deps
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
+
+      - name: Configure CMake
+        shell: bash
+        run: cmake -B ./build -S . -DUSE_CLANG_TIDY=ON
+
+      - name: Build Debug
+        shell: bash
+        run: cmake --build ./build --config Debug
+
+      - name: Build Release
+        shell: bash
+        run: cmake --build ./build --config Release
+
+  build_windows:
+    needs: [ build_files_changed, build_linux ]
+    if: always() && needs.build_linux.result=='success' && (needs.build_files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Cache libraries
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: ./build/_deps
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
+
+      - name: Configure CMake
+        shell: bash
+        run: cmake -B ./build -S . -DUSE_CLANG_TIDY=ON
+
+      - name: Build Debug
+        shell: bash
+        run: cmake --build ./build --config Debug
+
+      - name: Build Release
+        shell: bash
+        run: cmake --build ./build --config Release
+
+  build_macosx:
+    needs: [ build_files_changed, build_linux ]
+    if: always() && needs.build_linux.result=='success' && (needs.build_files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Cache libraries
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: ./build/_deps
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
+
+      - name: Configure CMake
+        shell: bash
+        run: cmake -B ./build -S . -DUSE_CLANG_TIDY=ON
+
+      - name: Build Debug
+        shell: bash
+        run: cmake --build ./build --config Debug
+
+      - name: Build Release
+        shell: bash
+        run: cmake --build ./build --config Release

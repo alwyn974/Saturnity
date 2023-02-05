@@ -26,6 +26,7 @@ namespace sa {
             sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
             sf::CircleShape shape(100.0);
             shape.setFillColor(sf::Color::Green);
+
             while (window.isOpen()) {
                 sf::Event event = {};
                 while (window.pollEvent(event)) {
