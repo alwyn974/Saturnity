@@ -93,6 +93,7 @@ jobs:
           cmake --build ./build --config Release -j`nproc`
 
       - name: Apply clang-tidy
+        id: apply-clang-tidy
         if: failure() && steps.clang-tidy.conclusion == 'failure'
         run: |
           cmake -B ./build -S . -DUSE_CLANG_TIDY=ON -DUSE_CLANG_TIDY_WITH_FIX=ON
@@ -105,11 +106,13 @@ jobs:
           echo "n" | ./lint.sh
 
       - name: Apply clang-format
+        id: apply-clang-format
         if: failure() && steps.clang-format.conclusion == 'failure'
         run: |
           echo "y" | ./lint.sh
 
       - name: Commit changes
+        if: steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success'
         uses: EndBug/add-and-commit@v9
         with:
           committer_name: Linter
