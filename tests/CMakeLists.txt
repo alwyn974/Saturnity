@@ -7,7 +7,7 @@ set(BINARY_NAME "unit_test")
 find_package(google-test)
 if (NOT google-test_FOUND)
     message(STATUS "Google test not found, downloading it")
-    include(FetchContent) # Add FetchContent
+    include(FetchContent)
     # Fetch google test from github
     FetchContent_Declare(
             googletest
@@ -20,7 +20,6 @@ endif ()
 add_library(GTest::GTest INTERFACE IMPORTED) # Create a library for google test
 target_link_libraries(GTest::GTest INTERFACE gtest_main) # Link the library to gtest_main
 
-# FILE(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false *.cpp) # Get all the files with .cpp extensions
 get_target_property(library_includes Saturnity INCLUDE_DIRECTORIES) # Get the include directories of Saturnity
 include_directories(${library_includes}) # Include the project include directories
 # Create an executable for the tests, link it to the sources files
