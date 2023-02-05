@@ -123,7 +123,7 @@ jobs:
         if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
         run: |
           ls -la
-          # git config --global --add safe.directory $PWD
+          git config --global --add safe.directory $PWD # Don't care if the owner of the directory is not the same as the user
 
       - name: Commit changes
         if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
