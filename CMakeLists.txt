@@ -20,7 +20,10 @@ option(USE_CLANG_TIDY_WITH_ERRORS "Use clang tidy but all warnings are errors" O
 option(USE_CLANG_TIDY_WITH_FIX "Use clang-tidy with fix" OFF) # Used by the CI
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF) # Fix dll issues on Windows
 
-add_library(${PROJECT_NAME} src/Saturnity.cpp)
+add_library(${PROJECT_NAME}
+        src/core/PacketWriter.cpp
+        src/core/PacketReader.cpp
+)
 add_executable(${PROJECT_NAME}-exe main.cpp)
 target_link_libraries(${PROJECT_NAME}-exe PRIVATE ${PROJECT_NAME}) # TODO: remove this later
 # Include all headers directories

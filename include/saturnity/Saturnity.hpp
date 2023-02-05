@@ -13,6 +13,7 @@
  * @file Saturnity.hpp
  */
 
-
+#include "core/Core.hpp"
+#include "core/AbstractPacket.hpp"
 
 #endif // SATURNITY_SATURNITY_HPP
