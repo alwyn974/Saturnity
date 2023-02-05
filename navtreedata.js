@@ -25,12 +25,18 @@
 var NAVTREE =
 [
   [ "Saturnity", "index.html", [
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+    ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
       [ "Data Fields", "functions.html", [
         [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ]
+        [ "Functions", "functions_func.html", null ],
+        [ "Variables", "functions_vars.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -41,7 +47,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_saturnity_8hpp_source.html"
+"_abstract_packet_8hpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

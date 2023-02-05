@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uwu_0',['uwu',['../classuwu.html',1,'']]]
+  ['abstractpacket_0',['AbstractPacket',['../classsa_1_1_abstract_packet.html#af90f8ab773ed12672bf30cf7372543ec',1,'sa::AbstractPacket::AbstractPacket()'],['../classsa_1_1_abstract_packet.html',1,'sa::AbstractPacket']]]
 ];
