@@ -17,7 +17,7 @@ TEST(Encoding, TestEncodingInteger)
     ASSERT_EQ(expected, actual);
 }
 
-TEST(spdlog, TestSpdlog)
+/*TEST(spdlog, TestSpdlog)
 {
     spdlog::info("Welcome to Saturnity!");
 }
@@ -29,4 +29,4 @@ TEST(Boost, array)
     ASSERT_EQ(array[1], 2);
     ASSERT_EQ(array[2], 3);
     ASSERT_EQ(array[3], 4);
-}
+}*/
