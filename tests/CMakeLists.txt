@@ -4,14 +4,18 @@ project(UnitTest)
 set(CMAKE_CXX_STANDARD 20)
 set(BINARY_NAME "unit_test")
 
-include(FetchContent) # Add FetchContent
-# Fetch google test from github
-FetchContent_Declare(
-        googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG        release-1.12.1
-)
-FetchContent_MakeAvailable(googletest) # Make google test available
+find_package(google-test)
+if (NOT google-test_FOUND)
+    message(STATUS "Google test not found, downloading it")
+    include(FetchContent) # Add FetchContent
+    # Fetch google test from github
+    FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG        release-1.12.1
+    )
+    FetchContent_MakeAvailable(googletest) # Make google test available
+endif ()
 
 add_library(GTest::GTest INTERFACE IMPORTED) # Create a library for google test
 target_link_libraries(GTest::GTest INTERFACE gtest_main) # Link the library to gtest_main

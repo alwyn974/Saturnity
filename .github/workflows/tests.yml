@@ -1,0 +1,59 @@
+name: Tests Action
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main, dev ]
+  workflow_dispatch:
+
+jobs:
+  tests_files_changed:
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      files_changed: ${{ steps.check_changed_files.outputs.files_changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get changed files
+        uses: tj-actions/changed-files@v35
+        id: changed_files
+
+      - name: Check changed files
+        id: check_changed_files
+        run: |
+          for file in ${{ steps.changed_files.outputs.all_modified_files }}; do
+            echo ""$file" was changed"
+            if [ ! -z "$(echo $file | grep -E "*.cpp|*.hpp|CMakeLists.txt")" ]; then
+              echo ::set-output name=files_changed::true
+              break
+            fi
+          done;
+  tests:
+    needs: tests_files_changed
+    if: always() && (needs.tests_files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
+    runs-on: docker://alwyn974/rtype-build:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache libraries
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: ./build/_deps
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt', '**/gradle-wrapper.properties') }}
+
+      - name: Configure CMake
+        shell: bash
+        run: cmake -B ./build -S . -DSATURNITY_BUILD_TESTS=ON
+
+      - name: Build Unit Test
+        shell: bash
+        run: cmake --build ./build --target unit_test
+
+      - name: Run Unit Test
+        shell: bash
+        run: ./build/tests/unit_test
