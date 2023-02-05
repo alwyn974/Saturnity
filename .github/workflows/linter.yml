@@ -112,6 +112,7 @@ jobs:
           echo "y" | ./lint.sh
 
       - name: Commit changes
+        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_user_name: Linter
