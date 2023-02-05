@@ -12,7 +12,7 @@ on:
 jobs:
   pr_asked_to_format:
     name: Format the code when "fix format" is written in a comment of a PR
-    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'fix format')
+    if: github.event.issue.pull_request && contains(github.event.comment.body, 'fix format') && github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     container: docker://alwyn974/rtype-build:latest
     steps:
@@ -38,10 +38,13 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
           committer_name: Linter
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: '♻️ Apply Linter (clang-tidy/format)'
           add: '.'
+          push: true
 
   linter_files_changed:
     if: github.event_name != 'workflow_dispatch'
@@ -66,7 +69,6 @@ jobs:
               break
             fi
           done;
-
 
   linter:
     name: Check clang-tidy & clang-format
@@ -113,3 +115,4 @@ jobs:
 #          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
 #          message: '♻️ Apply Linter (clang-tidy/format)'
 #          add: '.'
+#          push: true
