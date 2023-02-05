@@ -35,15 +35,20 @@ jobs:
         run: |
           echo "y" | ./lint.sh
 
+      - name: Add safedirectory
+        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
+        run: |
+          ls -la
+          git config --global --add safe.directory $PWD # Don't care if the owner of the directory is not the same as the user
+
       - name: Commit changes
+        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
         uses: EndBug/add-and-commit@v9
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.ref }}
           committer_name: Linter
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
           message: '♻️ Apply Linter (clang-tidy/format)'
-          add: $PWD
+          add: '.'
           push: true
 
   linter_files_changed:
@@ -92,12 +97,12 @@ jobs:
           cmake -B ./build -S . -DUSE_CLANG_TIDY=ON -DUSE_CLANG_TIDY_WITH_ERRORS=ON
           cmake --build ./build --config Release -j`nproc`
 
-      - name: Apply clang-tidy
-        id: apply-clang-tidy
-        if: failure() && steps.clang-tidy.conclusion == 'failure'
-        run: |
-          cmake -B ./build -S . -DUSE_CLANG_TIDY=ON -DUSE_CLANG_TIDY_WITH_FIX=ON
-          cmake --build ./build --config Release -j`nproc`
+#      - name: Apply clang-tidy
+#        id: apply-clang-tidy
+#        if: failure() && steps.clang-tidy.conclusion == 'failure'
+#        run: |
+#          cmake -B ./build -S . -DUSE_CLANG_TIDY=ON -DUSE_CLANG_TIDY_WITH_FIX=ON
+#          cmake --build ./build --config Release -j`nproc`
 
       - name: Try to run clang-format as error
         id: clang-format
@@ -105,32 +110,24 @@ jobs:
         run: |
           echo "n" | ./lint.sh
 
-      - name: Apply clang-format
-        id: apply-clang-format
-        if: failure() && steps.clang-format.conclusion == 'failure'
-        run: |
-          echo "y" | ./lint.sh
+#      - name: Apply clang-format
+#        id: apply-clang-format
+#        if: failure() && steps.clang-format.conclusion == 'failure'
+#        run: |
+#          echo "y" | ./lint.sh
 
+#      - name: Add safedirectory
+#        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
+#        run: |
+#          ls -la
+#          git config --global --add safe.directory $PWD # Don't care if the owner of the directory is not the same as the user
+#
 #      - name: Commit changes
 #        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
-#        uses: stefanzweifel/git-auto-commit-action@v4
+#        uses: EndBug/add-and-commit@v9
 #        with:
-#          commit_user_name: Linter
-#          commit_message: '♻️ Apply Linter (clang-tidy/format)'
-#          repository: .
-
-      - name: Add safedirectory
-        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
-        run: |
-          ls -la
-          git config --global --add safe.directory $PWD # Don't care if the owner of the directory is not the same as the user
-
-      - name: Commit changes
-        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
-        uses: EndBug/add-and-commit@v9
-        with:
-          committer_name: Linter
-          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
-          message: '♻️ Apply Linter (clang-tidy/format)'
-          add: '.'
-          push: true
+#          committer_name: Linter
+#          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+#          message: '♻️ Apply Linter (clang-tidy/format)'
+#          add: '.'
+#          push: true
