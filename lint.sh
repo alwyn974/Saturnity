@@ -3,7 +3,7 @@
 if [ -z "$(which fdfind)" ]; then
   echo "fdfind not found, please install it"
   read -r -p "The script can install it? [y/N] " response
-  if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+  if [[ "$response" =~ ^([yY][eE][sS]|[oO])+$ ]]; then
     sudo apt install fd-find
   else
     exit 1
@@ -13,7 +13,7 @@ fi
 if [ -z "$(which clang-format-16)" ]; then
   echo "clang-format-16 not found, please install it"
   read -r -p "The script can install it? [y/N] " response
-  if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+  if [[ "$response" =~ ^([yY][eE][sS]|[oO])+$ ]]; then
     local tmp="$(mktemp -d)"
     wget https://apt.llvm.org/llvm.sh -o "$tmp/llvm.sh"
     chmod +x "$tmp/llvm.sh"
@@ -33,7 +33,7 @@ if [ "$?" -eq 0 ]; then
 else
   echo "Some files need to be formatted"
   read -r -p "Do you want to format it? [y/N] " response
-  if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+  if [[ "$response" =~ ^([yY][eE][sS]|[oO])+$ ]]; then
     fdfind -E "cmake-*/" -i -e cpp -e hpp | xargs clang-format-16 -style=file --verbose -i
     exit 0
   else

@@ -53,7 +53,7 @@ jobs:
 
       - name: Build Unit Test
         shell: bash
-        run: cmake --build ./build --target unit_test
+        run: cmake --build ./build --target unit_test -j`nproc`
 
       - name: Run Unit Test
         shell: bash

@@ -1,0 +1,94 @@
+name: Linter Action
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main, dev ]
+  issue_comment:
+    types: [ created ]
+  workflow_dispatch:
+
+jobs:
+  pr_asked_to_format:
+    name: Format the code when "fix format" is written in a comment of a PR
+    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'fix format')
+    runs-on: ubuntu-latest
+    container: docker://alwyn974/rtype-build:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache libraries
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: ./build/_deps
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
+
+      - name: Apply clang-tidy
+        run: |
+          cmake -B ./build -S . -DUSE_CLANG_TIDY=ON -DUSE_CLANG_TIDY_WITH_FIX=ON
+          cmake --build ./build --config Release -j`nproc`
+
+      - name: Apply clang-format
+        run: |
+          echo "y" | ./lint.sh
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          committer_name: Linter
+          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: '♻️ Apply Linter (clang-tidy/format)'
+          add: '.'
+
+  linter_files_changed:
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      files_changed: ${{ steps.check_changed_files.outputs.FILES_CHANGED }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get changed files
+        uses: tj-actions/changed-files@v35
+        id: changed_files
+
+      - name: Check changed files
+        id: check_changed_files
+        run: |
+          for file in ${{ steps.changed_files.outputs.all_modified_files }}; do
+            echo ""$file" was changed"
+            if [ ! -z "$(echo $file | grep -E "*.cpp|*.hpp|CMakeLists.txt")" ]; then
+              echo "FILES_CHANGED=true" >> $GITHUB_OUTPUT
+              break
+            fi
+          done;
+
+  linter:
+    name: Check clang-tidy & clang-format
+    if: always() && (needs.linter_files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    container: docker://alwyn974/rtype-build:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache libraries
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: ./build/_deps
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
+
+      - name: Try to run clang-tidy as error
+        run: |
+          cmake -B ./build -S . -DUSE_CLANG_TIDY=ON -DUSE_CLANG_TIDY_WITH_ERRORS=ON
+          cmake --build ./build --config Release -j`nproc`
+
+      - name: Try to run clang-format as error
+        if: always()
+        run: |
+          echo "n" | ./lint.sh

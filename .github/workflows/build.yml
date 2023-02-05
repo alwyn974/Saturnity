@@ -53,11 +53,11 @@ jobs:
 
       - name: Build Debug
         shell: bash
-        run: cmake --build ./build --config Debug
+        run: cmake --build ./build --config Debug -j`nproc`
 
       - name: Build Release
         shell: bash
-        run: cmake --build ./build --config Release
+        run: cmake --build ./build --config Release -j`nproc`
 
   build_windows:
     needs: [ build_files_changed, build_linux ]
@@ -80,11 +80,11 @@ jobs:
 
       - name: Build Debug
         shell: bash
-        run: cmake --build ./build --config Debug
+        run: cmake --build ./build --config Debug -j$env:NUMBER_OF_PROCESSORS
 
       - name: Build Release
         shell: bash
-        run: cmake --build ./build --config Release
+        run: cmake --build ./build --config Release -j$env:NUMBER_OF_PROCESSORS
 
   build_macosx:
     needs: [ build_files_changed, build_linux ]
