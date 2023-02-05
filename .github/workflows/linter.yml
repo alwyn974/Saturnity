@@ -99,6 +99,7 @@ jobs:
           cmake --build ./build --config Release -j`nproc`
 
       - name: Try to run clang-format as error
+        id: clang-format
         if: always()
         run: |
           echo "n" | ./lint.sh
@@ -108,11 +109,11 @@ jobs:
         run: |
           echo "y" | ./lint.sh
 
-#      - name: Commit changes
-#        uses: EndBug/add-and-commit@v9
-#        with:
-#          committer_name: Linter
-#          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
-#          message: '♻️ Apply Linter (clang-tidy/format)'
-#          add: '.'
-#          push: true
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          committer_name: Linter
+          committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: '♻️ Apply Linter (clang-tidy/format)'
+          add: '.'
+          push: false
