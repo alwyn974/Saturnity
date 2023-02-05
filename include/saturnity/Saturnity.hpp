@@ -41,4 +41,4 @@ namespace sa {
     };
 }
 
-#endif //SATURNITY_SATURNITY_HPP
+#endif // SATURNITY_SATURNITY_HPP

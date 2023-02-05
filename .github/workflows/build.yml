@@ -16,8 +16,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
       - name: Get changed files
         uses: tj-actions/changed-files@v35
@@ -41,8 +39,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
       - name: Cache libraries
         id: cache-libraries
@@ -70,8 +66,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
       - name: Cache libraries
         id: cache-libraries
@@ -99,8 +93,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
       - name: Cache libraries
         id: cache-libraries
