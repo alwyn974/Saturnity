@@ -419,8 +419,8 @@ namespace sa {
 
         static inline const constexpr int MAX_VARINT_SIZE = 5; /**< The maximum size of the var (u)int */
         static inline const constexpr int MAX_VARLONG_SIZE = 10; /**< The maximum size of the var (u)long */
-        static inline const constexpr std::uint32_t SEGMENT_BITS = 0x7F; /**< The segment bits is used to extract the least significant bit (7-bit chunk) */
-        static inline const constexpr std::uint32_t CONTINUE_BIT = 0x80; /**< The continuation bit is used as a flag, to check if more bytes need to be read */
+        static inline const constexpr int SEGMENT_BITS = 0x7F; /**< The segment bits is used to extract the least significant bit (7-bit chunk) */
+        static inline const constexpr int CONTINUE_BIT = 0x80; /**< The continuation bit is used as a flag, to check if more bytes need to be read */
 
     protected:
         /**
