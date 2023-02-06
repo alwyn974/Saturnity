@@ -14,29 +14,30 @@
 #include <list>
 
 #define BUFF_SIZE 10
+
 void handleSend(const boost::system::error_code& error, boost::asio::mutable_buffer buffer,
 const boost::asio::ip::udp::socket& msocket, const boost::asio::io_service& ioService, std::string& input, boost::asio::ip::udp::endpoint remote);
-
 namespace saturnity {
     class UdpServer {
     public:
-        explicit UdpServer(int port);
+        explicit UdpServer(boost::asio::io_service& io_service, int port);
         ~UdpServer();
         void createSocket(int port);
         bool handshake();
-        void send();
+        virtual void send();
+        virtual void send(std::string input);
         void receive();
         void handleReceive(const boost::system::error_code& error);
-        void handleSend(const boost::system::error_code& error, std::array<char, BUFF_SIZE> sendBuffer);
+        void handleSend(const boost::system::error_code& error);
         void clearBuff(std::array<char, BUFF_SIZE> buffer);
 
     private:
-        boost::asio::io_context _ioCtx;
+        boost::asio::io_context& _ioCtx;
         boost::asio::ip::udp::endpoint _remoteEndpoint;
         boost::asio::ip::udp::socket _socket;
         std::array<char, BUFF_SIZE> _sendBuffer;
         std::array<char, BUFF_SIZE> _recvBuffer;
-
+        std::string _input;
         //        char _sendBuffer[BUFF_SIZE];
         //        char _recvBuffer[BUFF_SIZE];
         int _port;

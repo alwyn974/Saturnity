@@ -52,7 +52,6 @@ int udpServer(boost::asio::io_context& ioCtx)
     return 0;
 }
 
-
 int main()
 {
     // UDP no class
@@ -62,7 +61,7 @@ int main()
 
     // UDP class
     boost::asio::io_context ioContext;
-    saturnity::UdpServer const server(25565);
+    saturnity::UdpServer const server(ioContext, 25565);
     ioContext.run();
 
     // TCP

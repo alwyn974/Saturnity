@@ -14,13 +14,14 @@ SRC = main.cpp \
 		src/packets/*.cpp
 
 all:
-	g++ -std=c++20 $(SRC) $(INCLUDE) -o $(BIN_NAME) -lpthread
-
-client:
-	g++ -std=c++20 client.cpp -o client -lpthread
+	cmake -B build -S .
+	cmake --build ./build -j$(nproc)
 
 clean:
 	rm client
 	rm server
 
 fclean: clean
+
+
+.PHONY: client
