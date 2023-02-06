@@ -54,6 +54,6 @@ namespace saturnity {
         std::string _field_name;
         field_types _field_type;
     };
-}  // namespace saturnity::Packets
+}  // namespace saturnity
 
 #endif /* !PACKET_HPP_ */

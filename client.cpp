@@ -6,11 +6,12 @@
 */
 
 #include "client.hpp"
-#include <thread>
+
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <iostream>
+#include <thread>
 
 using namespace saturnity;
 
@@ -59,8 +60,7 @@ void UdpClient::send(std::string msg)
 
 void UdpClient::send(std::vector<uint8_t> input)
 {
-    _socket.async_send_to(boost::asio::buffer(input), _remoteEndpoint,
-                          boost::bind(&UdpClient::handleSend, this, boost::asio::placeholders::error));
+    _socket.async_send_to(boost::asio::buffer(input), _remoteEndpoint, boost::bind(&UdpClient::handleSend, this, boost::asio::placeholders::error));
 }
 
 void UdpClient::handleSend(const boost::system::error_code& error)
@@ -72,14 +72,14 @@ void UdpClient::handleSend(const boost::system::error_code& error)
     }
 }
 
-void UdpClient::get_input() {
+void UdpClient::get_input()
+{
     std::thread in([&]() {
         std::vector<uint8_t> test;
         test.resize(100);
         while (1) {
             std::getline(std::cin, _input);
-            if (_input == "exit")
-                std::exit(0);
+            if (_input == "exit") std::exit(0);
             test[0] = _input[0];
             send(test);
         }

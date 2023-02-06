@@ -6,6 +6,7 @@
 */
 
 #include "../include/server.hpp"
+
 #include <boost/asio.hpp>
 using namespace saturnity;
 
@@ -24,8 +25,8 @@ int TcpServer::createSocket()
         // waiting for connection
 
         // read operation
-//        std::string message = read(socket_);
-//        std::cout << message << std::endl;
+        //        std::string message = read(socket_);
+        //        std::cout << message << std::endl;
         // write operation
         char temp[50];
         std::cin >> temp;
@@ -34,8 +35,8 @@ int TcpServer::createSocket()
     return 0;
 }
 
-bool TcpServer::handshake() {
-
+bool TcpServer::handshake()
+{
     return 1;
 }
 

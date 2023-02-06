@@ -8,10 +8,11 @@
 #ifndef CLIENT_HPP_
 #define CLIENT_HPP_
 
-#include "packets/packets.hpp"
-#include <boost/bind.hpp>
 #include <boost/asio.hpp>
+#include <boost/bind.hpp>
 #include <list>
+
+#include "packets/packets.hpp"
 
 #define BUFF_SIZE 10
 
@@ -21,7 +22,6 @@ namespace saturnity {
     public:
         explicit UdpClient(std::string address, std::string port, boost::asio::io_context& ioContext);
         ~UdpClient();
-        // bool handshake();
         virtual void send();
         virtual void send(std::string input);
         virtual void send(std::vector<uint8_t> input);
@@ -45,9 +45,7 @@ namespace saturnity {
         std::string _address;
         std::string _port;
         std::string _input;
-        //        char _sendBuffer[BUFF_SIZE];
-        //        char _recvBuffer[BUFF_SIZE];
     };
-}
+}  // namespace saturnity
 
 #endif /* !CLIENT_HPP_ */

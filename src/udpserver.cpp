@@ -57,7 +57,8 @@ bool UdpServer::handshake()
 void UdpServer::receive()
 {
     //    std::cout << "receiving" << std::endl;
-    _socket.async_receive_from(boost::asio::buffer(_recvBuffer), _remoteEndpoint ,boost::bind(&UdpServer::handleReceive, this, boost::asio::placeholders::error));
+    _socket.async_receive_from(boost::asio::buffer(_recvBuffer), _remoteEndpoint,
+                               boost::bind(&UdpServer::handleReceive, this, boost::asio::placeholders::error));
     // _ioCtx.run();
 }
 
@@ -74,16 +75,14 @@ void UdpServer::handleReceive(const boost::system::error_code& error)
 void UdpServer::send()
 {
     std::string send_str = "Test";
-    _socket.async_send_to(boost::asio::buffer(send_str), _remoteEndpoint,
-                          boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
+    _socket.async_send_to(boost::asio::buffer(send_str), _remoteEndpoint, boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
     //    _ioCtx.run();
 }
 
 void UdpServer::send(std::string input)
 {
     // std::copy(_sendBuffer.begin(), _sendBuffer.end(), input.data());
-    _socket.async_send_to(boost::asio::buffer(input), _remoteEndpoint,
-                          boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
+    _socket.async_send_to(boost::asio::buffer(input), _remoteEndpoint, boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
     //    _ioCtx.run();
 }
 
