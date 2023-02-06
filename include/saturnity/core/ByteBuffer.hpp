@@ -20,7 +20,7 @@
  */
 namespace sa {
     /**
-     * @brief A byte buffer class to easily, use bytes
+     * @brief A byte buffer class, limited to UINT32_MAX bytes
      */
     class ByteBuffer {
     public:
@@ -89,11 +89,22 @@ namespace sa {
          */
         std::uint32_t remainingBytes() const;
 
+        /**
+         * @brief Check if the buffer has enough space to write a certain size
+         * @param size the size to check
+         * @return true if the buffer has enough space, false otherwise
+         */
+        bool hasSpace(std::uint32_t size) const;
+
         //
         // Read methods
         //
 
+        byte_t readByte();
 
+        std::vector<byte_t> readBytes(std::uint32_t size);
+
+        std::vector<byte_t> readBytes(std::uint32_t size, std::uint32_t offset);
 
         //
         // Write methods
@@ -104,13 +115,13 @@ namespace sa {
          * @param byte the byte to write
          * @throws ReadOnlyException if the ByteBuffer is only readeable
          */
-        /*void writeByte(byte_t byte);
+        void writeByte(const byte_t &byte);
 
-        void writeBytes(const byte_t *bytes, std::uint32_t size);
+        void writeBytes(const ByteBuffer &buffer);
 
         void writeBytes(const std::vector<byte_t> &bytes);
 
-        void writeBytes(const ByteBuffer &buffer);*/
+        void writeBytes(const byte_t *bytes, std::uint32_t size);
 
         //
         // Utils methods
@@ -121,6 +132,12 @@ namespace sa {
          * @return the vector
          */
         std::vector<byte_t> &vector();
+
+        /**
+         * @brief Return the vector used as buffer to store bytes
+         * @return the vector
+         */
+        const std::vector<byte_t> &getBuffer() const;
 
         /**
          * @brief Compare two byte buffer for equality (size and bytes are compared)
@@ -162,11 +179,55 @@ namespace sa {
          */
         void setWriterIndex(std::uint32_t writerIndex);
 
+    protected:
+        /**
+         * @brief Read a value from the buffer, change the reader index
+         * @tparam T the type of the value to read
+         * @return the value read
+         */
+        template<typename T>
+        T read();
+
+        /**
+         * @brief Read a value from the buffer at a certain offset, don't change the reader index
+         * @tparam T the type of the value to read
+         * @param offset the offset to read the value
+         * @return the value read
+         * @throws std::out_of_range if the offset is out of bounds (limit is UINT32_MAX)
+         */
+        template<typename T>
+        T read(std::uint32_t offset);
+
+        /**
+         * @brief Write a value in the buffer, change the writer index
+         * @tparam T the type of the value to write
+         * @param value the value to write
+         * @throws std::out_of_range if the offset is out of bounds (limit is UINT32_MAX)
+         */
+        template<typename T>
+        void write(const T &value);
+
+        /**
+         * @brief Write a value in the buffer at a certain offset, don't change the writer index
+         * @tparam T the type of the value to write
+         * @param value the value to write
+         * @param offset the offset to write the value
+         * @throws std::out_of_range if the offset is out of bounds (limit is UINT32_MAX)
+         */
+        template<typename T>
+        void write(const T &value, std::uint32_t offset);
+
     private:
         std::vector<byte_t> _buffer; /**< The vector to store the bytes */
         std::uint32_t _readPos; /**< The current index of the reader */
         std::uint32_t _writePos; /**< The current index of the writer */
         bool _readOnly; /**< Specify if the ByteBuffer is only readeable */
+
+        /**
+         * @brief Ensure that the buffer has enough space to write a certain size
+         * @param size the size to check
+         */
+        inline void ensureCapacity(std::uint32_t size);
     };
 
 } // namespace sa

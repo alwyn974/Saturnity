@@ -15,6 +15,7 @@
 
 #include <cstdint>
 #include <string>
+#include <exception>
 
 #ifndef SA_BUFFER_SIZE
     /**
@@ -23,7 +24,7 @@
     #define SA_BUFFER_SIZE 4096 // NOLINT
 #endif
 
-using byte_t = uint8_t; // NOLINT
+using byte_t = std::uint8_t; // NOLINT
 
 /**
  * @brief The Saturnity namespace.

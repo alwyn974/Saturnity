@@ -21,8 +21,6 @@ option(USE_CLANG_TIDY_WITH_FIX "Use clang-tidy with fix" OFF) # Used by the CI
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF) # Fix dll issues on Windows
 
 add_library(${PROJECT_NAME}
-        src/core/PacketWriter.cpp
-        src/core/PacketReader.cpp
         src/core/ByteBuffer.cpp
 )
 add_executable(${PROJECT_NAME}-exe main.cpp)

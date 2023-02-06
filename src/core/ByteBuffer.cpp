@@ -77,7 +77,105 @@ namespace sa {
         return this->size() - this->_readPos;
     }
 
+    bool ByteBuffer::hasSpace(std::uint32_t size) const
+    {
+        return this->size() + size <= UINT32_MAX;
+    }
+
+    //
+    // Read
+    //
+
+    byte_t ByteBuffer::readByte()
+    {
+        return this->read<byte_t>();
+    }
+
+    std::vector<byte_t> ByteBuffer::readBytes(std::uint32_t size)
+    {
+        return this->readBytes(size, this->_readPos);
+    }
+
+    std::vector<byte_t> ByteBuffer::readBytes(std::uint32_t size, std::uint32_t offset)
+    {
+        if (offset + size > this->size())
+            throw std::out_of_range("Offset is out of bounds: " + std::to_string(offset) + ", maximum is: " + std::to_string(this->size()));
+        std::vector<byte_t> bytes;
+        bytes.reserve(size);
+        for (std::uint32_t i = 0; i < size; i++)
+            bytes.push_back(this->_buffer[offset + i]);
+        this->_readPos += size;
+    }
+
+    template<typename T>
+    T ByteBuffer::read()
+    {
+        T value = read<T>(this->_readPos);
+        this->_readPos += sizeof(T);
+        return value;
+    }
+
+    template<typename T>
+    T ByteBuffer::read(std::uint32_t offset)
+    {
+        if (offset + sizeof(T) > this->size())
+            throw std::out_of_range("Offset is out of bounds: " + std::to_string(offset) + ", maximum is: " + std::to_string(this->size()));
+        T value = *(T *)(&this->_buffer[offset]); // NOLINT
+        return value;
+    }
+
+    //
+    // Write
+    //
+
+    void ByteBuffer::writeByte(const byte_t &byte)
+    {
+        this->write<byte_t>(byte);
+    }
+
+    void ByteBuffer::writeBytes(const byte_t *bytes, std::uint32_t size)
+    {
+        if (this->_readOnly)
+            throw ReadOnlyException("Cannot write to a read only buffer");
+        ensureCapacity(this->_writePos + size);
+        for (std::uint32_t i = 0; i < size; i++)
+            this->_buffer.emplace_back(bytes[i]);
+        this->_writePos += size;
+    }
+
+    void ByteBuffer::writeBytes(const std::vector<byte_t> &bytes)
+    {
+        this->writeBytes(bytes.data(), static_cast<std::uint32_t>(bytes.size()));
+    }
+
+    void ByteBuffer::writeBytes(const ByteBuffer &buffer)
+    {
+        this->writeBytes(buffer.getBuffer());
+    }
+
+    template<typename T>
+    void ByteBuffer::write(const T &value)
+    {
+        this->write<T>(value, this->_writePos);
+        this->_writePos += sizeof(T);
+    }
+
+    template<typename T>
+    void ByteBuffer::write(const T &value, std::uint32_t offset)
+    {
+        if (this->_readOnly)
+            throw ReadOnlyException("Cannot write to a read only buffer");
+        ensureCapacity(offset + sizeof(T));
+        for (std::size_t i = 0; i < sizeof(T); i++)
+            this->_buffer.emplace_back(((byte_t *) &value)[i]); // NOLINT
+    }
+
     std::vector<byte_t> &ByteBuffer::vector()
+    {
+        return this->_buffer;
+    }
+
+    const std::vector<byte_t> &ByteBuffer::getBuffer() const
     {
         return this->_buffer;
     }
@@ -119,5 +217,12 @@ namespace sa {
         if (writerIndex >= UINT32_MAX)
             throw std::out_of_range("Writer index is out of bounds: " + std::to_string(writerIndex) + ", maximum is: " + std::to_string(UINT32_MAX));
         this->_writePos = writerIndex;
+    }
+
+    void ByteBuffer::ensureCapacity(std::uint32_t size)
+    {
+        if (this->size() + size > UINT32_MAX)
+            throw std::out_of_range("Cannot ensure capacity: " + std::to_string(size) + ", maximum is: " + std::to_string(UINT32_MAX));
+        this->_buffer.reserve(this->size() + size);
     }
 } // namespace sa

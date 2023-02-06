@@ -20,5 +20,17 @@ int main(int ac, char **av)
 
     spdlog::info("{} {} - {}", test[0], copy[0], sizeof(bool));
 
+    sa::ByteBuffer buffer(100);
+    buffer.writeByte(0xFF);
+    buffer.writeByte(0x00);
+    buffer.writeByte(0xEE);
+    buffer.writeByte(0x11);
+
+    spdlog::info("{:X}", buffer.readByte());
+    spdlog::info("{:X}", buffer.readByte());
+    spdlog::info("{:X}", buffer.readByte());
+    spdlog::info("{:X}", buffer.readByte());
+    spdlog::info("{}", buffer.size());
+
     return 0;
 }

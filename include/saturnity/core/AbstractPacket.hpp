@@ -9,8 +9,7 @@
 #define SATURNITY_ABSTRACT_PACKET_HPP
 
 #include "Core.hpp"
-#include "PacketReader.hpp"
-#include "PacketWriter.hpp"
+#include "ByteBuffer.hpp"
 
 /**
  * @brief The Saturnity namespace.
@@ -34,15 +33,15 @@ namespace sa {
 
         /**
          * @brief Serialize the packet into bytes.
-         * @param packetWriter the packet writer to serialize data in bytes
+         * @param byteBuffer the byte buffer to serialize data into bytes
          */
-        virtual void toBytes(PacketWriter &packetWriter) = 0;
+        virtual void toBytes(ByteBuffer &byteBuffer) = 0;
 
         /**
          * @brief Deserialize the packet from bytes.
-         * @param packetReader the packet reader to deserialize from bytes
+         * @param byteBuffer the byte buffer to deserialize data from bytes
          */
-        virtual void fromBytes(PacketReader &packetReader) = 0;
+        virtual void fromBytes(ByteBuffer &byteBuffer) = 0;
 
         /**
          * @brief Check if the packet is a UDP packet.
