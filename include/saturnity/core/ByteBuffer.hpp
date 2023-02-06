@@ -46,7 +46,7 @@ namespace sa {
          * @param size the size of the array
          * @param readOnly specify if the byte buffer is only readeable (default: false)
          */
-        explicit ByteBuffer(const byte_t *bytes, std::uint32_t size, bool readOnly);
+        explicit ByteBuffer(const byte_t *bytes, std::uint32_t size, bool readOnly = false);
 
         /**
          * @brief Clear the buffer and reset the read/write position
@@ -111,17 +111,114 @@ namespace sa {
         //
 
         /**
-         * @brief Write a byte in the buffer
+         * @brief Write a byte in the buffer, (increase the write position by 1)
          * @param byte the byte to write
          * @throws ReadOnlyException if the ByteBuffer is only readeable
          */
         void writeByte(const byte_t &byte);
 
+        /**
+         * @brief Write a vector of bytes in the buffer (increase the write position by the size of the vector)
+         * @param buffer the byte buffer to write
+         */
         void writeBytes(const ByteBuffer &buffer);
 
+        /**
+         * @brief Write a vector of bytes in the buffer (increase the write position by the size of the vector)
+         * @param bytes the vector of bytes to write
+         */
         void writeBytes(const std::vector<byte_t> &bytes);
 
+        /**
+         * @brief Write a vector of bytes in the buffer (increase the write position by the size of the vector)
+         * @param bytes the vector of bytes to write
+         * @param size the size of the vector
+         */
         void writeBytes(const byte_t *bytes, std::uint32_t size);
+
+        /**
+         * @brief Write a boolean in the buffer (increase the write position by 1)
+         * @param value the value to write
+         */
+        void writeBoolean(bool value);
+
+        /**
+         * @brief Write a short in the buffer (increase the write position by 2)
+         * @param value the value to write
+         */
+        void writeShort(std::int16_t value);
+
+        /**
+         * @brief Write a unsigned short in the buffer (increase the write position by 2)
+         * @param value the value to write
+         */
+        void writeUShort(std::uint16_t value);
+
+        /**
+         * @brief Write a int in the buffer (increase the write position by 4)
+         * @param value the value to write
+         */
+        void writeInt(std::int32_t value);
+
+        /**
+         * @brief Write a unsigned int in the buffer (increase the write position by 4)
+         * @param value the value to write
+         */
+        void writeUInt(std::uint32_t value);
+
+        /**
+         * @brief Write a long in the buffer (increase the write position by 8)
+         * @param value the value to write
+         */
+        void writeLong(std::int64_t value);
+
+        /**
+         * @brief Write a unsigned long in the buffer (increase the write position by 8)
+         * @param value the value to write
+         */
+        void writeULong(std::uint64_t value);
+
+        /**
+         * @brief Write a float in the buffer (increase the write position by 4)
+         * @param value the value to write
+         */
+        void writeFloat(float value);
+
+        /**
+         * @brief Write a double in the buffer (increase the write position by 8)
+         * @param value the value to write
+         */
+        void writeDouble(double value);
+
+        /**
+         * @brief Write a string in the buffer (increase the write position by the 2 + size of the string)
+         * @param str the string to write
+         */
+        void writeString(const std::string &str);
+
+        /**
+         * @brief Write a var int in the buffer (minimum 1 byte, maximum 5 bytes)
+         * @param value the value to write
+         */
+        void writeVarInt(std::int32_t value);
+
+        /**
+         * @brief Write a var uint in the buffer (minimum 1 byte, maximum 5 bytes)
+         * @param value the value to write
+         */
+        void writeVarUInt(std::uint32_t value);
+
+        /**
+         * @brief Write a var long in the buffer (minimum 1 byte, maximum 10 bytes)
+         * @param value the value to write
+         */
+        void writeVarLong(std::int64_t value);
+
+        /**
+         * @brief Write a var ulong in the buffer (minimum 1 byte, maximum 10 bytes)
+         * @param value the value to write
+         */
+        void writeVarULong(std::uint64_t value);
 
         //
         // Utils methods
@@ -167,6 +264,11 @@ namespace sa {
         void setReaderIndex(std::uint32_t readerIndex);
 
         /**
+         * @brief Reset the reader index to 0
+         */
+        void resetReaderIndex();
+
+        /**
          * @brief Get the current writer index
          * @return the current index of the writer
          */
@@ -179,6 +281,14 @@ namespace sa {
          */
         void setWriterIndex(std::uint32_t writerIndex);
 
+        /**
+         * @brief Reset the writer index to 0
+         */
+        void resetWriterIndex();
+
+        static inline const constexpr int MAX_VARINT_SIZE = 5; /**< The maximum size of the var (u)int */
+        static inline const constexpr int MAX_VARLONG_SIZE = 10; /**< The maximum size of the var (u)long */
+
     protected:
         /**
          * @brief Read a value from the buffer, change the reader index
@@ -189,7 +299,7 @@ namespace sa {
         T read();
 
         /**
-         * @brief Read a value from the buffer at a certain offset, don't change the reader index
+         * @brief Read a value from the buffer at a certain offset, change the reader index
          * @tparam T the type of the value to read
          * @param offset the offset to read the value
          * @return the value read
@@ -199,7 +309,7 @@ namespace sa {
         T read(std::uint32_t offset);
 
         /**
-         * @brief Write a value in the buffer, change the writer index
+         * @brief Write a value in the buffer, change the writer index (capacity is increased if needed)
          * @tparam T the type of the value to write
          * @param value the value to write
          * @throws std::out_of_range if the offset is out of bounds (limit is UINT32_MAX)
@@ -208,7 +318,7 @@ namespace sa {
         void write(const T &value);
 
         /**
-         * @brief Write a value in the buffer at a certain offset, don't change the writer index
+         * @brief Write a value in the buffer at a certain offset, change the writer index (capacity is increased if needed)
          * @tparam T the type of the value to write
          * @param value the value to write
          * @param offset the offset to write the value
@@ -219,6 +329,7 @@ namespace sa {
 
     private:
         std::vector<byte_t> _buffer; /**< The vector to store the bytes */
+        std::uint32_t _maxCapacity; /**< The maximum capacity of the buffer */
         std::uint32_t _readPos; /**< The current index of the reader */
         std::uint32_t _writePos; /**< The current index of the writer */
         bool _readOnly; /**< Specify if the ByteBuffer is only readeable */

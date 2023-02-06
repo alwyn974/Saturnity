@@ -9,14 +9,14 @@
 
 namespace sa {
 
-    ByteBuffer::ByteBuffer(std::uint32_t bufferSize, bool readOnly): _readPos(0), _writePos(0)
+    ByteBuffer::ByteBuffer(std::uint32_t bufferSize, bool readOnly) : _maxCapacity(UINT32_MAX), _readPos(0), _writePos(0)
     {
         this->_buffer.reserve(bufferSize);
         this->clear();
         this->_readOnly = readOnly;
     }
 
-    ByteBuffer::ByteBuffer(const std::vector<byte_t> &buffer, bool readOnly)
+    ByteBuffer::ByteBuffer(const std::vector<byte_t> &buffer, bool readOnly) : _maxCapacity(UINT32_MAX)
     {
         this->_buffer = buffer;
         this->_readPos = 0;
@@ -24,14 +24,12 @@ namespace sa {
         this->_readOnly = readOnly;
     }
 
-    ByteBuffer::ByteBuffer(const byte_t *bytes, std::uint32_t size, bool readOnly): _readPos(0), _writePos(0)
+    ByteBuffer::ByteBuffer(const byte_t *bytes, std::uint32_t size, bool readOnly) : _maxCapacity(UINT32_MAX), _readPos(0), _writePos(0)
     {
         this->_buffer.reserve(size);
         this->clear();
-        if (bytes != nullptr) {
-            for (std::uint32_t i = 0; i < size; i++)
-                this->_buffer.push_back(bytes[i]); //TODO: change to writeBytes method
-        }
+        if (bytes != nullptr)
+            this->writeBytes(bytes, size);
         this->_readOnly = readOnly;
     }
 
@@ -111,16 +109,17 @@ namespace sa {
     T ByteBuffer::read()
     {
         T value = read<T>(this->_readPos);
-        this->_readPos += sizeof(T);
         return value;
     }
 
     template<typename T>
     T ByteBuffer::read(std::uint32_t offset)
     {
-        if (offset + sizeof(T) > this->size())
+        const std::size_t size = sizeof(T);
+        if (offset + size > this->size())
             throw std::out_of_range("Offset is out of bounds: " + std::to_string(offset) + ", maximum is: " + std::to_string(this->size()));
         T value = *(T *)(&this->_buffer[offset]); // NOLINT
+        this->_readPos += size;
         return value;
     }
 
@@ -151,6 +150,75 @@ namespace sa {
     void ByteBuffer::writeBytes(const ByteBuffer &buffer)
     {
         this->writeBytes(buffer.getBuffer());
+    }
+
+    void ByteBuffer::writeBoolean(bool value)
+    {
+        this->write<bool>(value);
+    }
+
+    void ByteBuffer::writeShort(std::int16_t value)
+    {
+        this->write<std::int16_t>(value);
+    }
+
+    void ByteBuffer::writeUShort(std::uint16_t value)
+    {
+        this->write<std::uint16_t>(value);
+    }
+
+    void ByteBuffer::writeInt(std::int32_t value)
+    {
+        this->write<std::int32_t>(value);
+    }
+
+    void ByteBuffer::writeUInt(std::uint32_t value)
+    {
+        this->write<std::uint32_t>(value);
+    }
+
+    void ByteBuffer::writeLong(std::int64_t value)
+    {
+        this->write<std::int64_t>(value);
+    }
+
+    void ByteBuffer::writeULong(std::uint64_t value)
+    {
+        this->write<std::uint64_t>(value);
+    }
+
+    void ByteBuffer::writeFloat(float value)
+    {
+        this->write<float>(value);
+    }
+
+    void ByteBuffer::writeDouble(double value)
+    {
+        this->write<double>(value);
+    }
+
+    void ByteBuffer::writeString(const std::string &str)
+    {
+        this->write<std::uint16_t>(static_cast<std::uint16_t>(str.size()));
+        const char *cstr = str.c_str();
+        const byte_t *bytes = reinterpret_cast<const byte_t *>(cstr); // NOLINT
+        this->writeBytes(bytes, static_cast<std::uint32_t>(str.size()));
+    }
+
+    void ByteBuffer::writeVarInt(std::int32_t value)
+    {
+    }
+
+    void ByteBuffer::writeVarUInt(std::uint32_t value)
+    {
+    }
+
+    void ByteBuffer::writeVarLong(std::int64_t value)
+    {
+    }
+
+    void ByteBuffer::writeVarULong(std::uint64_t value)
+    {
     }
 
     template<typename T>
@@ -207,6 +275,11 @@ namespace sa {
         this->_readPos = readerIndex;
     }
 
+    void ByteBuffer::resetReaderIndex()
+    {
+        this->_readPos = 0;
+    }
+
     std::uint32_t ByteBuffer::writerIndex() const
     {
         return this->_writePos;
@@ -217,6 +290,11 @@ namespace sa {
         if (writerIndex >= UINT32_MAX)
             throw std::out_of_range("Writer index is out of bounds: " + std::to_string(writerIndex) + ", maximum is: " + std::to_string(UINT32_MAX));
         this->_writePos = writerIndex;
+    }
+
+    void ByteBuffer::resetWriterIndex()
+    {
+        this->_writePos = 0;
     }
 
     void ByteBuffer::ensureCapacity(std::uint32_t size)
