@@ -8,8 +8,6 @@
 #include "saturnity/core/PacketWriter.hpp"
 
 namespace sa {
-    PacketWriter::PacketWriter(const std::size_t &bufferSize)
-    {
 
-    }
-}
+    PacketWriter::PacketWriter(ByteBuffer &byteBuffer) {}
+} // namespace sa

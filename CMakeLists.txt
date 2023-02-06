@@ -23,6 +23,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF) # Fix dll issues on Windo
 add_library(${PROJECT_NAME}
         src/core/PacketWriter.cpp
         src/core/PacketReader.cpp
+        src/core/ByteBuffer.cpp
 )
 add_executable(${PROJECT_NAME}-exe main.cpp)
 target_link_libraries(${PROJECT_NAME}-exe PRIVATE ${PROJECT_NAME}) # TODO: remove this later

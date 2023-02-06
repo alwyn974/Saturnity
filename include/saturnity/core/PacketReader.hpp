@@ -8,6 +8,7 @@
 #ifndef SATURNITY_PACKETREADER_HPP
 #define SATURNITY_PACKETREADER_HPP
 
+#include "ByteBuffer.hpp"
 #include "Core.hpp"
 
 /**
@@ -19,10 +20,8 @@ namespace sa {
      */
     class PacketReader {
     public:
-
     private:
-
     };
-}
+} // namespace sa
 
-#endif //SATURNITY_PACKETREADER_HPP
+#endif // SATURNITY_PACKETREADER_HPP
