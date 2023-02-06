@@ -161,7 +161,28 @@ namespace sa {
 
     std::int32_t ByteBuffer::readVarInt()
     {
-        return static_cast<std::int32_t>(this->readVarUInt());
+        std::int32_t decoded = 0;
+        int shift = 0;
+        bool signBit = false;
+
+        // Decode the 7-bit chunks of the value
+        while (true) {
+            const byte_t byte = this->readByte();
+            decoded |= (byte & SEGMENT_BITS) << shift;
+            shift += 7;
+            if ((byte & CONTINUE_BIT) == 0) {
+                break;
+            }
+        }
+
+        this->setReaderIndex(this->_readPos - 1);
+        if ((this->readByte() & 0x40) != 0) {
+            signBit = true;
+            decoded = ~decoded;
+        }
+
+        if (signBit) decoded = -decoded - 1;
+        return decoded;
     }
 
     std::uint32_t ByteBuffer::readVarUInt()
@@ -181,7 +202,7 @@ namespace sa {
 
     std::int64_t ByteBuffer::readVarLong()
     {
-        return static_cast<std::int64_t>(this->readVarULong());
+        return 0;
     }
 
     std::uint64_t ByteBuffer::readVarULong()
@@ -303,13 +324,7 @@ namespace sa {
 
     void ByteBuffer::writeVarInt(std::int32_t value)
     {
-        while (true) {
-            uint8_t byte = value & SEGMENT_BITS;
-            value >>= 7U;
-            if (value != 0) byte |= CONTINUE_BIT;
-            writeByte(byte);
-            if (value == 0) break;
-        }
+        this->writeVarLong(value);
     }
 
     void ByteBuffer::writeVarUInt(std::uint32_t value)
@@ -325,13 +340,24 @@ namespace sa {
 
     void ByteBuffer::writeVarLong(std::int64_t value)
     {
+        std::vector<byte_t> encoded;
+        // Encode the 7-bit chunks of the value
+        bool signBit = false;
+        if (value < 0) {
+            signBit = true;
+            value = ~value;
+        }
+
         while (true) {
-            uint8_t byte = value & SEGMENT_BITS;
+            byte_t byte = value & SEGMENT_BITS;
             value >>= 7;
             if (value != 0) byte |= CONTINUE_BIT;
-            writeByte(byte);
+            encoded.push_back(byte);
             if (value == 0) break;
         }
+
+        if (signBit) encoded.back() |= 0x40;
+        this->writeBytes(encoded);
     }
 
     void ByteBuffer::writeVarULong(std::uint64_t value)
