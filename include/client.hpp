@@ -23,10 +23,14 @@ namespace saturnity {
         ~UdpClient();
         // bool handshake();
         virtual void send();
-        // virtual void send(std::string input);
+        virtual void send(std::string input);
+        virtual void send(std::vector<uint8_t> input);
+
         void handleSend(const boost::system::error_code& error);
         void receive();
-        void handleReceive(const boost::system::error_code& error, std::string& received);
+        void get_input();
+
+        void handleReceive(const boost::system::error_code& error);
         // void clearBuff(std::array<char, BUFF_SIZE> buffer);
 
     private:

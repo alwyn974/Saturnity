@@ -73,10 +73,7 @@ void UdpServer::handleReceive(const boost::system::error_code& error)
 
 void UdpServer::send()
 {
-    // std::cout << "SENDING CLASS" << std::endl;
     std::string send_str = "Test";
-    // std::copy(_sendBuffer.begin(), _sendBuffer.end(), send_str.data());
-
     _socket.async_send_to(boost::asio::buffer(send_str), _remoteEndpoint,
                           boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
     //    _ioCtx.run();
@@ -84,9 +81,8 @@ void UdpServer::send()
 
 void UdpServer::send(std::string input)
 {
-    // std::cout << "SENDING MESSAGE" << std::endl;
-    std::copy(_sendBuffer.begin(), _sendBuffer.end(), input.data());
-    _socket.async_send_to(boost::asio::buffer(_sendBuffer), _remoteEndpoint,
+    // std::copy(_sendBuffer.begin(), _sendBuffer.end(), input.data());
+    _socket.async_send_to(boost::asio::buffer(input), _remoteEndpoint,
                           boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
     //    _ioCtx.run();
 }
