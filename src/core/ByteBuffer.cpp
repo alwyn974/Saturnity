@@ -49,7 +49,7 @@ namespace sa {
 
     std::unique_ptr<ByteBuffer> ByteBuffer::clone()
     {
-        auto cloned = std::make_unique<ByteBuffer>(this->_buffer.size());
+        auto cloned = std::make_unique<ByteBuffer>(static_cast<std::uint32_t>(this->_buffer.size()));
         for (std::size_t i = 0; i < this->_buffer.size(); i++)
             cloned->_buffer[i] = this->_buffer[i];
         return cloned;
@@ -114,7 +114,7 @@ namespace sa {
         return this->_writePos;
     }
 
-    void ByteBuffer::setWriterIndex(size_t writerIndex)
+    void ByteBuffer::setWriterIndex(std::uint32_t writerIndex)
     {
         if (writerIndex >= UINT32_MAX)
             throw std::out_of_range("Writer index is out of bounds: " + std::to_string(writerIndex) + ", maximum is: " + std::to_string(UINT32_MAX));

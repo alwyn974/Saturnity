@@ -18,7 +18,7 @@ int main(int ac, char **av)
     std::vector<byte_t> copy = test;
     copy[0] = 0x2;
 
-    spdlog::info("{} {}", test[0], copy[0]);
+    spdlog::info("{} {} - {}", test[0], copy[0], sizeof(bool));
 
     return 0;
 }
