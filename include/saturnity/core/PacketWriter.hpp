@@ -20,7 +20,7 @@ namespace sa {
      */
     class PacketWriter {
     public:
-        explicit PacketWriter(ByteBuffer &buffer);
+        //explicit PacketWriter(ByteBuffer &buffer);
 
     private:
     };

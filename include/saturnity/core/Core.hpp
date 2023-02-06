@@ -14,6 +14,7 @@
  */
 
 #include <cstdint>
+#include <string>
 
 #ifndef SA_BUFFER_SIZE
     /**

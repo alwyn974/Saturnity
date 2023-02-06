@@ -8,11 +8,12 @@
 #ifndef SATURNITY_BYTEBUFFER_HPP
 #define SATURNITY_BYTEBUFFER_HPP
 
+#include "Core.hpp"
+
 #include <memory>
 #include <vector>
 #include <exception>
-
-#include "Core.hpp"
+#include <stdexcept>
 
 /**
  * @brief The Saturnity namespace.
@@ -103,13 +104,13 @@ namespace sa {
          * @param byte the byte to write
          * @throws ReadOnlyException if the ByteBuffer is only readeable
          */
-        void writeByte(byte_t byte);
+        /*void writeByte(byte_t byte);
 
         void writeBytes(const byte_t *bytes, std::uint32_t size);
 
         void writeBytes(const std::vector<byte_t> &bytes);
 
-        void writeBytes(const ByteBuffer &buffer);
+        void writeBytes(const ByteBuffer &buffer);*/
 
         //
         // Utils methods
@@ -159,7 +160,7 @@ namespace sa {
          * @param writerIndex the new index of the writer
          * @throws std::out_of_range if the index is out of bounds (limit is UINT32_MAX)
          */
-        void setWriterIndex(std::size_t writerIndex);
+        void setWriterIndex(std::uint32_t writerIndex);
 
     private:
         std::vector<byte_t> _buffer; /**< The vector to store the bytes */
