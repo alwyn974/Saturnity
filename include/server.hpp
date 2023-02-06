@@ -13,7 +13,9 @@
 #include <boost/asio.hpp>
 #include <list>
 
-#define BUFF_SIZE 1
+#define BUFF_SIZE 10
+void handleSend(const boost::system::error_code& error, boost::asio::mutable_buffer buffer,
+const boost::asio::ip::udp::socket& msocket, const boost::asio::io_service& ioService, std::string& input, boost::asio::ip::udp::endpoint remote);
 
 namespace saturnity {
     class UdpServer {
@@ -38,8 +40,6 @@ namespace saturnity {
         //        char _sendBuffer[BUFF_SIZE];
         //        char _recvBuffer[BUFF_SIZE];
         int _port;
-
-
     };
 
     class TcpServer {
@@ -59,9 +59,7 @@ namespace saturnity {
 //        char _buffer[1024];
         int _port;
         int _address;
-
     };
-
 
 //    inline std::list<std::string> getPlayerList(){return _playerList;};
 //    void addPlayer();

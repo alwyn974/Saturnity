@@ -11,7 +11,7 @@ using namespace saturnity;
 
 void UdpServer::clearBuff(std::array<char, BUFF_SIZE> buffer)
 {
-        for (int i = 1023; i > 0; i--) { buffer[i] = '\0'; }
+        for (int i = BUFF_SIZE; i > 0; i--) { buffer[i] = '\0'; }
 }
 
 UdpServer::UdpServer(int port) : _socket(_ioCtx, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port)), _port(port){
@@ -29,7 +29,7 @@ UdpServer::UdpServer(int port) : _socket(_ioCtx, boost::asio::ip::udp::endpoint(
 //                send();
 //            }
 //            clearBuff(_sendBuffer);
-//            clearBuff(_recvBuffer);
+            clearBuff(_recvBuffer);
 //            std::cout << "cleared" << std::endl;
 
         }

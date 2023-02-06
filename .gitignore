@@ -25,13 +25,56 @@
 *.la
 *.a
 *.lib
+*.pdb
 
 # Executables
 *.exe
 *.out
 *.app
 
-.vscode
-server
-client
-cmake-build-debug/
+# Unwanted files
+*.txt
+*.log
+
+# Temporary Files
+*~
+*#
+\#*
+
+# Valgrind
+vgcore*
+*.report
+
+# Criterion
+*.gc*
+unit*
+
+# Visual Studio
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# IDEs and editors
+.idea/
+.fleet/
+.vscode/
+.vs/
+
+# Build dirs
+out/
+Cmake*
+CMake*
+cmake-build-*/
+build/
+dist/
+
+# Include cmake
+!CMakeLists.txt
+!cmake/
+!*.cmake
+
+# Include license
+!LICENSE.txt
+
+# Exclude doxygen directory
+doc/
