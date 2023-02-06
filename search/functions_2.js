@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['gettype_0',['getType',['../classsa_1_1_abstract_packet.html#aa742e5c7ea0113be773ac57ca02f83ef',1,'sa::AbstractPacket']]]
+  ['clear_0',['clear',['../classsa_1_1_byte_buffer.html#a8677dc403b56c27682da98d69909ff16',1,'sa::ByteBuffer']]],
+  ['clone_1',['clone',['../classsa_1_1_byte_buffer.html#a48e02e8604550b1a0aa32bee20965aa2',1,'sa::ByteBuffer']]]
 ];

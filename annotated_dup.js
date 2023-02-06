@@ -2,7 +2,7 @@ var annotated_dup =
 [
     [ "sa", "namespacesa.html", [
       [ "AbstractPacket", "classsa_1_1_abstract_packet.html", "classsa_1_1_abstract_packet" ],
-      [ "PacketReader", "namespacesa.html#classsa_1_1_packet_reader", null ],
-      [ "PacketWriter", "classsa_1_1_packet_writer.html", null ]
+      [ "ByteBuffer", "classsa_1_1_byte_buffer.html", "classsa_1_1_byte_buffer" ],
+      [ "Exception", "classsa_1_1_exception.html", "classsa_1_1_exception" ]
     ] ]
 ];
