@@ -100,11 +100,114 @@ namespace sa {
         // Read methods
         //
 
+        /**
+         * @brief Read a byte from the buffer (increase the read position by 1)
+         * @return the byte read
+         */
         byte_t readByte();
 
+        /**
+         * @brief Read a boolean from the buffer (increase the read position by the size)
+         * @param size the size of the bytes to read
+         * @return the bytes read
+         */
         std::vector<byte_t> readBytes(std::uint32_t size);
 
+        /**
+         * @brief Read bytes from the buffer (increase the read position by the size) from an offset
+         * @param size the size of the bytes to read
+         * @param offset the offset to read from
+         * @return the bytes read
+         */
         std::vector<byte_t> readBytes(std::uint32_t size, std::uint32_t offset);
+
+        /**
+         * @brief Read a boolean from the buffer (increase the read position by 1)
+         * @return the boolean read
+         */
+        bool readBoolean();
+
+        /**
+         * @brief Read a short from the buffer (increase the read position by 2)
+         * @return the short read
+         */
+        std::int16_t readShort();
+
+        /**
+         * @brief Read an unsigned short from the buffer (increase the read position by 2)
+         * @return the unsigned short read
+         */
+        std::uint16_t readUShort();
+
+        /**
+         * @brief Read an int from the buffer (increase the read position by 4)
+         * @return the int read
+         */
+        std::int32_t readInt();
+
+        /**
+         * @brief Read an unsigned int from the buffer (increase the read position by 4)
+         * @return the unsigned int read
+         */
+        std::uint32_t readUInt();
+
+        /**
+         * @brief Read a long from the buffer (increase the read position by 8)
+         * @return the long read
+         */
+        std::int64_t readLong();
+
+        /**
+         * @brief Read an unsigned long from the buffer (increase the read position by 8)
+         * @return the unsigned long read
+         */
+        std::uint64_t readULong();
+
+        /**
+         * @brief Read a float from the buffer (increase the read position by 4)
+         * @return the float read
+         */
+        float readFloat();
+
+        /**
+         * @brief Read a double from the buffer (increase the read position by 8)
+         * @return the double read
+         */
+        double readDouble();
+
+        /**
+         * @brief Read a string from the buffer (increase the read position by 2 + the size of the string)
+         * @return the string read
+         */
+        std::string readString();
+
+        /**
+         * @brief Read a variable length int from the buffer (increase the read position by 1 to 5)
+         * @return the variable length int read
+         * @throws std::runtime_error if the varint is too big
+         */
+        std::int32_t readVarInt();
+
+        /**
+         * @brief Read a variable length unsigned int from the buffer (increase the read position by 1 to 5)
+         * @return the variable length unsigned int read
+         * @throws std::runtime_error if the varuint is too big
+         */
+        std::uint32_t readVarUInt();
+
+        /**
+         * @brief Read a variable length long from the buffer (increase the read position by 1 to 10)
+         * @return the variable length long read
+         * @throws std::runtime_error if the varlong is too big
+         */
+        std::int64_t readVarLong();
+
+        /**
+         * @brief Read a variable length unsigned long from the buffer (increase the read position by 1 to 10)
+         * @return the variable length unsigned long read
+         * @throws std::runtime_error if the varulong is too big
+         */
+        std::uint64_t readVarULong();
 
         //
         // Write methods
@@ -259,7 +362,7 @@ namespace sa {
         /**
          * @brief Set the current reader index
          * @param readerIndex the new index of the reader
-         * @throws std::out_of_range if the index is out of bounds (limit is UINT32_MAX)
+         * @throws std::out_of_range if the index is out of bounds (limit is @link ByteBuffer::_maxCapacity)
          */
         void setReaderIndex(std::uint32_t readerIndex);
 
@@ -277,7 +380,7 @@ namespace sa {
         /**
          * @brief Set the current writer index
          * @param writerIndex the new index of the writer
-         * @throws std::out_of_range if the index is out of bounds (limit is UINT32_MAX)
+         * @throws std::out_of_range if the index is out of bounds (limit is @link ByteBuffer::_maxCapacity)
          */
         void setWriterIndex(std::uint32_t writerIndex);
 
@@ -286,8 +389,38 @@ namespace sa {
          */
         void resetWriterIndex();
 
+        /**
+         * @brief Get the size of a var int
+         * @param value the value of the var int
+         * @return the size of the var int
+         */
+        static int getVarIntSize(std::int32_t value);
+
+        /**
+         * @brief Get the size of a var unsigned int
+         * @param value the value of the var unsigined int
+         * @return the size of the var unsigned int
+         */
+        static int getVarUIntSize(std::uint32_t value);
+
+        /**
+         * @brief Get the size of a var long
+         * @param value the value of the var long
+         * @return the size of the var long
+         */
+        static int getVarLongSize(std::int64_t value);
+
+        /**
+         * @brief Get the size of a var unsigned long
+         * @param value the value of the var unsigned long
+         * @return the size of the var unsigned long
+         */
+        static int getVarULongSize(std::uint64_t value);
+
         static inline const constexpr int MAX_VARINT_SIZE = 5; /**< The maximum size of the var (u)int */
         static inline const constexpr int MAX_VARLONG_SIZE = 10; /**< The maximum size of the var (u)long */
+        static inline const constexpr std::uint32_t SEGMENT_BITS = 0x7F; /**< The segment bits is used to extract the least significant bit (7-bit chunk) */
+        static inline const constexpr std::uint32_t CONTINUE_BIT = 0x80; /**< The continuation bit is used as a flag, to check if more bytes need to be read */
 
     protected:
         /**
@@ -303,7 +436,7 @@ namespace sa {
          * @tparam T the type of the value to read
          * @param offset the offset to read the value
          * @return the value read
-         * @throws std::out_of_range if the offset is out of bounds (limit is UINT32_MAX)
+         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity)
          */
         template<typename T>
         T read(std::uint32_t offset);
@@ -312,7 +445,7 @@ namespace sa {
          * @brief Write a value in the buffer, change the writer index (capacity is increased if needed)
          * @tparam T the type of the value to write
          * @param value the value to write
-         * @throws std::out_of_range if the offset is out of bounds (limit is UINT32_MAX)
+         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity)
          */
         template<typename T>
         void write(const T &value);
@@ -322,7 +455,7 @@ namespace sa {
          * @tparam T the type of the value to write
          * @param value the value to write
          * @param offset the offset to write the value
-         * @throws std::out_of_range if the offset is out of bounds (limit is UINT32_MAX)
+         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity)
          */
         template<typename T>
         void write(const T &value, std::uint32_t offset);
@@ -340,7 +473,6 @@ namespace sa {
          */
         inline void ensureCapacity(std::uint32_t size);
     };
-
 } // namespace sa
 
 #endif // SATURNITY_BYTEBUFFER_HPP
