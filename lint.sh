@@ -15,7 +15,7 @@ if [ -z "$(which clang-format-16)" ]; then
   read -r -p "The script can install it? [y/N] " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
     local tmp="$(mktemp -d)"
-    wget https://apt.llvm.org/llvm.sh -o "$tmp/llvm.sh"
+    wget https://apt.llvm.org/llvm.sh -O "$tmp/llvm.sh"
     chmod +x "$tmp/llvm.sh"
     sudo "$tmp/llvm.sh" 16
     sudo apt install clang-format-16 clang-tidy-16 -y
