@@ -236,7 +236,7 @@ CheckOptions:
   - { key: readability-identifier-naming.MethodCase, value: camelBack } # member method
   - { key: readability-identifier-naming.NamespaceCase, value: lower_case } # namespace
   - { key: readability-identifier-naming.ParameterCase, value: camelBack } # parameter
-  - { key: readability-identifier-naming.ParameterPackCase, value: CamelCase } # parameter pack (variadic template)
+  - { key: readability-identifier-naming.ParameterPackCase, value: aNy_CasE } # parameter pack (variadic template)
   - { key: readability-identifier-naming.PointerParameterCase, value: camelBack } # parameter pointer
   - { key: readability-identifier-naming.PrivateMemberCase, value: camelBack } # private member variable
   - { key: readability-identifier-naming.PrivateMemberPrefix, value: '_' } # private member variable prefix
