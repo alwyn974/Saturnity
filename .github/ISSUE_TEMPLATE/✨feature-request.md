@@ -19,13 +19,16 @@ A clear and concise description of any alternative solutions or features you've 
 ## Sample Code
 If applicable, provide a sample code snippet that demonstrates the gist of feature you're proposing. This can be either from a usage standpoint, or an implementation standpoint.
 
+```language
+```
+
 ## Context
 Please provide any relevant information about your setup, which will help us ensure the requested support will work for you.
 
 * Project Version [e.g. 0.0.1.0]:
 * Operating System [e.g. Windows 11]:
 * Toolchain version [e.g. MSVC 12, GCC 12]:
-* CMake version [e.g. 3.25]
+* CMake version [e.g. 3.25]:
 
 ## Additional context
 Add any other context or screenshots about the feature request here.
