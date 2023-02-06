@@ -6,6 +6,8 @@
 */
 
 #include <spdlog/spdlog.h>
+#include <boost/asio.hpp>
+#include <iostream>
 
 #include "saturnity/Saturnity.hpp"
 
@@ -21,15 +23,28 @@ int main(int ac, char **av)
     spdlog::info("{} {} - {}", test[0], copy[0], sizeof(bool));
 
     sa::ByteBuffer buffer(100);
-    buffer.writeByte(0xFF);
+    buffer.writeLong(0x123456789ABCDEF0);
+    buffer.writeInt(-12);
+    buffer.writeString("Hello World!");
+    buffer.writeVarInt(-12);
+    /*buffer.writeByte(0xFF);
     buffer.writeByte(0x00);
     buffer.writeByte(0xEE);
-    buffer.writeByte(0x11);
+    buffer.writeByte(0x11);*/
 
-    spdlog::info("{:X}", buffer.readByte());
-    spdlog::info("{:X}", buffer.readByte());
-    spdlog::info("{:X}", buffer.readByte());
-    spdlog::info("{:X}", buffer.readByte());
+    /*auto buf = boost::asio::buffer(buffer.getBuffer());
+    auto byteBuf = boost::asio::buffer_cast<const byte_t *>(buf);
+    sa::ByteBuffer byteBuffer(byteBuf, buf.size());
+
+    std::vector<byte_t>  toto = buffer.readBytes(8); // NOLINT
+    std::int64_t ehoh = 0;
+    std::memcpy(&ehoh, toto.data(), 8);
+    std::cout << ehoh << std::endl;*/
+
+    spdlog::info("{}", buffer.readLong());
+    spdlog::info("{}", buffer.readInt());
+    spdlog::info("{}", buffer.readString());
+    spdlog::info("{}", buffer.readVarInt());
     spdlog::info("{}", buffer.size());
 
     return 0;
