@@ -9,8 +9,8 @@
 #define SATURNITY_ABSTRACT_PACKET_HPP
 
 #include "Core.hpp"
-#include "PacketWriter.hpp"
 #include "PacketReader.hpp"
+#include "PacketWriter.hpp"
 
 /**
  * @brief The Saturnity namespace.
@@ -34,27 +34,27 @@ namespace sa {
 
         /**
          * @brief Serialize the packet into bytes.
-         * @param buffer the buffer to serialize the packet into.
+         * @param packetWriter the packet writer to serialize data in bytes
          */
-        virtual void toBytes(byte_t *buffer) = 0;
+        virtual void toBytes(PacketWriter &packetWriter) = 0;
 
         /**
          * @brief Deserialize the packet from bytes.
-         * @param buffer the buffer to deserialize the packet from.
+         * @param packetReader the packet reader to deserialize from bytes
          */
-        virtual void fromBytes(byte_t *buffer) = 0;
+        virtual void fromBytes(PacketReader &packetReader) = 0;
 
         /**
          * @brief Check if the packet is a UDP packet.
          * @return true if the packet is a UDP packet, false otherwise.
          */
-        inline bool isUDP() { return this->_type == EnumPacketType::UDP; }
+        inline bool isUDP() const { return this->_type == EnumPacketType::UDP; }
 
         /**
          * @brief Check if the packet is a TCP packet.
          * @return true if the packet is a TCP packet, false otherwise.
          */
-        inline bool isTCP() { return this->_type == EnumPacketType::TCP; }
+        inline bool isTCP() const { return this->_type == EnumPacketType::TCP; }
 
         /**
          * @brief Get the packet type.

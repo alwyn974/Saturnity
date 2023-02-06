@@ -12,7 +12,13 @@
 int main(int ac, char **av)
 {
     spdlog::info("Welcome to Saturnity!");
-    const sa::Test saturnity;
-    saturnity.test();
+    std::vector<byte_t> test = {
+        0x1, 0x2
+    };
+    std::vector<byte_t> copy = test;
+    copy[0] = 0x2;
+
+    spdlog::info("{} {}", test[0], copy[0]);
+
     return 0;
 }

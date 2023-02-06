@@ -8,6 +8,7 @@
 #ifndef SATURNITY_PACKETWRITER_HPP
 #define SATURNITY_PACKETWRITER_HPP
 
+#include "ByteBuffer.hpp"
 #include "Core.hpp"
 
 /**
@@ -19,10 +20,10 @@ namespace sa {
      */
     class PacketWriter {
     public:
-        explicit PacketWriter(const std::size_t &bufferSize);
+        explicit PacketWriter(ByteBuffer &buffer);
 
     private:
     };
-}
+} // namespace sa
 
-#endif //SATURNITY_PACKETWRITER_HPP
+#endif // SATURNITY_PACKETWRITER_HPP
