@@ -8,6 +8,8 @@
 #include <spdlog/spdlog.h>
 #include <iostream>
 
+#include <iostream>
+
 #include "saturnity/Saturnity.hpp"
 
 int main(int ac, char **av)
