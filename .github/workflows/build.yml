@@ -80,11 +80,11 @@ jobs:
         run: cmake -B ./build -S . -DUSE_CLANG_TIDY=ON
 
       - name: Build Debug
-        shell: powershell
+        shell: pwsh
         run: cmake --build ./build --config Debug -j"$env:NUMBER_OF_PROCESSORS"
 
       - name: Build Release
-        shell: powershell
+        shell: pwsh
         run: cmake --build ./build --config Release -j"$env:NUMBER_OF_PROCESSORS"
 
   build_macosx:
