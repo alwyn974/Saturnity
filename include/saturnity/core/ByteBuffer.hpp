@@ -8,12 +8,12 @@
 #ifndef SATURNITY_BYTEBUFFER_HPP
 #define SATURNITY_BYTEBUFFER_HPP
 
-#include "Core.hpp"
-
-#include <memory>
-#include <vector>
 #include <exception>
+#include <memory>
 #include <stdexcept>
+#include <vector>
+
+#include "Core.hpp"
 
 /**
  * @brief The Saturnity namespace.
@@ -24,7 +24,7 @@ namespace sa {
      */
     class ByteBuffer {
     public:
-        //SA_EXCEPTION(ReadOnlyException, "When trying to write in a read only buffer") // TODO: remove this comment
+        // SA_EXCEPTION(ReadOnlyException, "When trying to write in a read only buffer") // TODO: remove this comment
         /**
          * @brief The ReadOnlyException is thrown when trying to write in a read only buffer
          */

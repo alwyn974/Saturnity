@@ -13,10 +13,11 @@
  * @file Saturnity.hpp
  */
 
-#include <cstdint>
-#include <string>
-#include <exception>
 #include <spdlog/spdlog.h>
+
+#include <cstdint>
+#include <exception>
+#include <string>
 
 #ifndef SA_BUFFER_SIZE
     /**
@@ -49,27 +50,24 @@ namespace sa {
          * @brief Get the message of the exception
          * @return an array of char
          */
-        const char *what() const noexcept override
-        {
-            return this->_msg.c_str();
-        }
+        const char *what() const noexcept override { return this->_msg.c_str(); }
 
     private:
         std::string _msg; /**< The message of the exception  */
     };
-}
+} // namespace sa
 
-#define SA_EXCEPTION(name, doc) \
-/**
- * @brief The #name exception class. #doc
- */ \
-class name : public sa::Exception { \
-public: \
-    /**
-     * @brief Construct a #name with a message
-     * @param message the message of the exception
-     */ \
-    explicit name(const std::string &message) : sa::Exception(message) {} \
-};
+#define SA_EXCEPTION(name, doc)                                               \
+    /**                                                                       \
+     * @brief The #name exception class. #doc                                 \
+     */                                                                       \
+    class name : public sa::Exception {                                       \
+    public:                                                                   \
+        /**                                                                   \
+         * @brief Construct a #name with a message                            \
+         * @param message the message of the exception                        \
+         */                                                                   \
+        explicit name(const std::string &message) : sa::Exception(message) {} \
+    };
 
 #endif // SATURNITY_CORE_HPP
