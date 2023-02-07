@@ -13,6 +13,8 @@
 int main(int ac, char **av)
 {
     spdlog::info("Welcome to Saturnity!");
+    spdlog::info("{}", sa::ByteBuffer::getVarShortSize(-4660));
+
     sa::ByteBuffer buffer(100);
     buffer.writeVarInt(-12);
     std::cout << buffer.writerIndex() << std::endl;

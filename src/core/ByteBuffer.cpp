@@ -201,9 +201,11 @@ namespace sa {
         while (true) {
             byte = this->readByte();
             value |= (byte & SEGMENT_BITS) << position;
-            if ((byte & CONTINUE_BIT) == 0) break;
+            if ((byte & CONTINUE_BIT) == 0)
+                break;
             position += 7;
-            if (position >= 16) throw std::runtime_error("VarShort is too big");
+            if (position >= 16)
+                throw std::runtime_error("VarShort is too big");
         }
         return value;
     }
@@ -221,9 +223,11 @@ namespace sa {
         while (true) {
             byte = this->readByte();
             value |= (byte & SEGMENT_BITS) << position;
-            if ((byte & CONTINUE_BIT) == 0) break;
+            if ((byte & CONTINUE_BIT) == 0)
+                break;
             position += 7;
-            if (position >= 32) throw std::runtime_error("VarInt is too big");
+            if (position >= 32)
+                throw std::runtime_error("VarInt is too big");
         }
         return value;
     }
@@ -242,9 +246,11 @@ namespace sa {
         while (true) {
             byte = readByte();
             value |= static_cast<std::uint64_t>(byte & SEGMENT_BITS) << position;
-            if ((byte & CONTINUE_BIT) == 0) break;
+            if ((byte & CONTINUE_BIT) == 0)
+                break;
             position += 7;
-            if (position >= 64) throw std::runtime_error("VarLong is too big");
+            if (position >= 64)
+                throw std::runtime_error("VarLong is too big");
         }
 
         return value;
@@ -370,9 +376,11 @@ namespace sa {
         while (true) {
             uint8_t byte = value & SEGMENT_BITS;
             value >>= 7U;
-            if (value != 0) byte |= CONTINUE_BIT;
+            if (value != 0)
+                byte |= CONTINUE_BIT;
             writeByte(byte);
-            if (value == 0) break;
+            if (value == 0)
+                break;
         }
     }
 
@@ -386,9 +394,11 @@ namespace sa {
         while (true) {
             uint8_t byte = value & SEGMENT_BITS;
             value >>= 7U;
-            if (value != 0) byte |= CONTINUE_BIT;
+            if (value != 0)
+                byte |= CONTINUE_BIT;
             writeByte(byte);
-            if (value == 0) break;
+            if (value == 0)
+                break;
         }
     }
 
@@ -402,9 +412,11 @@ namespace sa {
         while (true) {
             uint8_t byte = value & SEGMENT_BITS;
             value >>= 7U;
-            if (value != 0) byte |= CONTINUE_BIT;
+            if (value != 0)
+                byte |= CONTINUE_BIT;
             writeByte(byte);
-            if (value == 0) break;
+            if (value == 0)
+                break;
         }
     }
 
@@ -421,8 +433,8 @@ namespace sa {
             throw ReadOnlyException("Cannot write to a read only buffer");
         const std::size_t size = sizeof(T);
         if (offset + size > this->_maxCapacity)
-            throw std::out_of_range("Can't write at offset (" + std::to_string(offset) + "), with a size of (" + std::to_string(size) +
-                "), because maximum is: " + std::to_string(this->_maxCapacity));
+            throw std::out_of_range(spdlog::fmt_lib::format("Can't write at offset ({0}), with a size of ({1}), because maximum is: {2}", offset, size,
+                                                            this->_maxCapacity));
         ensureCapacity(offset + size);
         for (std::size_t i = 0; i < size; i++)
             this->_buffer.emplace_back(((byte_t *) &value)[i]); // NOLINT
@@ -436,8 +448,8 @@ namespace sa {
             throw ReadOnlyException("Cannot write to a read only buffer");
         const std::size_t size = sizeof(T);
         if (offset > this->_buffer.size())
-            throw std::out_of_range("Can't replace at offset (" + std::to_string(offset) + "), with a size of (" + std::to_string(size) +
-                "), because maximum is: " + std::to_string(this->_maxCapacity));
+            throw std::out_of_range(spdlog::fmt_lib::format("Can't write at offset ({0}), with a size of ({1}), because maximum is: {2}", offset, size,
+                                                            this->_maxCapacity));
         ensureCapacity(offset + size);
         for (std::size_t i = 0; i < size; i++)
             this->_buffer[offset + i] = ((byte_t *) &value)[i]; // NOLINT
@@ -504,25 +516,24 @@ namespace sa {
 
     int ByteBuffer::getVarShortSize(std::int16_t value)
     {
-        return 0;
+        if (value < 0)
+            return MAX_VARSHORT_SIZE;
+        return getVarUShortSize(value);
     }
 
     int ByteBuffer::getVarUShortSize(std::uint16_t value)
     {
-        for (unsigned int i = 1; i < MAX_VARSHORT_SIZE; i++) {
+        for (unsigned int i = 1; i < MAX_VARSHORT_SIZE; i++)
             if ((value & -1U << i * 7) == 0)
                 return static_cast<int>(i);
-        }
         return MAX_VARSHORT_SIZE;
     }
 
     int ByteBuffer::getVarIntSize(std::int32_t value)
     {
-        for (int i = 1; i < MAX_VARINT_SIZE; i++) {
-            if ((value & -1 << i * 7) == 0)
-                return i;
-        }
-        return MAX_VARINT_SIZE;
+        if (value < 0)
+            return MAX_VARINT_SIZE;
+        return getVarUIntSize(value);
     }
 
     int ByteBuffer::getVarUIntSize(std::uint32_t value)
@@ -535,10 +546,9 @@ namespace sa {
 
     int ByteBuffer::getVarLongSize(std::int64_t value)
     {
-        for (int i = 1; i < MAX_VARLONG_SIZE; i++)
-            if ((value & -1L << i * 7) == 0L)
-                return i;
-        return MAX_VARLONG_SIZE;
+        if (value < 0)
+            return MAX_VARLONG_SIZE;
+        return getVarULongSize(value);
     }
 
     int ByteBuffer::getVarULongSize(std::uint64_t value)
