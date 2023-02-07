@@ -324,7 +324,25 @@ namespace sa {
 
     void ByteBuffer::writeVarInt(std::int32_t value)
     {
-        this->writeVarLong(value);
+        std::vector<byte_t> encoded;
+        // Encode the 7-bit chunks of the value
+        bool signBit = false;
+        std::uint32_t uvalue = value;
+        if (value < 0) {
+            signBit = true;
+            uvalue = ~value; // NOLINT
+        }
+
+        while (true) {
+            byte_t byte = uvalue & SEGMENT_BITS;
+            uvalue >>= 7U;
+            if (value != 0) byte |= CONTINUE_BIT;
+            encoded.push_back(byte);
+            if (value == 0) break;
+        }
+
+        if (signBit) encoded.back() |= 0x40U;
+        this->writeBytes(encoded);
     }
 
     void ByteBuffer::writeVarUInt(std::uint32_t value)
@@ -448,21 +466,36 @@ namespace sa {
         this->_writePos = 0;
     }
 
+    int ByteBuffer::getVarShortSize(std::int16_t value)
+    {
+        return 0;
+    }
+
+    int ByteBuffer::getVarUShortSize(std::uint16_t value)
+    {
+        for (unsigned int i = 1; i < MAX_VARSHORT_SIZE; i++) {
+            if ((value & -1U << i * 7) == 0)
+                return static_cast<int>(i);
+        }
+        return MAX_VARSHORT_SIZE;
+    }
+
+
     int ByteBuffer::getVarIntSize(std::int32_t value)
     {
         for (int i = 1; i < MAX_VARINT_SIZE; i++) {
             if ((value & -1 << i * 7) == 0)
                 return i;
         }
-        return 5;
+        return MAX_VARINT_SIZE;
     }
 
     int ByteBuffer::getVarUIntSize(std::uint32_t value)
     {
-        for (int i = 1; i < MAX_VARINT_SIZE; i++)
-            if ((value & -1 << i * 7) == 0)
-                return i;
-        return 5;
+        for (unsigned int i = 1; i < MAX_VARINT_SIZE; i++)
+            if ((value & -1U << i * 7) == 0)
+                return static_cast<int>(i);
+        return MAX_VARINT_SIZE;
     }
 
     int ByteBuffer::getVarLongSize(std::int64_t value)
@@ -470,15 +503,15 @@ namespace sa {
         for (int i = 1; i < MAX_VARLONG_SIZE; i++)
             if ((value & -1L << i * 7) == 0L)
                 return i;
-        return 10;
+        return MAX_VARLONG_SIZE;
     }
 
     int ByteBuffer::getVarULongSize(std::uint64_t value)
     {
-        for (int i = 1; i < MAX_VARLONG_SIZE; i++)
-            if ((value & -1L << i * 7) == 0L)
-                return i;
-        return 10;
+        for (unsigned int i = 1; i < MAX_VARLONG_SIZE; i++)
+            if ((value & -1UL << i * 7) == 0L)
+                return static_cast<int>(i);
+        return MAX_VARLONG_SIZE;
     }
 
     void ByteBuffer::ensureCapacity(std::uint32_t size)
