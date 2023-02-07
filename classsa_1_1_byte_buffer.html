@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('classsa_1_1_byte_buffer.html',''); ini
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
@@ -128,6 +129,12 @@ Collaboration diagram for sa::ByteBuffer:</div>
 </div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html">ReadOnlyException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="The ReadOnlyException is thrown when trying to write in a read only buffer.">ReadOnlyException</a> is thrown when trying to write in a read only buffer.  <a href="classsa_1_1_byte_buffer_1_1_read_only_exception.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab9bd871472225091e6d2e2d137b2048d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#ab9bd871472225091e6d2e2d137b2048d">ByteBuffer</a> (const byte_t *bytes, std::uint32_t <a class="el" href="classsa_1_1_byte_buffer.html#a6f0129bca7f11599127fc9307df3b4bc">size</a>, bool readOnly=false)</td></tr>
@@ -139,6 +146,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a479270441b8dec070f812e28305723aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a479270441b8dec070f812e28305723aa">ByteBuffer</a> (std::uint32_t bufferSize=SA_BUFFER_SIZE, bool readOnly=false)</td></tr>
 <tr class="memdesc:a479270441b8dec070f812e28305723aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a byte buffer with a size.  <a href="classsa_1_1_byte_buffer.html#a479270441b8dec070f812e28305723aa">More...</a><br /></td></tr>
 <tr class="separator:a479270441b8dec070f812e28305723aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f34c269ae02a338f2c6bf86fed17d94"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a2f34c269ae02a338f2c6bf86fed17d94">capacity</a> () const</td></tr>
+<tr class="memdesc:a2f34c269ae02a338f2c6bf86fed17d94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the capacity of the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a>.  <a href="classsa_1_1_byte_buffer.html#a2f34c269ae02a338f2c6bf86fed17d94">More...</a><br /></td></tr>
+<tr class="separator:a2f34c269ae02a338f2c6bf86fed17d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8677dc403b56c27682da98d69909ff16"><td class="memItemLeft" align="right" valign="top"><a id="a8677dc403b56c27682da98d69909ff16" name="a8677dc403b56c27682da98d69909ff16"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
 <tr class="memdesc:a8677dc403b56c27682da98d69909ff16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the buffer and reset the read/write position. <br /></td></tr>
@@ -176,6 +186,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <tr class="memitem:a6c3f750ccc3480eec2b3247a9607e726"><td class="memItemLeft" align="right" valign="top">std::vector&lt; byte_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a6c3f750ccc3480eec2b3247a9607e726">readBytes</a> (std::uint32_t <a class="el" href="classsa_1_1_byte_buffer.html#a6f0129bca7f11599127fc9307df3b4bc">size</a>, std::uint32_t offset)</td></tr>
 <tr class="memdesc:a6c3f750ccc3480eec2b3247a9607e726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read bytes from the buffer (increase the read position by the size) from an offset.  <a href="classsa_1_1_byte_buffer.html#a6c3f750ccc3480eec2b3247a9607e726">More...</a><br /></td></tr>
 <tr class="separator:a6c3f750ccc3480eec2b3247a9607e726"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a435b5d32b286925e38c777217ed2effc"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a435b5d32b286925e38c777217ed2effc">readChar</a> ()</td></tr>
+<tr class="memdesc:a435b5d32b286925e38c777217ed2effc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a char from the buffer (increase the read position by 1)  <a href="classsa_1_1_byte_buffer.html#a435b5d32b286925e38c777217ed2effc">More...</a><br /></td></tr>
+<tr class="separator:a435b5d32b286925e38c777217ed2effc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35085c979e19fc67d5ed35ec94452ede"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a35085c979e19fc67d5ed35ec94452ede">readDouble</a> ()</td></tr>
 <tr class="memdesc:a35085c979e19fc67d5ed35ec94452ede"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a double from the buffer (increase the read position by 8)  <a href="classsa_1_1_byte_buffer.html#a35085c979e19fc67d5ed35ec94452ede">More...</a><br /></td></tr>
 <tr class="separator:a35085c979e19fc67d5ed35ec94452ede"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,15 +225,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <tr class="memitem:a9ff25fa7e65711a91614ee1498f13e81"><td class="memItemLeft" align="right" valign="top">std::int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a9ff25fa7e65711a91614ee1498f13e81">readVarLong</a> ()</td></tr>
 <tr class="memdesc:a9ff25fa7e65711a91614ee1498f13e81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a variable length long from the buffer (increase the read position by 1 to 10)  <a href="classsa_1_1_byte_buffer.html#a9ff25fa7e65711a91614ee1498f13e81">More...</a><br /></td></tr>
 <tr class="separator:a9ff25fa7e65711a91614ee1498f13e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ee9045d0def8ac112d55ea62126fa39"><td class="memItemLeft" align="right" valign="top">std::int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a1ee9045d0def8ac112d55ea62126fa39">readVarShort</a> ()</td></tr>
+<tr class="memdesc:a1ee9045d0def8ac112d55ea62126fa39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a variable length short from the buffer (increase the read position by 1 to 3)  <a href="classsa_1_1_byte_buffer.html#a1ee9045d0def8ac112d55ea62126fa39">More...</a><br /></td></tr>
+<tr class="separator:a1ee9045d0def8ac112d55ea62126fa39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada24620e4ad0910cd19afc6aaf6468f2"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#ada24620e4ad0910cd19afc6aaf6468f2">readVarUInt</a> ()</td></tr>
 <tr class="memdesc:ada24620e4ad0910cd19afc6aaf6468f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a variable length unsigned int from the buffer (increase the read position by 1 to 5)  <a href="classsa_1_1_byte_buffer.html#ada24620e4ad0910cd19afc6aaf6468f2">More...</a><br /></td></tr>
 <tr class="separator:ada24620e4ad0910cd19afc6aaf6468f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1231fdedfc5c6c7d51519b264013a401"><td class="memItemLeft" align="right" valign="top">std::uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a1231fdedfc5c6c7d51519b264013a401">readVarULong</a> ()</td></tr>
 <tr class="memdesc:a1231fdedfc5c6c7d51519b264013a401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a variable length unsigned long from the buffer (increase the read position by 1 to 10)  <a href="classsa_1_1_byte_buffer.html#a1231fdedfc5c6c7d51519b264013a401">More...</a><br /></td></tr>
 <tr class="separator:a1231fdedfc5c6c7d51519b264013a401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88a0b6e9cfcc029bce111a9a9bbc0fe7"><td class="memItemLeft" align="right" valign="top">std::uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a88a0b6e9cfcc029bce111a9a9bbc0fe7">readVarUShort</a> ()</td></tr>
+<tr class="memdesc:a88a0b6e9cfcc029bce111a9a9bbc0fe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a variable length unsigned short from the buffer (increase the read position by 1 to 3)  <a href="classsa_1_1_byte_buffer.html#a88a0b6e9cfcc029bce111a9a9bbc0fe7">More...</a><br /></td></tr>
+<tr class="separator:a88a0b6e9cfcc029bce111a9a9bbc0fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0a107e22875d5551d25d27294714628"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#ac0a107e22875d5551d25d27294714628">remainingBytes</a> () const</td></tr>
 <tr class="memdesc:ac0a107e22875d5551d25d27294714628"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get t nheber uomf bytes remaining in the buffer.  <a href="classsa_1_1_byte_buffer.html#ac0a107e22875d5551d25d27294714628">More...</a><br /></td></tr>
 <tr class="separator:ac0a107e22875d5551d25d27294714628"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b67680b1d9a03b76e00dadd846e2c27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a4b67680b1d9a03b76e00dadd846e2c27">replaceAt</a> (std::uint32_t offset, const std::vector&lt; byte_t &gt; &amp;bytes)</td></tr>
+<tr class="memdesc:a4b67680b1d9a03b76e00dadd846e2c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace the bytes at a certain offset.  <a href="classsa_1_1_byte_buffer.html#a4b67680b1d9a03b76e00dadd846e2c27">More...</a><br /></td></tr>
+<tr class="separator:a4b67680b1d9a03b76e00dadd846e2c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5e6b7d5cc0d3e62665898f7c74830c8"><td class="memItemLeft" align="right" valign="top"><a id="af5e6b7d5cc0d3e62665898f7c74830c8" name="af5e6b7d5cc0d3e62665898f7c74830c8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>resetReaderIndex</b> ()</td></tr>
 <tr class="memdesc:af5e6b7d5cc0d3e62665898f7c74830c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the reader index to 0. <br /></td></tr>
@@ -259,6 +281,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>resetWriterIndex</b> 
 <tr class="memitem:a040ba28039d5b88ae29552cd8e321c7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a040ba28039d5b88ae29552cd8e321c7d">writeBytes</a> (const std::vector&lt; byte_t &gt; &amp;bytes)</td></tr>
 <tr class="memdesc:a040ba28039d5b88ae29552cd8e321c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a vector of bytes in the buffer (increase the write position by the size of the vector)  <a href="classsa_1_1_byte_buffer.html#a040ba28039d5b88ae29552cd8e321c7d">More...</a><br /></td></tr>
 <tr class="separator:a040ba28039d5b88ae29552cd8e321c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a721069e05c45f30c6bf9529c0fd44613"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a721069e05c45f30c6bf9529c0fd44613">writeChar</a> (char value)</td></tr>
+<tr class="memdesc:a721069e05c45f30c6bf9529c0fd44613"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a char in the buffer (increase the write position by 1)  <a href="classsa_1_1_byte_buffer.html#a721069e05c45f30c6bf9529c0fd44613">More...</a><br /></td></tr>
+<tr class="separator:a721069e05c45f30c6bf9529c0fd44613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61833762d6030c4935e24e041833bf24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a61833762d6030c4935e24e041833bf24">writeDouble</a> (double value)</td></tr>
 <tr class="memdesc:a61833762d6030c4935e24e041833bf24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a double in the buffer (increase the write position by 8)  <a href="classsa_1_1_byte_buffer.html#a61833762d6030c4935e24e041833bf24">More...</a><br /></td></tr>
 <tr class="separator:a61833762d6030c4935e24e041833bf24"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,6 +305,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>resetWriterIndex</b> 
 <tr class="memitem:a9cc5453be851186c18c1f388b2c0b88b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a9cc5453be851186c18c1f388b2c0b88b">writeString</a> (const std::string &amp;str)</td></tr>
 <tr class="memdesc:a9cc5453be851186c18c1f388b2c0b88b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a string in the buffer (increase the write position by the 2 + size of the string)  <a href="classsa_1_1_byte_buffer.html#a9cc5453be851186c18c1f388b2c0b88b">More...</a><br /></td></tr>
 <tr class="separator:a9cc5453be851186c18c1f388b2c0b88b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2b2a85a5acfca576e91a0eb4b92dddb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#ac2b2a85a5acfca576e91a0eb4b92dddb">writeUChar</a> (unsigned char value)</td></tr>
+<tr class="memdesc:ac2b2a85a5acfca576e91a0eb4b92dddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a unsigned char in the buffer (increase the write position by 1) (exactly the same as <a class="el" href="">writeByte)</a> <a href="classsa_1_1_byte_buffer.html#ac2b2a85a5acfca576e91a0eb4b92dddb">More...</a><br /></td></tr>
+<tr class="separator:ac2b2a85a5acfca576e91a0eb4b92dddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48947d32de1761496f8940ec4fb1c4ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a48947d32de1761496f8940ec4fb1c4ad">writeUInt</a> (std::uint32_t value)</td></tr>
 <tr class="memdesc:a48947d32de1761496f8940ec4fb1c4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a unsigned int in the buffer (increase the write position by 4)  <a href="classsa_1_1_byte_buffer.html#a48947d32de1761496f8940ec4fb1c4ad">More...</a><br /></td></tr>
 <tr class="separator:a48947d32de1761496f8940ec4fb1c4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -290,17 +318,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>resetWriterIndex</b> 
 <tr class="memdesc:a70a2ed08e13ad2aa346a7daff8bacfb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a unsigned short in the buffer (increase the write position by 2)  <a href="classsa_1_1_byte_buffer.html#a70a2ed08e13ad2aa346a7daff8bacfb8">More...</a><br /></td></tr>
 <tr class="separator:a70a2ed08e13ad2aa346a7daff8bacfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a809bf7ce81d69edb1c407f8c27c1e314"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a809bf7ce81d69edb1c407f8c27c1e314">writeVarInt</a> (std::int32_t value)</td></tr>
-<tr class="memdesc:a809bf7ce81d69edb1c407f8c27c1e314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a var int in the buffer (minimum 1 byte, maximum 5 bytes)  <a href="classsa_1_1_byte_buffer.html#a809bf7ce81d69edb1c407f8c27c1e314">More...</a><br /></td></tr>
+<tr class="memdesc:a809bf7ce81d69edb1c407f8c27c1e314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a variable length int in the buffer (minimum 1 byte, maximum 5 bytes)  <a href="classsa_1_1_byte_buffer.html#a809bf7ce81d69edb1c407f8c27c1e314">More...</a><br /></td></tr>
 <tr class="separator:a809bf7ce81d69edb1c407f8c27c1e314"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e4b973d2d0afbecf4426c5c18d0cc08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a2e4b973d2d0afbecf4426c5c18d0cc08">writeVarLong</a> (std::int64_t value)</td></tr>
-<tr class="memdesc:a2e4b973d2d0afbecf4426c5c18d0cc08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a var long in the buffer (minimum 1 byte, maximum 10 bytes)  <a href="classsa_1_1_byte_buffer.html#a2e4b973d2d0afbecf4426c5c18d0cc08">More...</a><br /></td></tr>
+<tr class="memdesc:a2e4b973d2d0afbecf4426c5c18d0cc08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a variable length long in the buffer (minimum 1 byte, maximum 10 bytes)  <a href="classsa_1_1_byte_buffer.html#a2e4b973d2d0afbecf4426c5c18d0cc08">More...</a><br /></td></tr>
 <tr class="separator:a2e4b973d2d0afbecf4426c5c18d0cc08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd1e36b15b08feada206cb82e051b2dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#abd1e36b15b08feada206cb82e051b2dc">writeVarShort</a> (std::int16_t value)</td></tr>
+<tr class="memdesc:abd1e36b15b08feada206cb82e051b2dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a variable length short in the buffer (minimum 1 byte, maximum 3 bytes)  <a href="classsa_1_1_byte_buffer.html#abd1e36b15b08feada206cb82e051b2dc">More...</a><br /></td></tr>
+<tr class="separator:abd1e36b15b08feada206cb82e051b2dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1386eada7ec6d5bb48b02d00d61ee8e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a1386eada7ec6d5bb48b02d00d61ee8e1">writeVarUInt</a> (std::uint32_t value)</td></tr>
-<tr class="memdesc:a1386eada7ec6d5bb48b02d00d61ee8e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a var uint in the buffer (minimum 1 byte, maximum 5 bytes)  <a href="classsa_1_1_byte_buffer.html#a1386eada7ec6d5bb48b02d00d61ee8e1">More...</a><br /></td></tr>
+<tr class="memdesc:a1386eada7ec6d5bb48b02d00d61ee8e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a variable length unsigned int in the buffer (minimum 1 byte, maximum 5 bytes)  <a href="classsa_1_1_byte_buffer.html#a1386eada7ec6d5bb48b02d00d61ee8e1">More...</a><br /></td></tr>
 <tr class="separator:a1386eada7ec6d5bb48b02d00d61ee8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afebd3c4ae070700ab6deaa63321ca034"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#afebd3c4ae070700ab6deaa63321ca034">writeVarULong</a> (std::uint64_t value)</td></tr>
-<tr class="memdesc:afebd3c4ae070700ab6deaa63321ca034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a var ulong in the buffer (minimum 1 byte, maximum 10 bytes)  <a href="classsa_1_1_byte_buffer.html#afebd3c4ae070700ab6deaa63321ca034">More...</a><br /></td></tr>
+<tr class="memdesc:afebd3c4ae070700ab6deaa63321ca034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a variable length unsigned long in the buffer (minimum 1 byte, maximum 10 bytes)  <a href="classsa_1_1_byte_buffer.html#afebd3c4ae070700ab6deaa63321ca034">More...</a><br /></td></tr>
 <tr class="separator:afebd3c4ae070700ab6deaa63321ca034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2b8b9a4b9b64cc8b62cc39d4d00973e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#ad2b8b9a4b9b64cc8b62cc39d4d00973e">writeVarUShort</a> (std::uint16_t value)</td></tr>
+<tr class="memdesc:ad2b8b9a4b9b64cc8b62cc39d4d00973e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a variable length unsigned short in the buffer (minimum 1 byte, maximum 3 bytes)  <a href="classsa_1_1_byte_buffer.html#ad2b8b9a4b9b64cc8b62cc39d4d00973e">More...</a><br /></td></tr>
+<tr class="separator:ad2b8b9a4b9b64cc8b62cc39d4d00973e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -345,6 +379,10 @@ static const constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b
 static const constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>SEGMENT_BITS</b> = 0x7F</td></tr>
 <tr class="memdesc:ab3424f5ecefa9190ce675649d3b2b123"><td class="mdescLeft">&#160;</td><td class="mdescRight">The segment bits is used to extract the least significant bit (7-bit chunk) <br /></td></tr>
 <tr class="separator:ab3424f5ecefa9190ce675649d3b2b123"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ab3fe2293a390c4727330ee56cea7f4"><td class="memItemLeft" align="right" valign="top"><a id="a6ab3fe2293a390c4727330ee56cea7f4" name="a6ab3fe2293a390c4727330ee56cea7f4"></a>
+static const constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>SIGN_BIT</b> = 0x40</td></tr>
+<tr class="memdesc:a6ab3fe2293a390c4727330ee56cea7f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sign bit is used to check if the number is negative. <br /></td></tr>
+<tr class="separator:a6ab3fe2293a390c4727330ee56cea7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -356,6 +394,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a75b7cb814d20eb0891b412eaed087930"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a75b7cb814d20eb0891b412eaed087930">read</a> (std::uint32_t offset)</td></tr>
 <tr class="memdesc:a75b7cb814d20eb0891b412eaed087930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a value from the buffer at a certain offset, change the reader index.  <a href="classsa_1_1_byte_buffer.html#a75b7cb814d20eb0891b412eaed087930">More...</a><br /></td></tr>
 <tr class="separator:a75b7cb814d20eb0891b412eaed087930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac25c438293bf89c0f0a49254a013a26b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ac25c438293bf89c0f0a49254a013a26b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#ac25c438293bf89c0f0a49254a013a26b">replaceAt</a> (std::uint32_t offset, const T &amp;value)</td></tr>
+<tr class="memdesc:ac25c438293bf89c0f0a49254a013a26b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace a value in the buffer at a certain offset.  <a href="classsa_1_1_byte_buffer.html#ac25c438293bf89c0f0a49254a013a26b">More...</a><br /></td></tr>
+<tr class="separator:ac25c438293bf89c0f0a49254a013a26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c6a00a5cf68a50bf46cfbf14ebd086b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a0c6a00a5cf68a50bf46cfbf14ebd086b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a0c6a00a5cf68a50bf46cfbf14ebd086b">write</a> (const T &amp;value)</td></tr>
 <tr class="memdesc:a0c6a00a5cf68a50bf46cfbf14ebd086b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a value in the buffer, change the writer index (capacity is increased if needed)  <a href="classsa_1_1_byte_buffer.html#a0c6a00a5cf68a50bf46cfbf14ebd086b">More...</a><br /></td></tr>
@@ -377,6 +419,10 @@ Private Attributes</h2></td></tr>
 std::vector&lt; byte_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_buffer</b></td></tr>
 <tr class="memdesc:aaecc083d4c7e69d104d51e9eb1ee7078"><td class="mdescLeft">&#160;</td><td class="mdescRight">The vector to store the bytes. <br /></td></tr>
 <tr class="separator:aaecc083d4c7e69d104d51e9eb1ee7078"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acde62b348e892130a6fd72c6160e9d54"><td class="memItemLeft" align="right" valign="top"><a id="acde62b348e892130a6fd72c6160e9d54" name="acde62b348e892130a6fd72c6160e9d54"></a>
+std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_capacity</b></td></tr>
+<tr class="memdesc:acde62b348e892130a6fd72c6160e9d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current capacity of the buffer. <br /></td></tr>
+<tr class="separator:acde62b348e892130a6fd72c6160e9d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c41315cc5ba5e8b828517e588d9a6ec"><td class="memItemLeft" align="right" valign="top"><a id="a2c41315cc5ba5e8b828517e588d9a6ec" name="a2c41315cc5ba5e8b828517e588d9a6ec"></a>
 std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_maxCapacity</b></td></tr>
 <tr class="memdesc:a2c41315cc5ba5e8b828517e588d9a6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum capacity of the buffer. <br /></td></tr>
@@ -540,6 +586,26 @@ std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_writePos</b
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2f34c269ae02a338f2c6bf86fed17d94" name="a2f34c269ae02a338f2c6bf86fed17d94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f34c269ae02a338f2c6bf86fed17d94">&#9670;&#160;</a></span>capacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint32_t sa::ByteBuffer::capacity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the capacity of the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>the capacity of the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> </dd></dl>
+
+</div>
+</div>
 <a id="a48e02e8604550b1a0aa32bee20965aa2" name="a48e02e8604550b1a0aa32bee20965aa2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a48e02e8604550b1a0aa32bee20965aa2">&#9670;&#160;</a></span>clone()</h2>
 
@@ -1132,6 +1198,26 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a435b5d32b286925e38c777217ed2effc" name="a435b5d32b286925e38c777217ed2effc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a435b5d32b286925e38c777217ed2effc">&#9670;&#160;</a></span>readChar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char sa::ByteBuffer::readChar </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a char from the buffer (increase the read position by 1) </p>
+<dl class="section return"><dt>Returns</dt><dd>the char read </dd></dl>
+
+</div>
+</div>
 <a id="a35085c979e19fc67d5ed35ec94452ede" name="a35085c979e19fc67d5ed35ec94452ede"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a35085c979e19fc67d5ed35ec94452ede">&#9670;&#160;</a></span>readDouble()</h2>
 
@@ -1351,7 +1437,7 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the variable length int read </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the varint is too big </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the variable length int is too big </td></tr>
   </table>
   </dd>
 </dl>
@@ -1377,7 +1463,33 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the variable length long read </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the varlong is too big </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the variable length long is too big </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1ee9045d0def8ac112d55ea62126fa39" name="a1ee9045d0def8ac112d55ea62126fa39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ee9045d0def8ac112d55ea62126fa39">&#9670;&#160;</a></span>readVarShort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::int16_t sa::ByteBuffer::readVarShort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a variable length short from the buffer (increase the read position by 1 to 3) </p>
+<dl class="section return"><dt>Returns</dt><dd>the variable length short read </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the variable length short is too big </td></tr>
   </table>
   </dd>
 </dl>
@@ -1403,7 +1515,7 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the variable length unsigned int read </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the varuint is too big </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the variable length unsigned int is too big </td></tr>
   </table>
   </dd>
 </dl>
@@ -1429,7 +1541,33 @@ template&lt;typename T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the variable length unsigned long read </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the varulong is too big </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>if the variable length unsigned long is too big </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a88a0b6e9cfcc029bce111a9a9bbc0fe7" name="a88a0b6e9cfcc029bce111a9a9bbc0fe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88a0b6e9cfcc029bce111a9a9bbc0fe7">&#9670;&#160;</a></span>readVarUShort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint16_t sa::ByteBuffer::readVarUShort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a variable length unsigned short from the buffer (increase the read position by 1 to 3) </p>
+<dl class="section return"><dt>Returns</dt><dd>the variable length unsigned short read </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if the variable length unsigned short is too big </td></tr>
   </table>
   </dd>
 </dl>
@@ -1453,6 +1591,109 @@ template&lt;typename T &gt; </div>
 
 <p>Get t nheber uomf bytes remaining in the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of bytes remaining </dd></dl>
+
+</div>
+</div>
+<a id="a4b67680b1d9a03b76e00dadd846e2c27" name="a4b67680b1d9a03b76e00dadd846e2c27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b67680b1d9a03b76e00dadd846e2c27">&#9670;&#160;</a></span>replaceAt() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sa::ByteBuffer::replaceAt </td>
+          <td>(</td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; byte_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Replace the bytes at a certain offset. </p>
+<p >Check if the offset is valid. After ensure the buffer capacity, if not, resize it. The write position will be moved, if the offset is greater than the write position. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">offset</td><td>the offset to replace at </td></tr>
+    <tr><td class="paramname">bytes</td><td>the bytes to replace the bytes at the offset </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the offset is greater than the buffer size </td></tr>
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="The ReadOnlyException is thrown when trying to write in a read only buffer.">ReadOnlyException</a></td><td>if the buffer is only readeable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac25c438293bf89c0f0a49254a013a26b" name="ac25c438293bf89c0f0a49254a013a26b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac25c438293bf89c0f0a49254a013a26b">&#9670;&#160;</a></span>replaceAt() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sa::ByteBuffer::replaceAt </td>
+          <td>(</td>
+          <td class="paramtype">std::uint32_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Replace a value in the buffer at a certain offset. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>the type of the value to replace </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">offset</td><td>the offset to replace the value </td></tr>
+    <tr><td class="paramname">value</td><td>the value to replace </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>if the offset is out of bounds (limit is <a class="el" href="">ByteBuffer::_maxCapacity)</a></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1744,7 +1985,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">ReadOnlyException</td><td>if the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> is only readeable </td></tr>
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="The ReadOnlyException is thrown when trying to write in a read only buffer.">ReadOnlyException</a></td><td>if the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> is only readeable </td></tr>
   </table>
   </dd>
 </dl>
@@ -1834,6 +2075,32 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bytes</td><td>the vector of bytes to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a721069e05c45f30c6bf9529c0fd44613" name="a721069e05c45f30c6bf9529c0fd44613"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a721069e05c45f30c6bf9529c0fd44613">&#9670;&#160;</a></span>writeChar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sa::ByteBuffer::writeChar </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a char in the buffer (increase the write position by 1) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>the value to write </td></tr>
   </table>
   </dd>
 </dl>
@@ -2016,6 +2283,32 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="ac2b2a85a5acfca576e91a0eb4b92dddb" name="ac2b2a85a5acfca576e91a0eb4b92dddb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2b2a85a5acfca576e91a0eb4b92dddb">&#9670;&#160;</a></span>writeUChar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sa::ByteBuffer::writeUChar </td>
+          <td>(</td>
+          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a unsigned char in the buffer (increase the write position by 1) (exactly the same as <a class="el" href="">writeByte)</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>the value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a48947d32de1761496f8940ec4fb1c4ad" name="a48947d32de1761496f8940ec4fb1c4ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a48947d32de1761496f8940ec4fb1c4ad">&#9670;&#160;</a></span>writeUInt()</h2>
 
@@ -2110,7 +2403,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Write a var int in the buffer (minimum 1 byte, maximum 5 bytes) </p>
+<p>Write a variable length int in the buffer (minimum 1 byte, maximum 5 bytes) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>the value to write </td></tr>
@@ -2136,7 +2429,33 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Write a var long in the buffer (minimum 1 byte, maximum 10 bytes) </p>
+<p>Write a variable length long in the buffer (minimum 1 byte, maximum 10 bytes) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>the value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abd1e36b15b08feada206cb82e051b2dc" name="abd1e36b15b08feada206cb82e051b2dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd1e36b15b08feada206cb82e051b2dc">&#9670;&#160;</a></span>writeVarShort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sa::ByteBuffer::writeVarShort </td>
+          <td>(</td>
+          <td class="paramtype">std::int16_t&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a variable length short in the buffer (minimum 1 byte, maximum 3 bytes) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>the value to write </td></tr>
@@ -2162,7 +2481,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Write a var uint in the buffer (minimum 1 byte, maximum 5 bytes) </p>
+<p>Write a variable length unsigned int in the buffer (minimum 1 byte, maximum 5 bytes) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>the value to write </td></tr>
@@ -2188,7 +2507,33 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Write a var ulong in the buffer (minimum 1 byte, maximum 10 bytes) </p>
+<p>Write a variable length unsigned long in the buffer (minimum 1 byte, maximum 10 bytes) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>the value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad2b8b9a4b9b64cc8b62cc39d4d00973e" name="ad2b8b9a4b9b64cc8b62cc39d4d00973e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2b8b9a4b9b64cc8b62cc39d4d00973e">&#9670;&#160;</a></span>writeVarUShort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sa::ByteBuffer::writeVarUShort </td>
+          <td>(</td>
+          <td class="paramtype">std::uint16_t&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a variable length unsigned short in the buffer (minimum 1 byte, maximum 3 bytes) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>the value to write </td></tr>

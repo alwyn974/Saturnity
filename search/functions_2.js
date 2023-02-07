@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['clear_0',['clear',['../classsa_1_1_byte_buffer.html#a8677dc403b56c27682da98d69909ff16',1,'sa::ByteBuffer']]],
-  ['clone_1',['clone',['../classsa_1_1_byte_buffer.html#a48e02e8604550b1a0aa32bee20965aa2',1,'sa::ByteBuffer']]]
+  ['capacity_0',['capacity',['../classsa_1_1_byte_buffer.html#a2f34c269ae02a338f2c6bf86fed17d94',1,'sa::ByteBuffer']]],
+  ['clear_1',['clear',['../classsa_1_1_byte_buffer.html#a8677dc403b56c27682da98d69909ff16',1,'sa::ByteBuffer']]],
+  ['clone_2',['clone',['../classsa_1_1_byte_buffer.html#a48e02e8604550b1a0aa32bee20965aa2',1,'sa::ByteBuffer']]]
 ];
