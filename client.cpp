@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 #include <iostream>
 #include <thread>
+#include "ByteBuffer.hpp"
 
 using namespace saturnity;
 
@@ -60,7 +61,9 @@ void UdpClient::send(std::string msg)
 
 void UdpClient::send(std::vector<uint8_t> input)
 {
-    _socket.async_send_to(boost::asio::buffer(input), _remoteEndpoint, boost::bind(&UdpClient::handleSend, this, boost::asio::placeholders::error));
+    sa::ByteBuffer buffer(100);
+    buffer.writeLong(500);
+    _socket.async_send_to(boost::asio::buffer(buffer.getBuffer()), _remoteEndpoint, boost::bind(&UdpClient::handleSend, this, boost::asio::placeholders::error));
 }
 
 void UdpClient::handleSend(const boost::system::error_code& error)
@@ -81,7 +84,7 @@ void UdpClient::get_input()
             std::getline(std::cin, _input);
             if (_input == "exit") std::exit(0);
             test[0] = _input[0];
-            send(test);
+            send(_input);
         }
     });
     in.detach();
@@ -90,6 +93,6 @@ void UdpClient::get_input()
 int main(int ac, char** av)
 {
     boost::asio::io_context ioContext;
-    UdpClient client("10.106.1.238", "25565", ioContext);
+    UdpClient client("127.0.0.1", "25565", ioContext);
     ioContext.run();
 }

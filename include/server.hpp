@@ -11,7 +11,7 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <list>
-
+#include <map>
 #include "packets/packets.hpp"
 
 #define BUFF_SIZE 10
@@ -26,11 +26,20 @@ namespace saturnity {
         void createSocket(int port);
         bool handshake();
         virtual void send();
-        virtual void send(std::string input);
+        virtual void send(std::string& input);
+        virtual void send(boost::asio::ip::udp::endpoint remoteEndpoint);
+        virtual void send(boost::asio::ip::udp::endpoint remoteEndpoint, std::string& input);
+
         void receive();
         void handleReceive(const boost::system::error_code& error);
         void handleSend(const boost::system::error_code& error);
         void clearBuff(std::array<char, BUFF_SIZE> buffer);
+        void addClient(boost::asio::ip::udp::endpoint newEndpoint, int id);
+        inline void showClients() { for (int i = 0; i < _clientCount; i++) { std::cout << "[Client] - " << _clientList[i] << std::endl; }; };
+        bool isInList(const boost::asio::ip::udp::endpoint newEndpoint);
+        void broadcastAll(std::string& msg);
+        void broadcast(boost::asio::ip::udp::endpoint sender, std::string& msg);
+        void broadcast(boost::asio::ip::udp::endpoint sender);
 
     private:
         boost::asio::io_context& _ioCtx;
@@ -39,38 +48,10 @@ namespace saturnity {
         std::array<char, BUFF_SIZE> _sendBuffer;
         std::array<char, BUFF_SIZE> _recvBuffer;
         std::string _input;
-        //        char _sendBuffer[BUFF_SIZE];
-        //        char _recvBuffer[BUFF_SIZE];
         int _port;
+        int _clientCount;
+        std::unordered_map<int, boost::asio::ip::udp::endpoint> _clientList;
     };
-
-    class TcpServer {
-    public:
-        TcpServer();
-        ~TcpServer();
-        int createSocket();
-        bool handshake();
-        void send(Packet toSend);
-        void receive();
-        void handleReceive();
-        void handleSend();
-
-    private:
-        boost::asio::io_context _io_ctx;
-        boost::asio::ip::udp::endpoint _remote_endpoint;
-        boost::asio::ip::udp::socket _socket;
-        //        char _buffer[1024];
-        int _port;
-        int _address;
-    };
-
-    //    inline std::list<std::string> getPlayerList(){return _playerList;};
-    //    void addPlayer();
-    //    void disconnectPlayer();
-    //    void movePlayer();
-    //
-    // private:
-    //    std::list<std::string> _playerList;
 
 }  // namespace saturnity
 

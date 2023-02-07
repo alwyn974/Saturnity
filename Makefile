@@ -14,7 +14,7 @@ SRC = main.cpp \
 		src/packets/*.cpp
 
 all:
-	cmake -B build -S .
+	cmake -B build -S . -G "Ninja"
 	cmake --build ./build -j$(nproc)
 
 clean:
