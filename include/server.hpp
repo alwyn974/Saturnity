@@ -14,7 +14,7 @@
 #include <map>
 #include "packets/packets.hpp"
 
-#define BUFF_SIZE 10
+#define BUFF_SIZE 9
 
 void handleSend(const boost::system::error_code& error, boost::asio::mutable_buffer buffer, const boost::asio::ip::udp::socket& msocket,
                 const boost::asio::io_service& ioService, std::string& input, boost::asio::ip::udp::endpoint remote);
@@ -37,6 +37,11 @@ namespace saturnity {
         bool isInList(const boost::asio::ip::udp::endpoint newEndpoint);
         void broadcastAll(std::string& msg);
         void broadcast(boost::asio::ip::udp::endpoint sender, std::string& msg);
+
+
+        inline std::string getBuffer() { return std::string(_recvBuffer.data()); };
+        inline std::unordered_map<int, boost::asio::ip::udp::endpoint> getClientList() { return _clientList; };
+        inline boost::asio::ip::udp::endpoint getEndpoint() { return _remoteEndpoint; };
 
     private:
         boost::asio::io_context& _ioCtx;

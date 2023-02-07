@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 #include <iostream>
 #include <thread>
+
 #include "ByteBuffer.hpp"
 
 using namespace saturnity;
@@ -21,7 +22,6 @@ UdpClient::UdpClient(std::string address, std::string port, boost::asio::io_cont
 {
     _remoteEndpoint = boost::asio::ip::udp::endpoint(*_resolver.resolve(_query));
     _socket.open(boost::asio::ip::udp::v4());
-
     get_input();
     receive();
 }
@@ -42,7 +42,7 @@ void UdpClient::handleReceive(const boost::system::error_code& error)
     if (error) {
         std::cout << "ERROR WRITING" << std::endl;
     } else {
-        std::cout << "Got: " << _recvBuffer.data() << std::endl;
+        std::cout << "[Received] - [" << _recvBuffer.data() << "]" << std::endl;
         receive();
     }
 }
@@ -63,7 +63,8 @@ void UdpClient::send(std::vector<uint8_t> input)
 {
     sa::ByteBuffer buffer(100);
     buffer.writeLong(500);
-    _socket.async_send_to(boost::asio::buffer(buffer.getBuffer()), _remoteEndpoint, boost::bind(&UdpClient::handleSend, this, boost::asio::placeholders::error));
+    _socket.async_send_to(boost::asio::buffer(buffer.getBuffer()), _remoteEndpoint,
+                          boost::bind(&UdpClient::handleSend, this, boost::asio::placeholders::error));
 }
 
 void UdpClient::handleSend(const boost::system::error_code& error)
@@ -71,7 +72,7 @@ void UdpClient::handleSend(const boost::system::error_code& error)
     if (error) {
         std::cout << "ERROR WRITING" << std::endl;
     } else {
-        std::cout << "ASYNC SENT" << std::endl;
+        std::cout << "[Sent]" << std::endl;
     }
 }
 
@@ -93,6 +94,6 @@ void UdpClient::get_input()
 int main(int ac, char** av)
 {
     boost::asio::io_context ioContext;
-    UdpClient client("127.0.0.1", "25565", ioContext);
+    UdpClient client("10.106.1.160", "25565", ioContext);
     ioContext.run();
 }

@@ -32,6 +32,8 @@ namespace saturnity {
 
         void handleReceive(const boost::system::error_code& error);
         // void clearBuff(std::array<char, BUFF_SIZE> buffer);
+        inline std::string getBuffer() { return std::string(_recvBuffer.data()); };
+        inline boost::asio::ip::udp::endpoint getEndpoint() { return _remoteEndpoint; };
 
     private:
         boost::asio::ip::udp::endpoint _remoteEndpoint;

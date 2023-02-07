@@ -31,20 +31,7 @@ void UdpServer::clearBuff(std::array<char, BUFF_SIZE> buffer)
 UdpServer::UdpServer(boost::asio::io_context& ioContext, int port) :
     _ioCtx(ioContext), _socket(ioContext, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port)), _port(port), _clientCount(0)
 {
-    // TODO: LAUNCH SERVER AND HANDLE RECEIVE / SENT
-    //            std::string input;
-    //            std::cin >> input;
-    //            std::cout << input << std::endl;
     receive();
-    //            if (_recvBuffer.size() > 0) {
-    //                std::cout << "Received" << std::endl;
-    //            }
-    //            if (_sendBuffer.size() > 0) {
-    //                std::cout << "Not empty" << std::endl;
-    //            }
-    //            clearBuff(_sendBuffer);
-    // clearBuff(_recvBuffer);
-    //            std::cout << "cleared" << std::endl;
 }
 
 UdpServer::~UdpServer()
@@ -88,7 +75,7 @@ void UdpServer::handleReceive(const boost::system::error_code& error)
             broadcast(_remoteEndpoint, received);
         } else {
             std::cout << "Handling: " << _recvBuffer.data() << "|" << std::endl;
-            broadcastAll(received);
+            broadcast(_remoteEndpoint, received);
         }
     }
 }
@@ -100,7 +87,7 @@ void UdpServer::send(std::string& input)
 
 void UdpServer::send(boost::asio::ip::udp::endpoint remoteEndpoint, std::string& input)
 {
-    _socket.async_send_to(boost::asio::buffer(input), remoteEndpoint, boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
+    _socket.async_send_to(boost::asio::buffer(input, input.size()), remoteEndpoint, boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
 }
 
 void UdpServer::handleSend(const boost::system::error_code& error)
