@@ -8,6 +8,7 @@
 #include <spdlog/spdlog.h>
 #include <boost/asio.hpp>
 #include <iostream>
+#include <bitset>
 
 #include "saturnity/Saturnity.hpp"
 
@@ -20,12 +21,13 @@ int main(int ac, char **av)
     std::vector<byte_t> copy = test;
     copy[0] = 0x2;
 
-    spdlog::info("{} {} - {}", test[0], copy[0], sizeof(bool));
+    spdlog::info("{} {} - {} - {}", test[0], copy[0], sizeof(bool), std::bitset<8>(0b1010101).to_string());
 
     sa::ByteBuffer buffer(100);
-    buffer.writeLong(0x123456789ABCDEF0);
+    /*buffer.writeLong(0x123456789ABCDEF0);
     buffer.writeInt(-12);
-    buffer.writeString("Hello World!");
+    buffer.writeString("Hello World!");*/
+    spdlog::info("{}", sa::ByteBuffer::getVarIntSize(-12));
     buffer.writeVarInt(-12);
     /*buffer.writeByte(0xFF);
     buffer.writeByte(0x00);
@@ -41,9 +43,9 @@ int main(int ac, char **av)
     std::memcpy(&ehoh, toto.data(), 8);
     std::cout << ehoh << std::endl;*/
 
-    spdlog::info("{}", buffer.readLong());
+    /*spdlog::info("{}", buffer.readLong());
     spdlog::info("{}", buffer.readInt());
-    spdlog::info("{}", buffer.readString());
+    spdlog::info("{}", buffer.readString());*/
     spdlog::info("{}", buffer.readVarInt());
     spdlog::info("{}", buffer.size());
 

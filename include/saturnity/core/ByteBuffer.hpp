@@ -390,37 +390,52 @@ namespace sa {
         void resetWriterIndex();
 
         /**
-         * @brief Get the size of a var int
-         * @param value the value of the var int
-         * @return the size of the var int
+         * @brief Get the size of a variable length short
+         * @param value the value of the variable length short
+         * @return the size of the variable length short
+         */
+        static int getVarShortSize(std::int16_t value);
+
+        /**
+         * @brief Get the size of a variable length unsigned short
+         * @param value the value of the variable length unsigned short
+         * @return the size of the variable length unsigned short
+         */
+        static int getVarUShortSize(std::uint16_t value);
+
+        /**
+         * @brief Get the size of a variable length int
+         * @param value the value of the variable length int
+         * @return the size of the variable length int
          */
         static int getVarIntSize(std::int32_t value);
 
         /**
-         * @brief Get the size of a var unsigned int
-         * @param value the value of the var unsigined int
-         * @return the size of the var unsigned int
+         * @brief Get the size of a variable length unsigned int
+         * @param value the value of the variable length unsigined int
+         * @return the size of the variable length unsigned int
          */
         static int getVarUIntSize(std::uint32_t value);
 
         /**
-         * @brief Get the size of a var long
-         * @param value the value of the var long
-         * @return the size of the var long
+         * @brief Get the size of a variable length long
+         * @param value the value of the variable length long
+         * @return the size of the variable length long
          */
         static int getVarLongSize(std::int64_t value);
 
         /**
-         * @brief Get the size of a var unsigned long
-         * @param value the value of the var unsigned long
-         * @return the size of the var unsigned long
+         * @brief Get the size of a variable length unsigned long
+         * @param value the value of the variable length unsigned long
+         * @return the size of the variable length unsigned long
          */
         static int getVarULongSize(std::uint64_t value);
 
-        static inline const constexpr int MAX_VARINT_SIZE = 5; /**< The maximum size of the var (u)int */
-        static inline const constexpr int MAX_VARLONG_SIZE = 10; /**< The maximum size of the var (u)long */
-        static inline const constexpr int SEGMENT_BITS = 0x7F; /**< The segment bits is used to extract the least significant bit (7-bit chunk) */
-        static inline const constexpr int CONTINUE_BIT = 0x80; /**< The continuation bit is used as a flag, to check if more bytes need to be read */
+        static inline const constexpr int MAX_VARSHORT_SIZE = 3; /**< The maximum size of the variable length (u)short */
+        static inline const constexpr int MAX_VARINT_SIZE = 5; /**< The maximum size of the variable length (u)int */
+        static inline const constexpr int MAX_VARLONG_SIZE = 10; /**< The maximum size of the variable length (u)long */
+        static inline const constexpr unsigned int SEGMENT_BITS = 0x7F; /**< The segment bits is used to extract the least significant bit (7-bit chunk) */
+        static inline const constexpr unsigned int CONTINUE_BIT = 0x80; /**< The continuation bit is used as a flag, to check if more bytes need to be read */
 
     protected:
         /**
