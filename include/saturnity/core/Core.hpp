@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <string>
 #include <exception>
+#include <spdlog/spdlog.h>
 
 #ifndef SA_BUFFER_SIZE
     /**
@@ -24,6 +25,9 @@
     #define SA_BUFFER_SIZE 4096 // NOLINT
 #endif
 
+/**
+ * @brief Typedef for a byte
+ */
 using byte_t = std::uint8_t; // NOLINT
 
 /**
@@ -55,6 +59,17 @@ namespace sa {
     };
 }
 
-#define SA_EXCEPTION(name) class name : public sa::Exception { public: explicit name(const std::string &message) : sa::Exception(message) {} };
+#define SA_EXCEPTION(name, doc) \
+/**
+ * @brief The #name exception class. #doc
+ */ \
+class name : public sa::Exception { \
+public: \
+    /**
+     * @brief Construct a #name with a message
+     * @param message the message of the exception
+     */ \
+    explicit name(const std::string &message) : sa::Exception(message) {} \
+};
 
 #endif // SATURNITY_CORE_HPP

@@ -6,46 +6,30 @@
 */
 
 #include <spdlog/spdlog.h>
-#include <boost/asio.hpp>
 #include <iostream>
-#include <bitset>
 
 #include "saturnity/Saturnity.hpp"
 
 int main(int ac, char **av)
 {
     spdlog::info("Welcome to Saturnity!");
-    std::vector<byte_t> test = {
-        0x1, 0x2
-    };
-    std::vector<byte_t> copy = test;
-    copy[0] = 0x2;
-
-    spdlog::info("{} {} - {} - {}", test[0], copy[0], sizeof(bool), std::bitset<8>(0b1010101).to_string());
-
     sa::ByteBuffer buffer(100);
-    /*buffer.writeLong(0x123456789ABCDEF0);
-    buffer.writeInt(-12);
-    buffer.writeString("Hello World!");*/
-    spdlog::info("{}", sa::ByteBuffer::getVarIntSize(-12));
     buffer.writeVarInt(-12);
-    /*buffer.writeByte(0xFF);
-    buffer.writeByte(0x00);
-    buffer.writeByte(0xEE);
-    buffer.writeByte(0x11);*/
+    std::cout << buffer.writerIndex() << std::endl;
+    std::cout << buffer.size() << std::endl;
+    std::cout << buffer.readVarInt() << std::endl;
+    buffer.writeChar(0x0F);
+    buffer.writeChar(0x0F);
+    spdlog::info("{} - {} - {} - {}", buffer.size(), buffer.readerIndex(), buffer.writerIndex(), buffer.remainingBytes());
+    buffer.clear();
+    buffer.writeLong(0x123456789ABCDEF0);
+    buffer.writeInt(-12);
+    buffer.writeString("Hello World!");
+    buffer.writeVarInt(-12);
 
-    /*auto buf = boost::asio::buffer(buffer.getBuffer());
-    auto byteBuf = boost::asio::buffer_cast<const byte_t *>(buf);
-    sa::ByteBuffer byteBuffer(byteBuf, buf.size());
-
-    std::vector<byte_t>  toto = buffer.readBytes(8); // NOLINT
-    std::int64_t ehoh = 0;
-    std::memcpy(&ehoh, toto.data(), 8);
-    std::cout << ehoh << std::endl;*/
-
-    /*spdlog::info("{}", buffer.readLong());
+    spdlog::info("{}", buffer.readLong());
     spdlog::info("{}", buffer.readInt());
-    spdlog::info("{}", buffer.readString());*/
+    spdlog::info("{}", buffer.readString());
     spdlog::info("{}", buffer.readVarInt());
     spdlog::info("{}", buffer.size());
 
