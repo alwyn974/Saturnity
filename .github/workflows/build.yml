@@ -31,6 +31,7 @@ jobs:
               break
             fi
           done;
+
   build_linux:
     needs: build_files_changed
     if: always() && (needs.build_files_changed.outputs.files_changed == 'True' || github.event_name == 'workflow_dispatch')
@@ -79,12 +80,12 @@ jobs:
         run: cmake -B ./build -S . -DUSE_CLANG_TIDY=ON
 
       - name: Build Debug
-        shell: bash
-        run: cmake --build ./build --config Debug -j$env:NUMBER_OF_PROCESSORS
+        shell: powershell
+        run: cmake --build ./build --config Debug -j"$env:NUMBER_OF_PROCESSORS"
 
       - name: Build Release
-        shell: bash
-        run: cmake --build ./build --config Release -j$env:NUMBER_OF_PROCESSORS
+        shell: powershell
+        run: cmake --build ./build --config Release -j"$env:NUMBER_OF_PROCESSORS"
 
   build_macosx:
     needs: [ build_files_changed, build_linux ]
