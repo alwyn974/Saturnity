@@ -24,7 +24,18 @@ namespace sa {
      */
     class ByteBuffer {
     public:
-        SA_EXCEPTION(ReadOnlyException)
+        //SA_EXCEPTION(ReadOnlyException, "When trying to write in a read only buffer") // TODO: remove this comment
+        /**
+         * @brief The ReadOnlyException is thrown when trying to write in a read only buffer
+         */
+        class ReadOnlyException : public sa::Exception {
+        public:
+            /**
+             * @brief Construct a ReadOnlyException with a message
+             * @param message the message of the exception
+             */
+            explicit ReadOnlyException(const std::string &message) : sa::Exception(message) {}
+        };
 
         /**
          * @brief Construct a byte buffer with a size
@@ -72,6 +83,12 @@ namespace sa {
         std::uint32_t size() const;
 
         /**
+         * @brief Get the capacity of the ByteBuffer
+         * @return the capacity of the ByteBuffer
+         */
+        std::uint32_t capacity() const;
+
+        /**
          * @brief Resize the ByteBuffer
          * @param size the new size of the ByteBuffer
          */
@@ -95,6 +112,16 @@ namespace sa {
          * @return true if the buffer has enough space, false otherwise
          */
         bool hasSpace(std::uint32_t size) const;
+
+        /**
+         * @brief Replace the bytes at a certain offset. Check if the offset is valid. After ensure the buffer capacity, if not, resize it.
+         * The write position will be moved, if the offset is greater than the write position.
+         * @param offset the offset to replace at
+         * @param bytes the bytes to replace the bytes at the offset
+         * @throws std::out_of_range if the offset is greater than the buffer size
+         * @throws ReadOnlyException if the buffer is only readeable
+         */
+        void replaceAt(std::uint32_t offset, const std::vector<byte_t> &bytes);
 
         //
         // Read methods
@@ -120,6 +147,12 @@ namespace sa {
          * @return the bytes read
          */
         std::vector<byte_t> readBytes(std::uint32_t size, std::uint32_t offset);
+
+        /**
+         * @brief Read a char from the buffer (increase the read position by 1)
+         * @return the char read
+         */
+        char readChar();
 
         /**
          * @brief Read a boolean from the buffer (increase the read position by 1)
@@ -182,30 +215,44 @@ namespace sa {
         std::string readString();
 
         /**
+         * @brief Read a variable length short from the buffer (increase the read position by 1 to 3)
+         * @return the variable length short read
+         * @throws std::runtime_error if the variable length short is too big
+         */
+        std::int16_t readVarShort();
+
+        /**
+         * @brief Read a variable length unsigned short from the buffer (increase the read position by 1 to 3)
+         * @return the variable length unsigned short read
+         * @throws std::runtime_error if the variable length unsigned short is too big
+         */
+        std::uint16_t readVarUShort();
+
+        /**
          * @brief Read a variable length int from the buffer (increase the read position by 1 to 5)
          * @return the variable length int read
-         * @throws std::runtime_error if the varint is too big
+         * @throws std::runtime_error if the variable length int is too big
          */
         std::int32_t readVarInt();
 
         /**
          * @brief Read a variable length unsigned int from the buffer (increase the read position by 1 to 5)
          * @return the variable length unsigned int read
-         * @throws std::runtime_error if the varuint is too big
+         * @throws std::runtime_error if the variable length unsigned int is too big
          */
         std::uint32_t readVarUInt();
 
         /**
          * @brief Read a variable length long from the buffer (increase the read position by 1 to 10)
          * @return the variable length long read
-         * @throws std::runtime_error if the varlong is too big
+         * @throws std::runtime_error if the variable length long is too big
          */
         std::int64_t readVarLong();
 
         /**
          * @brief Read a variable length unsigned long from the buffer (increase the read position by 1 to 10)
          * @return the variable length unsigned long read
-         * @throws std::runtime_error if the varulong is too big
+         * @throws std::runtime_error if the variable length unsigned long is too big
          */
         std::uint64_t readVarULong();
 
@@ -238,6 +285,18 @@ namespace sa {
          * @param size the size of the vector
          */
         void writeBytes(const byte_t *bytes, std::uint32_t size);
+
+        /**
+         * @brief Write a char in the buffer (increase the write position by 1)
+         * @param value the value to write
+         */
+        void writeChar(char value);
+
+        /**
+         * @brief Write a unsigned char in the buffer (increase the write position by 1) (exactly the same as @link writeByte)
+         * @param value the value to write
+         */
+        void writeUChar(unsigned char value);
 
         /**
          * @brief Write a boolean in the buffer (increase the write position by 1)
@@ -300,25 +359,37 @@ namespace sa {
         void writeString(const std::string &str);
 
         /**
-         * @brief Write a var int in the buffer (minimum 1 byte, maximum 5 bytes)
+         * @brief Write a variable length short in the buffer (minimum 1 byte, maximum 3 bytes)
+         * @param value the value to write
+         */
+        void writeVarShort(std::int16_t value);
+
+        /**
+         * @brief Write a variable length unsigned short in the buffer (minimum 1 byte, maximum 3 bytes)
+         * @param value the value to write
+         */
+        void writeVarUShort(std::uint16_t value);
+
+        /**
+         * @brief Write a variable length int in the buffer (minimum 1 byte, maximum 5 bytes)
          * @param value the value to write
          */
         void writeVarInt(std::int32_t value);
 
         /**
-         * @brief Write a var uint in the buffer (minimum 1 byte, maximum 5 bytes)
+         * @brief Write a variable length unsigned int in the buffer (minimum 1 byte, maximum 5 bytes)
          * @param value the value to write
          */
         void writeVarUInt(std::uint32_t value);
 
         /**
-         * @brief Write a var long in the buffer (minimum 1 byte, maximum 10 bytes)
+         * @brief Write a variable length long in the buffer (minimum 1 byte, maximum 10 bytes)
          * @param value the value to write
          */
         void writeVarLong(std::int64_t value);
 
         /**
-         * @brief Write a var ulong in the buffer (minimum 1 byte, maximum 10 bytes)
+         * @brief Write a variable length unsigned long in the buffer (minimum 1 byte, maximum 10 bytes)
          * @param value the value to write
          */
         void writeVarULong(std::uint64_t value);
@@ -436,6 +507,7 @@ namespace sa {
         static inline const constexpr int MAX_VARLONG_SIZE = 10; /**< The maximum size of the variable length (u)long */
         static inline const constexpr unsigned int SEGMENT_BITS = 0x7F; /**< The segment bits is used to extract the least significant bit (7-bit chunk) */
         static inline const constexpr unsigned int CONTINUE_BIT = 0x80; /**< The continuation bit is used as a flag, to check if more bytes need to be read */
+        static inline const constexpr unsigned int SIGN_BIT = 0x40; /**< The sign bit is used to check if the number is negative */
 
     protected:
         /**
@@ -475,8 +547,19 @@ namespace sa {
         template<typename T>
         void write(const T &value, std::uint32_t offset);
 
+        /**
+         * @brief Replace a value in the buffer at a certain offset
+         * @tparam T the type of the value to replace
+         * @param offset the offset to replace the value
+         * @param value the value to replace
+         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity)
+         */
+        template<typename T>
+        void replaceAt(std::uint32_t offset, const T &value);
+
     private:
         std::vector<byte_t> _buffer; /**< The vector to store the bytes */
+        std::uint32_t _capacity; /**< The current capacity of the buffer */
         std::uint32_t _maxCapacity; /**< The maximum capacity of the buffer */
         std::uint32_t _readPos; /**< The current index of the reader */
         std::uint32_t _writePos; /**< The current index of the writer */
