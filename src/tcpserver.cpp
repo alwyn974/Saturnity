@@ -10,7 +10,7 @@
 #include <boost/asio.hpp>
 using namespace saturnity;
 
-int TcpServer::createSocket()
+void TcpServer::createSocket()
 {
     boost::asio::io_service io_service;
 

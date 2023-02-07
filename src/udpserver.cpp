@@ -93,19 +93,9 @@ void UdpServer::handleReceive(const boost::system::error_code& error)
     }
 }
 
-void UdpServer::send()
-{
-    _socket.async_send_to(boost::asio::buffer(_sendBuffer), _remoteEndpoint, boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
-}
-
 void UdpServer::send(std::string& input)
 {
     _socket.async_send_to(boost::asio::buffer(input), _remoteEndpoint, boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
-}
-
-void UdpServer::send(boost::asio::ip::udp::endpoint remoteEndpoint)
-{
-    _socket.async_send_to(boost::asio::buffer(_sendBuffer), remoteEndpoint, boost::bind(&UdpServer::handleSend, this, boost::asio::placeholders::error));
 }
 
 void UdpServer::send(boost::asio::ip::udp::endpoint remoteEndpoint, std::string& input)
@@ -126,19 +116,9 @@ void UdpServer::handleSend(const boost::system::error_code& error)
 void UdpServer::broadcast(boost::asio::ip::udp::endpoint sender, std::string& message)
 {
     std::cout << "BROADCAST" << std::endl;
-    for (const auto& elem : _clientList) {
-        if (elem.second != sender)
-            send(elem.second, message);
-    }
-    receive();
-}
-
-void UdpServer::broadcast(boost::asio::ip::udp::endpoint sender)
-{
-    std::cout << "BROADCAST 2" << std::endl;
-    for (const auto& elem : _clientList) {
-        if (elem.second != sender)
-            send(elem.second);
+    for (const auto& [key, remote] : _clientList) {
+        if (remote != sender)
+            send(remote, message);
     }
     receive();
 }
@@ -146,7 +126,7 @@ void UdpServer::broadcast(boost::asio::ip::udp::endpoint sender)
 void UdpServer::broadcastAll(std::string& message)
 {
     std::cout << "BROADCAST ALL" << std::endl;
-    for (const auto& elem : _clientList) { send(elem.second, message); }
+    for (const auto& [key, remote] : _clientList) { send(remote, message); }
     receive();
 }
 
