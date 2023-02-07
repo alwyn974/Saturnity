@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Cache libraries
         id: cache-libraries
@@ -36,13 +38,13 @@ jobs:
           echo "y" | ./lint.sh
 
       - name: Add safedirectory
-        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
+        if: (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
         run: |
           ls -la
           git config --global --add safe.directory $PWD # Don't care if the owner of the directory is not the same as the user
 
       - name: Commit changes
-        if: failure() && (steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success')
+        if: steps.apply-clang-tidy.conclusion == 'success' || steps.apply-clang-format.conclusion == 'success'
         uses: EndBug/add-and-commit@v9
         with:
           committer_name: Linter
@@ -52,7 +54,7 @@ jobs:
           push: true
 
   linter_files_changed:
-    if: github.event_name != 'workflow_dispatch'
+    if: github.event_name != 'workflow_dispatch' && ${{ !github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     outputs:
       files_changed: ${{ steps.check_changed_files.outputs.FILES_CHANGED }}
