@@ -1,13 +1,13 @@
 <map id="/github/workspace/include/saturnity/Saturnity.hpp" name="/github/workspace/include/saturnity/Saturnity.hpp">
-<area shape="rect" id="node1" title="The Core header of Saturnity." alt="" coords="225,5,398,45"/>
-<area shape="rect" id="node2" href="$_abstract_packet_8hpp_source.html" title=" " alt="" coords="289,93,454,119"/>
-<area shape="rect" id="node3" href="$_core_8hpp_source.html" title=" " alt="" coords="215,240,288,265"/>
-<area shape="rect" id="node8" href="$_byte_buffer_8hpp_source.html" title=" " alt="" coords="343,167,450,192"/>
-<area shape="rect" id="node4" title=" " alt="" coords="221,313,282,339"/>
-<area shape="rect" id="node5" title=" " alt="" coords="5,313,60,339"/>
-<area shape="rect" id="node6" title=" " alt="" coords="306,313,383,339"/>
-<area shape="rect" id="node7" title=" " alt="" coords="85,313,197,339"/>
-<area shape="rect" id="node9" title=" " alt="" coords="364,240,432,265"/>
-<area shape="rect" id="node10" title=" " alt="" coords="457,240,515,265"/>
-<area shape="rect" id="node11" title=" " alt="" coords="540,240,619,265"/>
+<area shape="rect" id="node1" title="The Core header of Saturnity." alt="" coords="192,5,366,45"/>
+<area shape="rect" id="node2" href="$_abstract_packet_8hpp_source.html" title=" " alt="" coords="136,93,302,119"/>
+<area shape="rect" id="node8" href="$_core_8hpp_source.html" title=" " alt="" coords="302,240,376,265"/>
+<area shape="rect" id="node3" href="$_byte_buffer_8hpp_source.html" title=" " alt="" coords="112,167,219,192"/>
+<area shape="rect" id="node4" title=" " alt="" coords="10,313,87,339"/>
+<area shape="rect" id="node5" title=" " alt="" coords="24,240,92,265"/>
+<area shape="rect" id="node6" title=" " alt="" coords="116,240,194,265"/>
+<area shape="rect" id="node7" title=" " alt="" coords="219,240,278,265"/>
+<area shape="rect" id="node9" title=" " alt="" coords="172,313,284,339"/>
+<area shape="rect" id="node10" title=" " alt="" coords="308,313,370,339"/>
+<area shape="rect" id="node11" title=" " alt="" coords="394,313,449,339"/>
 </map>
