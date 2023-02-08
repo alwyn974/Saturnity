@@ -281,7 +281,7 @@ If your request is unreadable due to whitespace changes, it will be rejected.
 
 Most likely you will want to follow the [gitmoji](https://gitmoji.dev/) commit guidelines.
 
-- The first line of the commit, should be a short description (50 chars or less) of the change.
+- The first line of the commit, should be a short description (50 chars or fewer) of the change.
 - The other lines can be as detailed as you want, and should include more detailed explanations, links to issues, etc.
 
 > Warning

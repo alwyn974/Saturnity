@@ -13,7 +13,6 @@ set(CPACK_NSIS_URL_INFO_ABOUT "${PROJECT_HOMEPAGE_URL}") # Link to the project's
 set(CPACK_NSIS_CONTACT "${CPACK_PACKAGE_CONTACT}") # Contact information
 set(CPACK_NSIS_EXECUTABLES_DIRECTORY "bin") # Modify where the executables should be, for the Start Menu, by default=bin
 if (${${PROJECT_NAME}_IS_EXECUTABLE})
-    set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\logo.ico") # set the add/remove programs icon using an installed executable
     set(CPACK_NSIS_MUI_FINISHPAGE_RUN "${PROJECT_NAME}.exe") # Launch the application after the installation
     set(CPACK_NSIS_MUI_FINISHPAGE_RUN_NOTCHECKED ON) # Launch checkbox
     set(CPACK_NSIS_MUI_FINISHPAGE_RUN_PARAMETERS "") # Launch parameters

@@ -29,7 +29,6 @@ get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
 if (TARGET_TYPE STREQUAL "EXECUTABLE")
     set(CPACK_PACKAGE_EXECUTABLES "${PROJECT_NAME}" "${PROJECT_NAME}") # Set the executable name
     set(${PROJECT_NAME}_IS_EXECUTABLE ON)
-    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/assets/logo.ico" DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT runtime) # Install the logo.ico file
 endif ()
 
 # Components
@@ -66,7 +65,6 @@ set(CPACK_SOURCE_GENERATOR "7Z;DEB;IFW;NSIS;NSIS64;NUGET;STGZ:TGZ;TXZ;ZIP")
 set(CPACK_SOURCE_IGNORE_FILES ".git;build;out;dist;cmake-*")
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackDEB.cmake) # DEB
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackIFW.cmake) # Qt Installer Framework
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackNSIS.cmake) # NSIS
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cpack/CPackRPM.cmake) # RPM
 
