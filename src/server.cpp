@@ -1,5 +1,6 @@
 
 #include "server.hpp"
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <iostream>
 
 namespace saturnity {
@@ -36,20 +37,49 @@ namespace saturnity {
         });
     }
 
-    server::connection::TCP::TCP(asio::io_context &ioContext) : _socket(ioContext) {
+    server::connection::TCP::TCP(asio::io_context &ioContext) : _socket(ioContext), _ioContext(ioContext) {
+
 
     }
 
     void server::connection::TCP::start() {
         auto sharedThis = shared_from_this();
-        std::string message("Hello from server");
+        std::string message("Hello from server\n");
         asio::async_write(_socket, asio::buffer(message),
                           [sharedThis](const boost::system::error_code &ec, std::size_t bytesTransferred) {
                               if (!ec) {
                                   std::cout << "Sent " << bytesTransferred << " bytes" << std::endl;
+                                  sharedThis->sleepAndWrite("Hello from server\n", 100);
                               } else {
                                   std::cerr << "Error: " << ec.message() << std::endl;
                               }
                           });
     }
+
+    void server::connection::TCP::sleepAndWrite(std::string message, int ms) {
+        auto sharedThis = shared_from_this();
+        _timer = std::make_unique<boost::asio::deadline_timer>(sharedThis->getIoContext(), boost::posix_time::milliseconds(ms));
+        _timer->async_wait([sharedThis, message](const boost::system::error_code &ec) {
+            if (!ec) {
+                sharedThis->write(message);
+            } else {
+                std::cerr << "HA: " << ec.message() << std::endl;
+            }
+        });
+
+    }
+
+    void server::connection::TCP::write(std::string message) {
+        auto sharedThis = shared_from_this();
+        asio::async_write(_socket, asio::buffer(message),
+                          [sharedThis](const boost::system::error_code &ec, std::size_t bytesTransferred) {
+                              if (!ec) {
+                                  std::cout << "Sent " << bytesTransferred << " bytes" << std::endl;
+                                  sharedThis->sleepAndWrite("Hello from server\n", 100);
+                              } else {
+                                  std::cerr << "Error: " << ec.message() << std::endl;
+                              }
+                          });
+    }
+
 }

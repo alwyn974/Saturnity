@@ -36,18 +36,27 @@ namespace saturnity {
                     return Pointer(new TCP(ioContext));
                 }
 
+                asio::io_context &getIoContext() const {
+                    return _ioContext;
+                }
+
                 tcp::socket &socket() {
                     return _socket;
                 }
 
                 void start();
+                std::string read();
+                void write(std::string message);
+                void sleepAndWrite(std::string message, int ms);
 
             private:
                 explicit TCP(asio::io_context &ioContext);
 
             private:
                 tcp::socket _socket;
-                std::string _buffer;
+                asio::streambuf _buffer;
+                asio::io_context &_ioContext;
+                std::unique_ptr<asio::deadline_timer> _timer;
             };
         }
 

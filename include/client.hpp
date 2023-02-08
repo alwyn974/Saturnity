@@ -17,7 +17,9 @@
 #define BUFF_SIZE 10
 
 namespace saturnity {
+    namespace client {
 
+    }
 }  // namespace saturnity
 
 #endif /* !CLIENT_HPP_ */
