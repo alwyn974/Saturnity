@@ -65,7 +65,8 @@ namespace sa {
 
     void ByteBuffer::resize(std::uint32_t size)
     {
-        if (this->_readOnly) throw ReadOnlyException("Cannot resize a read only buffer");
+        if (this->_readOnly)
+            throw ReadOnlyException("Cannot resize a read only buffer");
         this->_buffer.resize(size);
     }
 
@@ -86,7 +87,8 @@ namespace sa {
 
     void ByteBuffer::replaceAt(std::uint32_t offset, const std::vector<byte_t> &bytes)
     {
-        if (this->_readOnly) throw ReadOnlyException("Cannot replace bytes in a read only buffer");
+        if (this->_readOnly)
+            throw ReadOnlyException("Cannot replace bytes in a read only buffer");
         if (offset > this->size())
             throw std::out_of_range("Offset is out of bounds: " + std::to_string(offset) + ", maximum is: " + std::to_string(this->size()));
         const auto size = static_cast<std::uint32_t>(bytes.size());
@@ -275,7 +277,8 @@ namespace sa {
 
     void ByteBuffer::writeBytes(const byte_t *bytes, std::uint32_t size)
     {
-        if (this->_readOnly) throw ReadOnlyException("Cannot write to a read only buffer");
+        if (this->_readOnly)
+            throw ReadOnlyException("Cannot write to a read only buffer");
         ensureCapacity(this->_writePos + size);
         for (std::uint32_t i = 0; i < size; i++)
             this->_buffer.emplace_back(bytes[i]);
@@ -412,7 +415,8 @@ namespace sa {
     template<typename T>
     void ByteBuffer::write(const T &value, std::uint32_t offset)
     {
-        if (this->_readOnly) throw ReadOnlyException("Cannot write to a read only buffer");
+        if (this->_readOnly)
+            throw ReadOnlyException("Cannot write to a read only buffer");
         const std::size_t size = sizeof(T);
         if (offset + size > this->_maxCapacity)
             throw std::out_of_range(
@@ -426,7 +430,8 @@ namespace sa {
     template<typename T>
     void ByteBuffer::replaceAt(std::uint32_t offset, const T &value)
     {
-        if (this->_readOnly) throw ReadOnlyException("Cannot write to a read only buffer");
+        if (this->_readOnly)
+            throw ReadOnlyException("Cannot write to a read only buffer");
         const std::size_t size = sizeof(T);
         if (offset > this->_buffer.size())
             throw std::out_of_range(
