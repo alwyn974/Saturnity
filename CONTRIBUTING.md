@@ -78,6 +78,8 @@ Please create a new [GitHub issue][issues] for any major changes and enhancement
 Please provide the feature you would like to see, why you need it, and how it will work. 
 Discuss your ideas transparently and get community feedback before proceeding.
 
+If you want to add a feature, feel free to create the [issue][issues] before and then link it to your [Pull Request][pr].
+
 Major Changes that you wish to contribute to the project should be discussed first in an [GitHub issue][issues] that clearly outlines the changes and benefits of the feature.
 
 Small Changes can directly be crafted and submitted to the GitHub Repository as a [Pull Request][pr]. See the section about [Pull Request Submission Guidelines](#pull-request-process), and for detailed information the core development documentation.
