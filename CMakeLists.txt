@@ -20,7 +20,8 @@ option(USE_CLANG_TIDY_WITH_ERRORS "Use clang tidy but all warnings are errors" O
 option(USE_CLANG_TIDY_WITH_FIX "Use clang-tidy with fix" OFF) # Used by the CI
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF) # Fix dll issues on Windows
 
-add_library(${PROJECT_NAME} src/udpserver.cpp)
+add_library(${PROJECT_NAME} src/udpserver.cpp
+        src/server.cpp)
 add_executable(${PROJECT_NAME}-server main.cpp)
 add_executable(${PROJECT_NAME}-client client.cpp)
 

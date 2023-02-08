@@ -11,66 +11,63 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <list>
+#include <boost/asio/ip/tcp.hpp>
+#include <optional>
 
 #include "packets/packets.hpp"
 
-#define BUFF_SIZE 10
-
-void handleSend(const boost::system::error_code& error, boost::asio::mutable_buffer buffer, const boost::asio::ip::udp::socket& msocket,
-                const boost::asio::io_service& ioService, std::string& input, boost::asio::ip::udp::endpoint remote);
 namespace saturnity {
-    class UdpServer {
-    public:
-        explicit UdpServer(boost::asio::io_service& io_service, int port);
-        ~UdpServer();
-        void createSocket(int port);
-        bool handshake();
-        virtual void send();
-        virtual void send(std::string input);
-        void receive();
-        void handleReceive(const boost::system::error_code& error);
-        void handleSend(const boost::system::error_code& error);
-        void clearBuff(std::array<char, BUFF_SIZE> buffer);
 
-    private:
-        boost::asio::io_context& _ioCtx;
-        boost::asio::ip::udp::endpoint _remoteEndpoint;
-        boost::asio::ip::udp::socket _socket;
-        std::array<char, BUFF_SIZE> _sendBuffer;
-        std::array<char, BUFF_SIZE> _recvBuffer;
-        std::string _input;
-        //        char _sendBuffer[BUFF_SIZE];
-        //        char _recvBuffer[BUFF_SIZE];
-        int _port;
+    enum class IPV {
+        V4,
+        V6
     };
 
-    class TcpServer {
-    public:
-        TcpServer();
-        ~TcpServer();
-        int createSocket();
-        bool handshake();
-        void send(Packet toSend);
-        void receive();
-        void handleReceive();
-        void handleSend();
+    namespace asio = boost::asio;
+    using boost::asio::ip::tcp;
 
-    private:
-        boost::asio::io_context _io_ctx;
-        boost::asio::ip::udp::endpoint _remote_endpoint;
-        boost::asio::ip::udp::socket _socket;
-        //        char _buffer[1024];
-        int _port;
-        int _address;
-    };
+    namespace server {
+        namespace connection {
+            class TCP : public std::enable_shared_from_this<TCP> {
+            public:
+                using Pointer = std::shared_ptr<TCP>;
 
-    //    inline std::list<std::string> getPlayerList(){return _playerList;};
-    //    void addPlayer();
-    //    void disconnectPlayer();
-    //    void movePlayer();
-    //
-    // private:
-    //    std::list<std::string> _playerList;
+                static Pointer create(asio::io_context &ioContext) {
+                    return Pointer(new TCP(ioContext));
+                }
+
+                tcp::socket &socket() {
+                    return _socket;
+                }
+
+                void start();
+
+            private:
+                explicit TCP(asio::io_context &ioContext);
+
+            private:
+                tcp::socket _socket;
+                std::string _buffer;
+            };
+        }
+
+        class TCP {
+        public:
+            TCP(IPV ipv, unsigned short port);
+
+            void run();
+
+        private:
+            void startAccept();
+
+        private:
+            IPV _ipVersion;
+            unsigned short _port;
+            asio::io_context _ioContext;
+            tcp::acceptor _acceptor;
+            std::vector<connection::TCP::Pointer> _connections{};
+        };
+    }
 
 }  // namespace saturnity
 

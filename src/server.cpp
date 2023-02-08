@@ -1,45 +1,55 @@
-/*
-** EPITECH PROJECT, 2023
-** Saturnity
-** File description:
-** server
-*/
 
-#include "../include/server.hpp"
+#include "server.hpp"
+#include <iostream>
 
-#include <boost/asio.hpp>
-using namespace saturnity;
+namespace saturnity {
 
-int TcpServer::createSocket()
-{
-    boost::asio::io_service io_service;
+    using boost::asio::ip::tcp;
 
-    // listen for new connection
-    boost::asio::ip::tcp::acceptor acceptor_(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 1234));
+    server::TCP::TCP(IPV ipv, unsigned short port) : _ipVersion(ipv), _port(port), _acceptor(_ioContext, tcp::endpoint(ipv == IPV::V4 ? tcp::v4() : tcp::v6(), port)) {
 
-    // socket creation
-    boost::asio::ip::tcp::socket socket_(io_service);
-    acceptor_.accept(socket_);
-
-    while (1) {
-        // waiting for connection
-
-        // read operation
-        //        std::string message = read(socket_);
-        //        std::cout << message << std::endl;
-        // write operation
-        char temp[50];
-        std::cin >> temp;
-        boost::asio::write(socket_, boost::asio::buffer(temp));
     }
-    return 0;
+
+    void server::TCP::run() {
+        try {
+            startAccept();
+            _ioContext.run();
+        } catch (std::exception &e) {
+            std::cerr << "Exception: " << e.what() << std::endl;
+        }
+    }
+
+    void server::TCP::startAccept() {
+
+        auto newConnection = connection::TCP::create(_ioContext);
+
+        _connections.push_back(newConnection);
+
+        _acceptor.async_accept(newConnection->socket(), [newConnection, this](const boost::system::error_code &ec) {
+            if (!ec) {
+                std::cout << "Connection accepted" << std::endl;
+                newConnection->start();
+            } else {
+                std::cerr << "Error: " << ec.message() << std::endl;
+            }
+            startAccept();
+        });
+    }
+
+    server::connection::TCP::TCP(asio::io_context &ioContext) : _socket(ioContext) {
+
+    }
+
+    void server::connection::TCP::start() {
+        auto sharedThis = shared_from_this();
+        std::string message("Hello from server");
+        asio::async_write(_socket, asio::buffer(message),
+                          [sharedThis](const boost::system::error_code &ec, std::size_t bytesTransferred) {
+                              if (!ec) {
+                                  std::cout << "Sent " << bytesTransferred << " bytes" << std::endl;
+                              } else {
+                                  std::cerr << "Error: " << ec.message() << std::endl;
+                              }
+                          });
+    }
 }
-
-bool TcpServer::handshake()
-{
-    return 1;
-}
-
-void TcpServer::receive() {}
-
-void TcpServer::send(Packet toSend) {}
