@@ -12,7 +12,6 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
-
 #include "Core.hpp"
 
 /**
@@ -20,21 +19,57 @@
  */
 namespace sa {
     /**
-     * @brief A byte buffer class, limited to UINT32_MAX bytes
+     * @brief A byte buffer class, limited to UINT32_MAX bytes. A simple example:
+     * @code
+     * sa::ByteBuffer buffer; // or sa::ByteBuffer buffer(1024); to specify the size, max size is UINT32_MAX
+     * buffer.writeByte(0x01);
+     * buffer.writeChar('a');
+     * buffer.writeShort(0x0102);
+     * buffer.writeInt(0x01020304); //
+     * buffer.writeLong(0x0102030405060708); //
+     * buffer.writeFloat(1.0f); //
+     * buffer.writeDouble(1.0); //
+     * buffer.writeString("Hello World!");
+     * buffer.writeBytes({0x01, 0x02, 0x03, 0x04}); // Using std::vector<byte_t>
+     * buffer.writeVarShort(0x1); // Variable length short, exists for all integer types (short, int, long)
+     *
+     * std::cout << buffer.readByte(); << "\n"
+     * std::cout << buffer.readChar(); << "\n"
+     * std::cout << buffer.readShort(); << "\n"
+     * std::cout << buffer.readInt(); << "\n"
+     * std::cout << buffer.readLong(); << "\n"
+     * std::cout << buffer.readFloat(); << "\n"
+     * std::cout << buffer.readDouble(); << "\n"
+     * std::cout << buffer.readString(); << "\n"
+     * std::cout << buffer.readBytes(4); << "\n" // Read 4 bytes
+     * std::cout << buffer.readVarShort(); << std::endl;
+     * @endcode
+     * Unsigned version of the methods are also available, see the documentation for more information
      */
     class ByteBuffer {
     public:
-        // SA_EXCEPTION(ReadOnlyException, "When trying to write in a read only buffer") // TODO: remove this comment
         /**
-         * @brief The ReadOnlyException is thrown when trying to write in a read only buffer
+         * @brief Thrown when trying to write in a read only buffer
          */
         class ReadOnlyException : public sa::Exception {
         public:
             /**
-             * @brief Construct a ReadOnlyException with a message
+             * @brief Construct a new Read Only Exception object
              * @param message the message of the exception
              */
             explicit ReadOnlyException(const std::string &message) : sa::Exception(message) {}
+        };
+
+        /**
+         * @brief Throw when a variable length type is too big
+         */
+        class VariableLengthTooBigException : public sa::Exception {
+        public:
+            /**
+             * @brief Construct a new Variable Length Too Big Exception object
+             * @param message the message of the exception
+             */
+            explicit VariableLengthTooBigException(const std::string &message) : sa::Exception(message) {}
         };
 
         /**
@@ -507,7 +542,6 @@ namespace sa {
         static inline const constexpr int MAX_VARLONG_SIZE = 10; /**< The maximum size of the variable length (u)long */
         static inline const constexpr unsigned int SEGMENT_BITS = 0x7F; /**< The segment bits is used to extract the least significant bit (7-bit chunk) */
         static inline const constexpr unsigned int CONTINUE_BIT = 0x80; /**< The continuation bit is used as a flag, to check if more bytes need to be read */
-        static inline const constexpr unsigned int SIGN_BIT = 0x40; /**< The sign bit is used to check if the number is negative */
 
     protected:
         /**

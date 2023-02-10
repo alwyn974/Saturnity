@@ -100,7 +100,7 @@ ForEachMacros:
   - BOOST_FOREACH
 IfMacros:
   - KJ_IF_MAYBE
-IncludeBlocks: Regroup
+IncludeBlocks: Merge
 IncludeCategories:
   - Regex: '^<ext/.*\.h>'
     Priority: 2

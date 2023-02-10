@@ -32,6 +32,11 @@ namespace sa {
         explicit AbstractPacket(const EnumPacketType &type) : _type(type) {};
 
         /**
+         * @brief Destroy the Abstract Packet object.
+         */
+        virtual ~AbstractPacket() = default;
+
+        /**
          * @brief Serialize the packet into bytes.
          * @param byteBuffer the byte buffer to serialize data into bytes
          */

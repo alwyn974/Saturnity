@@ -14,7 +14,6 @@
  */
 
 #include <spdlog/spdlog.h>
-
 #include <cstdint>
 #include <exception>
 #include <string>
@@ -59,12 +58,12 @@ namespace sa {
 
 #define SA_EXCEPTION(name, doc)                                               \
     /**                                                                       \
-     * @brief The #name exception class. #doc                                 \
+     * @brief The #name exception class. Thrown #doc                          \
      */                                                                       \
     class name : public sa::Exception {                                       \
     public:                                                                   \
         /**                                                                   \
-         * @brief Construct a #name with a message                            \
+         * @brief Construct a new #name object                                \
          * @param message the message of the exception                        \
          */                                                                   \
         explicit name(const std::string &message) : sa::Exception(message) {} \

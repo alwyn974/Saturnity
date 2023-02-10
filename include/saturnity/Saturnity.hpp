@@ -14,6 +14,8 @@
  */
 
 #include "core/AbstractPacket.hpp"
+#include "core/ByteBuffer.hpp"
 #include "core/Core.hpp"
+#include "core/PacketRegistry.hpp"
 
 #endif // SATURNITY_SATURNITY_HPP

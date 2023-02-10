@@ -87,12 +87,11 @@ namespace sa {
     void ByteBuffer::replaceAt(std::uint32_t offset, const std::vector<byte_t> &bytes)
     {
         if (this->_readOnly) throw ReadOnlyException("Cannot replace bytes in a read only buffer");
-        if (offset > this->size())
-            throw std::out_of_range("Offset is out of bounds: " + std::to_string(offset) + ", maximum is: " + std::to_string(this->size()));
+        if (offset > this->size()) throw std::out_of_range(spdlog::fmt_lib::format("Offset is out of bounds: {}, maximum is: {}", offset, this->size()));
         const auto size = static_cast<std::uint32_t>(bytes.size());
         ensureCapacity(offset + size);
         for (std::uint32_t i = 0; i < size; i++) {
-            if (offset + i < this->size())
+            if (offset + i < this->size()) // Ensure that the current vector is big enough, to be overwritten
                 this->_buffer[offset + i] = bytes[i];
             else
                 this->_buffer.push_back(bytes[i]);
@@ -117,7 +116,7 @@ namespace sa {
     std::vector<byte_t> ByteBuffer::readBytes(std::uint32_t size, std::uint32_t offset)
     {
         if (offset + size > this->size())
-            throw std::out_of_range("Offset is out of bounds: " + std::to_string(offset) + ", maximum is: " + std::to_string(this->size()));
+            throw std::out_of_range(spdlog::fmt_lib::format("Offset is out of bounds: {}, maximum is: {}", offset + size, this->size()));
         std::vector<byte_t> bytes;
         bytes.reserve(size);
         for (std::uint32_t i = 0; i < size; i++)
@@ -199,7 +198,7 @@ namespace sa {
             value |= (byte & SEGMENT_BITS) << position;
             if ((byte & CONTINUE_BIT) == 0) break;
             position += 7;
-            if (position >= 16) throw std::runtime_error("VarShort is too big");
+            if (position >= 16) throw VariableLengthTooBigException("VarShort is too big");
         }
         return value;
     }
@@ -219,7 +218,7 @@ namespace sa {
             value |= (byte & SEGMENT_BITS) << position;
             if ((byte & CONTINUE_BIT) == 0) break;
             position += 7;
-            if (position >= 32) throw std::runtime_error("VarInt is too big");
+            if (position >= 32) throw VariableLengthTooBigException("VarInt is too big");
         }
         return value;
     }
@@ -240,7 +239,7 @@ namespace sa {
             value |= static_cast<std::uint64_t>(byte & SEGMENT_BITS) << position;
             if ((byte & CONTINUE_BIT) == 0) break;
             position += 7;
-            if (position >= 64) throw std::runtime_error("VarLong is too big");
+            if (position >= 64) throw VariableLengthTooBigException("VarLong is too big");
         }
 
         return value;
@@ -258,7 +257,7 @@ namespace sa {
     {
         const std::size_t size = sizeof(T);
         if (offset + size > this->size())
-            throw std::out_of_range("Offset is out of bounds: " + std::to_string(offset) + ", maximum is: " + std::to_string(this->size()));
+            throw std::out_of_range(spdlog::fmt_lib::format("Offset is out of bounds: {}, maximum is: {}", offset + size, this->size()));
         T value = *(T *) (&this->_buffer[offset]); // NOLINT
         this->_readPos += size;
         return value;
@@ -432,8 +431,13 @@ namespace sa {
             throw std::out_of_range(
                 spdlog::fmt_lib::format("Can't write at offset ({0}), with a size of ({1}), because maximum is: {2}", offset, size, this->_maxCapacity));
         ensureCapacity(offset + size);
-        for (std::size_t i = 0; i < size; i++)
-            this->_buffer[offset + i] = ((byte_t *) &value)[i]; // NOLINT
+        for (std::size_t i = 0; i < size; i++) {
+            byte_t byte = ((byte_t *) &value)[i]; // NOLINT
+            if (offset + i < this->size()) // Ensure that the current vector is big enough, to be overwritten
+                this->_buffer[offset + i] = byte;
+            else
+                this->_buffer.push_back(byte);
+        }
     }
 
     std::vector<byte_t> &ByteBuffer::vector()
@@ -466,8 +470,8 @@ namespace sa {
 
     void ByteBuffer::setReaderIndex(std::uint32_t readerIndex)
     {
-        if (readerIndex >= this->_maxCapacity)
-            throw std::out_of_range("Reader index is out of bounds: " + std::to_string(readerIndex) + ", maximum is: " + std::to_string(this->_maxCapacity));
+        if (readerIndex >= this->size())
+            throw std::out_of_range(spdlog::fmt_lib::format("Reader index is out of bounds ({}), maximum is: ({})", readerIndex, this->_capacity));
         this->_readPos = readerIndex;
     }
 
@@ -484,7 +488,7 @@ namespace sa {
     void ByteBuffer::setWriterIndex(std::uint32_t writerIndex)
     {
         if (writerIndex >= this->_maxCapacity)
-            throw std::out_of_range("Writer index is out of bounds: " + std::to_string(writerIndex) + ", maximum is: " + std::to_string(this->_maxCapacity));
+            throw std::out_of_range(spdlog::fmt_lib::format("Writer index is out of bounds ({}), maximum is: ({})", writerIndex, this->_maxCapacity));
         this->_writePos = writerIndex;
     }
 
@@ -538,7 +542,7 @@ namespace sa {
     void ByteBuffer::ensureCapacity(std::uint32_t size)
     {
         if (this->size() + size > this->_maxCapacity)
-            throw std::out_of_range("Cannot ensure capacity: " + std::to_string(size) + ", maximum is: " + std::to_string(this->_maxCapacity));
+            throw std::out_of_range(spdlog::fmt_lib::format("Cannot ensure capacity: {}, maximum is: {}", size, this->_maxCapacity));
         this->_buffer.reserve(this->size() + size);
     }
 } // namespace sa
