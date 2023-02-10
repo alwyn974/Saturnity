@@ -14,7 +14,6 @@
  */
 
 #include <spdlog/spdlog.h>
-
 #include <cstdint>
 #include <exception>
 #include <string>

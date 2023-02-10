@@ -4,7 +4,7 @@ project(UnitTest)
 set(CMAKE_CXX_STANDARD 20)
 set(BINARY_NAME "unit_test")
 
-find_package(google-test)
+find_package(google-test QUIET)
 if (NOT google-test_FOUND)
     message(STATUS "Google test not found, downloading it")
     include(FetchContent)
@@ -24,7 +24,7 @@ get_target_property(library_includes Saturnity INCLUDE_DIRECTORIES) # Get the in
 include_directories(${library_includes}) # Include the project include directories
 # Create an executable for the tests, link it to the sources files
 add_executable(${BINARY_NAME} ${SOURCES_FILES} MainTest.cpp
-        binary/TestEncoding.cpp
+        buffer/TestByteBuffer.cpp
 )
 
 get_target_property(linked_targets Saturnity INTERFACE_LINK_LIBRARIES) # Get the linked libraries of Saturnity

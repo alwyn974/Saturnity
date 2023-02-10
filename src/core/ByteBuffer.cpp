@@ -87,8 +87,7 @@ namespace sa {
     void ByteBuffer::replaceAt(std::uint32_t offset, const std::vector<byte_t> &bytes)
     {
         if (this->_readOnly) throw ReadOnlyException("Cannot replace bytes in a read only buffer");
-        if (offset > this->size())
-            throw std::out_of_range(spdlog::fmt_lib::format("Offset is out of bounds: {}, maximum is: {}", offset, this->size()));
+        if (offset > this->size()) throw std::out_of_range(spdlog::fmt_lib::format("Offset is out of bounds: {}, maximum is: {}", offset, this->size()));
         const auto size = static_cast<std::uint32_t>(bytes.size());
         ensureCapacity(offset + size);
         for (std::uint32_t i = 0; i < size; i++) {

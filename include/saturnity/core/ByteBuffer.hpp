@@ -12,7 +12,6 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
-
 #include "Core.hpp"
 
 /**
@@ -22,7 +21,7 @@ namespace sa {
     /**
      * @brief A byte buffer class, limited to UINT32_MAX bytes. A simple example:
      * @code
-     * ByteBuffer buffer; // or ByteBuffer buffer(1024); to specify the size, max size is UINT32_MAX
+     * sa::ByteBuffer buffer; // or sa::ByteBuffer buffer(1024); to specify the size, max size is UINT32_MAX
      * buffer.writeByte(0x01);
      * buffer.writeChar('a');
      * buffer.writeShort(0x0102);

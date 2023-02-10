@@ -7,10 +7,21 @@
 
 #include <spdlog/spdlog.h>
 #include <iostream>
-
-#include <iostream>
-
 #include "saturnity/Saturnity.hpp"
+
+class Packet1 : public sa::AbstractPacket {
+public:
+    Packet1() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP) {};
+    void toBytes(sa::ByteBuffer &byteBuffer) override {};
+    void fromBytes(sa::ByteBuffer &byteBuffer) override {};
+};
+
+class Packet2 : public sa::AbstractPacket {
+public:
+    Packet2() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP) {};
+    void toBytes(sa::ByteBuffer &byteBuffer) override {};
+    void fromBytes(sa::ByteBuffer &byteBuffer) override {};
+};
 
 int main(int ac, char **av)
 {
@@ -36,6 +47,10 @@ int main(int ac, char **av)
     spdlog::info("{}", buffer.readString());
     spdlog::info("{}", buffer.readVarInt());
     spdlog::info("{}", buffer.size());
+
+    sa::PacketRegistry packetRegistry;
+    packetRegistry.registerPacket<Packet1>(0x1);
+    packetRegistry.registerPacket<Packet2>(0x2);
 
     return 0;
 }
