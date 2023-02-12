@@ -515,9 +515,11 @@ namespace sa {
 
     int ByteBuffer::getVarUShortSize(std::uint16_t value)
     {
-        for (unsigned int i = 1; i < MAX_VARSHORT_SIZE; i++)
-            if ((value & -1U << i * 7) == 0) // NOLINT TODO: fix this
+        for (unsigned int i = 1; i < MAX_VARSHORT_SIZE; i++) {
+            const std::uint64_t mask = (1 << i * 7) - 1;
+            if (value <= mask)
                 return static_cast<int>(i);
+        }
         return MAX_VARSHORT_SIZE;
     }
 
@@ -529,9 +531,11 @@ namespace sa {
 
     int ByteBuffer::getVarUIntSize(std::uint32_t value)
     {
-        for (unsigned int i = 1; i < MAX_VARINT_SIZE; i++)
-            if ((value & -1U << i * 7) == 0) // NOLINT TODO: fix this
+        for (unsigned int i = 1; i < MAX_VARINT_SIZE; i++) {
+            const std::uint64_t mask = (1U << i * 7) - 1U;
+            if (value <= mask)
                 return static_cast<int>(i);
+        }
         return MAX_VARINT_SIZE;
     }
 
@@ -544,7 +548,7 @@ namespace sa {
     int ByteBuffer::getVarULongSize(std::uint64_t value)
     {
         for (unsigned int i = 1; i < MAX_VARLONG_SIZE; i++) {
-            const std::uint64_t mask = (1ULL << i * 7) - 1UL;
+            const std::uint64_t mask = (1ULL << i * 7) - 1ULL;
             if (value <= mask)
                 return static_cast<int>(i);
         }
