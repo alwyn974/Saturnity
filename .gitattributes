@@ -3,3 +3,4 @@
 *.txt     text
 *.sh      text eol=lf
 *.vcproj  text eol=crlf
+*.bat     text eol=crlf
