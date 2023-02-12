@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 # Make project-provided Find modules available
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-option(SATURNITY_BUILD_TESTS "Build tests" OFF)
+option(SATURNITY_BUILD_TESTS "Build tests" ON)
 option(SATURNITY_INSTALL "Install Saturnity" ON)
 option(SATURNITY_CPACK "Create the installer" OFF)
 option(USE_CLANG_TIDY "Use clang-tidy" OFF) # Used by the CI
