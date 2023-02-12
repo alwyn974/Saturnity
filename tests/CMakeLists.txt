@@ -24,10 +24,12 @@ get_target_property(library_includes Saturnity INCLUDE_DIRECTORIES) # Get the in
 include_directories(${library_includes}) # Include the project include directories
 # Create an executable for the tests, link it to the sources files
 add_executable(${BINARY_NAME} ${SOURCES_FILES} MainTest.cpp
-        buffer/TestByteBuffer.cpp
+        buffer/TestReadWriteByteBuffer.cpp
+        buffer/TestConstructorByteBuffer.cpp
+        buffer/TestByteBufferUtils.cpp
 )
 
 get_target_property(linked_targets Saturnity INTERFACE_LINK_LIBRARIES) # Get the linked libraries of Saturnity
 message(STATUS "Tests linked library: ${linked_targets}")
-target_link_libraries(${BINARY_NAME} PRIVATE GTest::GTest ${linked_targets}) # Link the executable to the google test library
+target_link_libraries(${BINARY_NAME} PRIVATE GTest::GTest Saturnity ${linked_targets}) # Link the executable to the google test library
 add_test(main_gtests ${BINARY_NAME}) # Add the test to the test suite

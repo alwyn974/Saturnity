@@ -124,7 +124,7 @@ namespace sa {
         std::uint32_t capacity() const;
 
         /**
-         * @brief Resize the ByteBuffer
+         * @brief Resize the ByteBuffer. Will update the capacity and the size of the internal vector
          * @param size the new size of the ByteBuffer
          */
         void resize(std::uint32_t size);
@@ -136,7 +136,7 @@ namespace sa {
         bool isReadOnly() const;
 
         /**
-         * @brief Get t nheber uomf bytes remaining in the buffer
+         * @brief Get the number of bytes remaining in the buffer (capacity - read position)
          * @return the number of bytes remaining
          */
         std::uint32_t remainingBytes() const;
@@ -188,6 +188,12 @@ namespace sa {
          * @return the char read
          */
         char readChar();
+
+        /**
+         * @brief Read an unsigned char from the buffer (increase the read position by 1)
+         * @return the unsigned char read
+         */
+        unsigned char readUChar();
 
         /**
          * @brief Read a boolean from the buffer (increase the read position by 1)
@@ -600,7 +606,7 @@ namespace sa {
         bool _readOnly; /**< Specify if the ByteBuffer is only readeable */
 
         /**
-         * @brief Ensure that the buffer has enough space to write a certain size
+         * @brief Ensure that the buffer has enough space to write a certain size. Will update the capacity if needed
          * @param size the size to check
          */
         inline void ensureCapacity(std::uint32_t size);
