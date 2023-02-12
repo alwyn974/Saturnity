@@ -543,9 +543,11 @@ namespace sa {
 
     int ByteBuffer::getVarULongSize(std::uint64_t value)
     {
-        for (unsigned int i = 1; i < MAX_VARLONG_SIZE; i++)
-            if ((value & -1UL << i * 7) == 0L) // NOLINT TODO: fix this
+        for (unsigned int i = 1; i < MAX_VARLONG_SIZE; i++) {
+            const std::uint64_t mask = (1ULL << i * 7) - 1UL;
+            if (value <= mask)
                 return static_cast<int>(i);
+        }
         return MAX_VARLONG_SIZE;
     }
 

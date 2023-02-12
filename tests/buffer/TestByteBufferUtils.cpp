@@ -201,7 +201,8 @@ TEST(ByteBuffer_Utils, getVarShortSize)
     ASSERT_EQ(1, sa::ByteBuffer::getVarShortSize(127));
     ASSERT_EQ(2, sa::ByteBuffer::getVarShortSize(128));
     ASSERT_EQ(2, sa::ByteBuffer::getVarShortSize(255));
-    ASSERT_EQ(2, sa::ByteBuffer::getVarShortSize(32767));
+    ASSERT_EQ(2, sa::ByteBuffer::getVarShortSize(16383));
+    ASSERT_EQ(3, sa::ByteBuffer::getVarShortSize(32767));
 }
 
 TEST(ByteBuffer_Utils, getVarUShortSize)
@@ -211,8 +212,8 @@ TEST(ByteBuffer_Utils, getVarUShortSize)
     ASSERT_EQ(1, sa::ByteBuffer::getVarUShortSize(127));
     ASSERT_EQ(2, sa::ByteBuffer::getVarUShortSize(128));
     ASSERT_EQ(2, sa::ByteBuffer::getVarUShortSize(255));
-    ASSERT_EQ(2, sa::ByteBuffer::getVarUShortSize(32767));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarUShortSize(32768));
+    ASSERT_EQ(2, sa::ByteBuffer::getVarUShortSize(16383));
+    ASSERT_EQ(3, sa::ByteBuffer::getVarUShortSize(32767));
     ASSERT_EQ(3, sa::ByteBuffer::getVarUShortSize(65535));
 }
 
@@ -249,13 +250,12 @@ TEST(ByteBuffer_Utils, getVarIntSize)
     ASSERT_EQ(1, sa::ByteBuffer::getVarIntSize(127));
     ASSERT_EQ(2, sa::ByteBuffer::getVarIntSize(128));
     ASSERT_EQ(2, sa::ByteBuffer::getVarIntSize(255));
-    ASSERT_EQ(2, sa::ByteBuffer::getVarIntSize(32767));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarIntSize(32768));
+    ASSERT_EQ(2, sa::ByteBuffer::getVarIntSize(16383));
+    ASSERT_EQ(3, sa::ByteBuffer::getVarIntSize(32767));
     ASSERT_EQ(3, sa::ByteBuffer::getVarIntSize(65535));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarIntSize(8388607));
-    ASSERT_EQ(4, sa::ByteBuffer::getVarIntSize(8388608));
+    ASSERT_EQ(4, sa::ByteBuffer::getVarIntSize(8388607));
     ASSERT_EQ(4, sa::ByteBuffer::getVarIntSize(16777215));
-    ASSERT_EQ(4, sa::ByteBuffer::getVarIntSize(2147483647));
+    ASSERT_EQ(5, sa::ByteBuffer::getVarIntSize(2147483647));
 }
 
 TEST(ByteBuffer_Utils, getVarUIntSize)
@@ -265,14 +265,12 @@ TEST(ByteBuffer_Utils, getVarUIntSize)
     ASSERT_EQ(1, sa::ByteBuffer::getVarUIntSize(127));
     ASSERT_EQ(2, sa::ByteBuffer::getVarUIntSize(128));
     ASSERT_EQ(2, sa::ByteBuffer::getVarUIntSize(255));
-    ASSERT_EQ(2, sa::ByteBuffer::getVarUIntSize(32767));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarUIntSize(32768));
+    ASSERT_EQ(2, sa::ByteBuffer::getVarUIntSize(16383));
+    ASSERT_EQ(3, sa::ByteBuffer::getVarUIntSize(32767));
     ASSERT_EQ(3, sa::ByteBuffer::getVarUIntSize(65535));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarUIntSize(8388607));
-    ASSERT_EQ(4, sa::ByteBuffer::getVarUIntSize(8388608));
+    ASSERT_EQ(4, sa::ByteBuffer::getVarUIntSize(8388607));
     ASSERT_EQ(4, sa::ByteBuffer::getVarUIntSize(16777215));
-    ASSERT_EQ(4, sa::ByteBuffer::getVarUIntSize(2147483647));
-    ASSERT_EQ(5, sa::ByteBuffer::getVarUIntSize(2147483648));
+    ASSERT_EQ(5, sa::ByteBuffer::getVarUIntSize(2147483647));
     ASSERT_EQ(5, sa::ByteBuffer::getVarUIntSize(4294967295));
 }
 
@@ -341,25 +339,19 @@ TEST(ByteBuffer_Utils, getVarLongSize)
     ASSERT_EQ(1, sa::ByteBuffer::getVarLongSize(127));
     ASSERT_EQ(2, sa::ByteBuffer::getVarLongSize(128));
     ASSERT_EQ(2, sa::ByteBuffer::getVarLongSize(255));
-    ASSERT_EQ(2, sa::ByteBuffer::getVarLongSize(32767));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarLongSize(32768));
+    ASSERT_EQ(3, sa::ByteBuffer::getVarLongSize(32767));
     ASSERT_EQ(3, sa::ByteBuffer::getVarLongSize(65535));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarLongSize(8388607));
-    ASSERT_EQ(4, sa::ByteBuffer::getVarLongSize(8388608));
+    ASSERT_EQ(4, sa::ByteBuffer::getVarLongSize(8388607));
     ASSERT_EQ(4, sa::ByteBuffer::getVarLongSize(16777215));
-    ASSERT_EQ(4, sa::ByteBuffer::getVarLongSize(2147483647));
-    ASSERT_EQ(5, sa::ByteBuffer::getVarLongSize(2147483648));
+    ASSERT_EQ(5, sa::ByteBuffer::getVarLongSize(2147483647));
     ASSERT_EQ(5, sa::ByteBuffer::getVarLongSize(4294967295));
-    ASSERT_EQ(5, sa::ByteBuffer::getVarLongSize(549755813887));
-    ASSERT_EQ(6, sa::ByteBuffer::getVarLongSize(549755813888));
+    ASSERT_EQ(6, sa::ByteBuffer::getVarLongSize(549755813887));
     ASSERT_EQ(6, sa::ByteBuffer::getVarLongSize(1099511627775));
-    ASSERT_EQ(6, sa::ByteBuffer::getVarLongSize(140737488355327));
-    ASSERT_EQ(7, sa::ByteBuffer::getVarLongSize(140737488355328));
+    ASSERT_EQ(7, sa::ByteBuffer::getVarLongSize(140737488355327));
     ASSERT_EQ(7, sa::ByteBuffer::getVarLongSize(281474976710655));
-    ASSERT_EQ(7, sa::ByteBuffer::getVarLongSize(36028797018963967));
-    ASSERT_EQ(8, sa::ByteBuffer::getVarLongSize(36028797018963968));
+    ASSERT_EQ(8, sa::ByteBuffer::getVarLongSize(36028797018963967));
     ASSERT_EQ(8, sa::ByteBuffer::getVarLongSize(72057594037927935));
-    ASSERT_EQ(8, sa::ByteBuffer::getVarLongSize(9223372036854775807));
+    ASSERT_EQ(9, sa::ByteBuffer::getVarLongSize(9223372036854775807));
 }
 
 TEST(ByteBuffer_Utils, getVarULongSize)
@@ -369,26 +361,20 @@ TEST(ByteBuffer_Utils, getVarULongSize)
     ASSERT_EQ(1, sa::ByteBuffer::getVarULongSize(127));
     ASSERT_EQ(2, sa::ByteBuffer::getVarULongSize(128));
     ASSERT_EQ(2, sa::ByteBuffer::getVarULongSize(255));
-    ASSERT_EQ(2, sa::ByteBuffer::getVarULongSize(32767));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarULongSize(32768));
+    ASSERT_EQ(3, sa::ByteBuffer::getVarULongSize(32767));
     ASSERT_EQ(3, sa::ByteBuffer::getVarULongSize(65535));
-    ASSERT_EQ(3, sa::ByteBuffer::getVarULongSize(8388607));
-    ASSERT_EQ(4, sa::ByteBuffer::getVarULongSize(8388608));
+    ASSERT_EQ(4, sa::ByteBuffer::getVarULongSize(8388607));
     ASSERT_EQ(4, sa::ByteBuffer::getVarULongSize(16777215));
-    ASSERT_EQ(4, sa::ByteBuffer::getVarULongSize(2147483647));
-    ASSERT_EQ(5, sa::ByteBuffer::getVarULongSize(2147483648));
+    ASSERT_EQ(5, sa::ByteBuffer::getVarULongSize(2147483647));
     ASSERT_EQ(5, sa::ByteBuffer::getVarULongSize(4294967295));
-    ASSERT_EQ(5, sa::ByteBuffer::getVarULongSize(549755813887));
-    ASSERT_EQ(6, sa::ByteBuffer::getVarULongSize(549755813888));
+    ASSERT_EQ(6, sa::ByteBuffer::getVarULongSize(549755813887));
     ASSERT_EQ(6, sa::ByteBuffer::getVarULongSize(1099511627775));
-    ASSERT_EQ(6, sa::ByteBuffer::getVarULongSize(140737488355327));
-    ASSERT_EQ(7, sa::ByteBuffer::getVarULongSize(140737488355328));
+    ASSERT_EQ(7, sa::ByteBuffer::getVarULongSize(140737488355327));
     ASSERT_EQ(7, sa::ByteBuffer::getVarULongSize(281474976710655));
-    ASSERT_EQ(7, sa::ByteBuffer::getVarULongSize(36028797018963967));
-    ASSERT_EQ(8, sa::ByteBuffer::getVarULongSize(36028797018963968));
+    ASSERT_EQ(8, sa::ByteBuffer::getVarULongSize(36028797018963967));
     ASSERT_EQ(8, sa::ByteBuffer::getVarULongSize(72057594037927935));
-    ASSERT_EQ(8, sa::ByteBuffer::getVarULongSize(9223372036854775807));
-    ASSERT_EQ(9, sa::ByteBuffer::getVarULongSize(UINT64_MAX));
+    ASSERT_EQ(9, sa::ByteBuffer::getVarULongSize(9223372036854775807));
+    ASSERT_EQ(10, sa::ByteBuffer::getVarULongSize(UINT64_MAX));
 }
 
 TEST(ByteBuffer_Utils, resetWriterIndex)
