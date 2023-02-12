@@ -440,7 +440,7 @@ namespace sa {
         //
 
         /**
-         * @brief Return the vector used as buffer to store bytes
+         * @brief Return the mutable vector used as buffer to store bytes
          * @return the vector
          */
         std::vector<byte_t> &vector();

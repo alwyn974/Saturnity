@@ -366,7 +366,7 @@ namespace sa {
 
     void ByteBuffer::writeVarShort(std::int16_t value)
     {
-        this->writeUShort(static_cast<std::uint16_t>(value));
+        this->writeVarUShort(static_cast<std::uint16_t>(value));
     }
 
     void ByteBuffer::writeVarUShort(std::uint16_t value)
@@ -398,7 +398,7 @@ namespace sa {
 
     void ByteBuffer::writeVarLong(std::int64_t value)
     {
-        this->writeULong(static_cast<std::uint64_t>(value));
+        this->writeVarULong(static_cast<std::uint64_t>(value));
     }
 
     void ByteBuffer::writeVarULong(std::uint64_t value)
