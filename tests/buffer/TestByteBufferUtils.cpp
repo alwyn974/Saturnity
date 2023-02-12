@@ -390,3 +390,42 @@ TEST(ByteBuffer_Utils, getVarULongSize)
     ASSERT_EQ(8, sa::ByteBuffer::getVarULongSize(9223372036854775807));
     ASSERT_EQ(9, sa::ByteBuffer::getVarULongSize(UINT64_MAX));
 }
+
+TEST(ByteBuffer_Utils, resetWriterIndex)
+{
+    sa::ByteBuffer buf(10);
+    buf.writeByte(1);
+    buf.writeByte(2);
+    buf.writeByte(3);
+    ASSERT_EQ(3, buf.writerIndex());
+    buf.resetWriterIndex();
+    ASSERT_EQ(0, buf.writerIndex());
+}
+
+TEST(ByteBuffer_Utils, resetReaderIndex)
+{
+    sa::ByteBuffer buf(10);
+    buf.writeByte(1);
+    buf.writeByte(2);
+    buf.writeByte(3);
+    ASSERT_EQ(3, buf.writerIndex());
+    ASSERT_EQ(0, buf.readerIndex());
+    ASSERT_EQ(1, buf.readByte());
+    ASSERT_EQ(1, buf.readerIndex());
+    ASSERT_EQ(2, buf.readByte());
+    ASSERT_EQ(2, buf.readerIndex());
+    ASSERT_EQ(3, buf.readByte());
+    ASSERT_EQ(3, buf.readerIndex());
+    buf.resetReaderIndex();
+    ASSERT_EQ(0, buf.readerIndex());
+}
+
+TEST(ByteBuffer_Utils, compareBuffer)
+{
+    sa::ByteBuffer buf1({0x01, 0x02, 0x03});
+    sa::ByteBuffer buf2({0x01, 0x02, 0x03});
+    ASSERT_TRUE(buf1 == buf2);
+    buf2.writeByte(4);
+    ASSERT_FALSE(buf1 == buf2);
+    ASSERT_TRUE(buf1 != buf2);
+}
