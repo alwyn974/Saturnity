@@ -22,64 +22,109 @@ namespace saturnity {
 
     void server::TCP::startAccept() {
 
-        auto newConnection = connection::TCP::create(_ioContext);
+        _socket.emplace(_ioContext);
 
-        _connections.push_back(newConnection);
+        _acceptor.async_accept(*_socket, [this](const boost::system::error_code &ec) {
+            auto newConnection = connection::TCP::create(std::move(*_socket));
 
-        _acceptor.async_accept(newConnection->socket(), [newConnection, this](const boost::system::error_code &ec) {
-            if (!ec) {
-                std::cout << "Connection accepted" << std::endl;
-                newConnection->start();
-            } else {
-                std::cerr << "Error: " << ec.message() << std::endl;
+            if (onJoin) {
+                onJoin(newConnection);
             }
+
+            _connections.insert(newConnection);
+
+            if (!ec) {
+                newConnection->start(
+                    [this](const std::string &message) {
+                        if (onClientMessage) {
+                            onClientMessage(message);
+                        }
+                    },
+                    [&, weak = std::weak_ptr(newConnection)] {
+                        if (auto shared = weak.lock(); shared && _connections.erase(shared)) {
+                            if (onLeave) {
+                                onLeave(shared);
+                            }
+                        }
+                    }
+                );
+            }
+
             startAccept();
         });
     }
-
-    server::connection::TCP::TCP(asio::io_context &ioContext) : _socket(ioContext), _ioContext(ioContext) {
-
-
+    void server::TCP::broadcast(const std::string &message) {
+        for (auto &connection : _connections) {
+            connection->post(message);
+        }
     }
 
-    void server::connection::TCP::start() {
-        auto sharedThis = shared_from_this();
-        std::string message("Hello from server\n");
-        asio::async_write(_socket, asio::buffer(message),
-                          [sharedThis](const boost::system::error_code &ec, std::size_t bytesTransferred) {
-                              if (!ec) {
-                                  std::cout << "Sent " << bytesTransferred << " bytes" << std::endl;
-                                  sharedThis->sleepAndWrite("Hello from server\n", 100);
-                              } else {
-                                  std::cerr << "Error: " << ec.message() << std::endl;
-                              }
-                          });
+    server::connection::TCP::TCP(asio::ip::tcp::socket&& socket) : _socket(std::move(socket)) {
+        boost::system::error_code ec;
+        std::stringstream name;
+        name << _socket.remote_endpoint(ec);
+        _username = name.str();
     }
 
-    void server::connection::TCP::sleepAndWrite(std::string message, int ms) {
-        auto sharedThis = shared_from_this();
-        _timer = std::make_unique<boost::asio::deadline_timer>(sharedThis->getIoContext(), boost::posix_time::milliseconds(ms));
-        _timer->async_wait([sharedThis, message](const boost::system::error_code &ec) {
-            if (!ec) {
-                sharedThis->write(message);
-            } else {
-                std::cerr << "HA: " << ec.message() << std::endl;
-            }
+    void server::connection::TCP::start(MessageCallback&& messageCallback, ErrorCallback&& errorCallback) {
+        _messageCallback = std::move(messageCallback);
+        _errorCallback = std::move(errorCallback);
+
+        asyncRead();
+    }
+
+    void server::connection::TCP::post(const std::string &message) {
+        bool queueEmpty = _queue.empty();
+
+        _queue.push(message);
+
+        if (queueEmpty) {
+            asyncWrite();
+        }
+    }
+
+    void server::connection::TCP::asyncRead() {
+        asio::async_read(_socket, _buffer, asio::transfer_at_least(1), [self = shared_from_this()](const boost::system::error_code ec, std::size_t bytesTransferred) {
+            self->onRead(ec, bytesTransferred);
         });
-
     }
 
-    void server::connection::TCP::write(std::string message) {
-        auto sharedThis = shared_from_this();
-        asio::async_write(_socket, asio::buffer(message),
-                          [sharedThis](const boost::system::error_code &ec, std::size_t bytesTransferred) {
-                              if (!ec) {
-                                  std::cout << "Sent " << bytesTransferred << " bytes" << std::endl;
-                                  sharedThis->sleepAndWrite("Hello from server\n", 100);
-                              } else {
-                                  std::cerr << "Error: " << ec.message() << std::endl;
-                              }
-                          });
+    void server::connection::TCP::onRead(boost::system::error_code ec, std::size_t bytesTransferred) {
+        if (ec) {
+            _socket.close(ec);
+
+            _errorCallback();
+            return;
+        }
+
+        std::stringstream message;
+        message << "Message from " << _username << ": " << std::string(asio::buffers_begin(_buffer.data()), asio::buffers_begin(_buffer.data()) + bytesTransferred);
+        _buffer.consume(bytesTransferred);
+
+        _messageCallback(message.str());
+
+        asyncRead();
+    }
+
+    void server::connection::TCP::asyncWrite() {
+        asio::async_write(_socket, asio::buffer(_queue.front()), [self = shared_from_this()](const boost::system::error_code ec, std::size_t bytesTransferred) {
+            self->onWrite(ec, bytesTransferred);
+        });
+    }
+
+    void server::connection::TCP::onWrite(boost::system::error_code ec, std::size_t bytesTransferred) {
+        if (ec) {
+            _socket.close(ec);
+
+            _errorCallback();
+            return;
+        }
+
+        _queue.pop();
+
+        if (!_queue.empty()) {
+            asyncWrite();
+        }
     }
 
 }

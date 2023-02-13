@@ -13,7 +13,25 @@
 #include <iostream>
 #include <thread>
 
-int main(int ac, char** av)
+int main(int argc, char* argv[])
 {
+    saturnity::client::TCP client {"localhost", 4242};
 
+    client.onMessage = [](const std::string& message) { std::cout << message; };
+
+    std::thread t {[&client]() { client.run(); }};
+
+    while (true) {
+        std::string message;
+        getline(std::cin, message);
+
+        if (message == "\\q") break;
+        message += "\n";
+
+        client.post(message);
+    }
+
+    client.stop();
+    t.join();
+    return 0;
 }
