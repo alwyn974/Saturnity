@@ -95,6 +95,8 @@ namespace sa {
         {
             if (!std::is_default_constructible<T>())
                 throw PacketMissingEmptyConstructorException(spdlog::fmt_lib::format("Packet: {} is missing an empty constructor", typeid(T).name()));
+            if (this->_packetFactories.contains(id))
+                throw PacketAlreadyRegisteredException(spdlog::fmt_lib::format("Packet with id: {} is already registered", id));
             auto typeIndex = std::type_index(typeid(T)); // NOLINT
             if (this->_packetRegistry.contains(typeIndex))
                 throw PacketAlreadyRegisteredException(spdlog::fmt_lib::format("Packet with type: {} is already registered", typeIndex.name()));
@@ -139,6 +141,20 @@ namespace sa {
         std::unique_ptr<AbstractPacket> createPacket(std::uint16_t id, ByteBuffer &buffer);
 
         /**
+         * @brief Create a packet from a buffer
+         * @tparam T type of the packet (must inherit from AbstractPacket)
+         * @param buffer the buffer
+         * @return the packet
+         * @throws PacketNotRegisteredException if the packet is not registered
+         */
+        template<typename T, typename = std::enable_if_t<std::is_base_of<AbstractPacket, T>::value, T>>
+        std::unique_ptr<T> createPacket(ByteBuffer &buffer)
+        {
+            auto packet = this->createPacket(this->getPacketId<T>(), buffer);
+            return std::unique_ptr<T>(static_cast<T *>(packet.release()));
+        }
+
+        /**
          * @brief Check if a packet is registered
          * @param id the id of the packet
          * @return true if the packet is registered, false otherwise
@@ -160,7 +176,8 @@ namespace sa {
         template<typename T, typename = std::enable_if_t<std::is_base_of<AbstractPacket, T>::value, T>>
         bool hasPacket()
         {
-            return this->hasPacket(T());
+            auto typeIndex = std::type_index(typeid(T)); // NOLINT
+            return this->_packetRegistry.contains(typeIndex);
         }
 
         /**
