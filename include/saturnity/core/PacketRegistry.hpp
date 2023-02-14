@@ -115,7 +115,10 @@ namespace sa {
         template<typename T, typename = std::enable_if_t<std::is_base_of<AbstractPacket, T>::value, T>>
         std::uint16_t getPacketId()
         {
-            return this->getPacketId(T());
+            auto typeIndex = std::type_index(typeid(T)); // NOLINT
+            if (!this->_packetRegistry.contains(typeIndex))
+                throw PacketNotRegisteredException(spdlog::fmt_lib::format("Packet with type: {} is not registered", typeIndex.name()));
+            return this->_packetRegistry[typeIndex];
         }
 
         /**
