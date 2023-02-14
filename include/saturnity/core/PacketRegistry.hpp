@@ -192,9 +192,17 @@ namespace sa {
          */
         const std::unordered_map<std::uint16_t, PacketFactory> &getPacketFactories() const;
 
+        /**
+         * @brief Get the instance of the packet registry
+         * @return the instance of the packet registry
+         */
+        static std::unique_ptr<PacketRegistry> &getInstance();
+
     private:
         std::unordered_map<std::type_index, std::uint16_t> _packetRegistry; /**< Registry containing all packets */
         std::unordered_map<std::uint16_t, PacketFactory> _packetFactories; /**< Factory containing the packet creator, used when receiving a packet */
+
+        static std::unique_ptr<PacketRegistry> instance; /**< The instance of the packet registry */
     };
 } // namespace sa
 

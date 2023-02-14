@@ -9,6 +9,15 @@
 
 namespace sa {
 
+    std::unique_ptr<PacketRegistry> PacketRegistry::instance = nullptr;
+
+    std::unique_ptr<PacketRegistry> &PacketRegistry::getInstance()
+    {
+        if (PacketRegistry::instance == nullptr)
+            PacketRegistry::instance = std::make_unique<PacketRegistry>();
+        return instance;
+    }
+
     std::uint16_t PacketRegistry::getPacketId(AbstractPacket &packet)
     {
         auto typeIndex = std::type_index(typeid(packet));
