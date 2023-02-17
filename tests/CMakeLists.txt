@@ -29,7 +29,6 @@ add_executable(${BINARY_NAME} ${SOURCES_FILES} MainTest.cpp
         buffer/TestByteBufferUtils.cpp
 
         packet/TestPacketRegistry.cpp
-        packet/TestPackets.cpp
 )
 
 get_target_property(linked_targets Saturnity INTERFACE_LINK_LIBRARIES) # Get the linked libraries of Saturnity

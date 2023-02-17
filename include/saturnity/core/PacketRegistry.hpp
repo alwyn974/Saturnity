@@ -109,6 +109,21 @@ namespace sa {
         }
 
         /**
+         * @brief Unregister a packet
+         * @tparam T type of the packet (must inherit from AbstractPacket)
+         * @throws PacketNotRegisteredException if the packet is not registered
+         */
+        template<typename T, typename = std::enable_if_t<std::is_base_of<AbstractPacket, T>::value, T>>
+        void unregisterPacket()
+        {
+            auto typeIndex = std::type_index(typeid(T)); // NOLINT
+            if (!this->_packetRegistry.contains(typeIndex))
+                throw PacketNotRegisteredException(spdlog::fmt_lib::format("Packet with type: {} is not registered", typeIndex.name()));
+            this->_packetFactories.erase(this->_packetRegistry[typeIndex]);
+            this->_packetRegistry.erase(typeIndex);
+        }
+
+        /**
          * @brief Get the packet id
          * @tparam T type of the packet (must inherit from AbstractPacket)
          * @return the id of the packet

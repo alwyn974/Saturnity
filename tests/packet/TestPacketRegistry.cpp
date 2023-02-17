@@ -218,3 +218,34 @@ TEST(PacketRegistry, getPacketId)
     ASSERT_EQ(packetRegistry.getPacketId(entityMovePacket), 1);
     ASSERT_EQ(packetRegistry.getPacketId(entityKillPacket), 2);
 }
+
+TEST(PacketRegistry, unregisterPacket)
+{
+    sa::PacketRegistry packetRegistry;
+
+    packetRegistry.registerPacket<HelloPacket>(0);
+    packetRegistry.registerPacket<EntityMovePacket>(1);
+    packetRegistry.registerPacket<EntityKillPacket>(2);
+
+    ASSERT_TRUE(packetRegistry.hasPacket<HelloPacket>());
+    ASSERT_TRUE(packetRegistry.hasPacket<EntityMovePacket>());
+    ASSERT_TRUE(packetRegistry.hasPacket<EntityKillPacket>());
+
+    packetRegistry.unregisterPacket<HelloPacket>();
+
+    ASSERT_FALSE(packetRegistry.hasPacket<HelloPacket>());
+    ASSERT_TRUE(packetRegistry.hasPacket<EntityMovePacket>());
+    ASSERT_TRUE(packetRegistry.hasPacket<EntityKillPacket>());
+
+    packetRegistry.unregisterPacket<EntityMovePacket>();
+
+    ASSERT_FALSE(packetRegistry.hasPacket<HelloPacket>());
+    ASSERT_FALSE(packetRegistry.hasPacket<EntityMovePacket>());
+    ASSERT_TRUE(packetRegistry.hasPacket<EntityKillPacket>());
+
+    packetRegistry.unregisterPacket<EntityKillPacket>();
+
+    ASSERT_FALSE(packetRegistry.hasPacket<HelloPacket>());
+    ASSERT_FALSE(packetRegistry.hasPacket<EntityMovePacket>());
+    ASSERT_FALSE(packetRegistry.hasPacket<EntityKillPacket>());
+}
