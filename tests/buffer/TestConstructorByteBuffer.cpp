@@ -8,7 +8,8 @@
 #include <gtest/gtest.h>
 #include "saturnity/core/ByteBuffer.hpp"
 
-TEST(ByteBufferConstructor, DefaultConstructor) {
+TEST(ByteBufferConstructor, DefaultConstructor)
+{
     sa::ByteBuffer buffer;
     EXPECT_EQ(0, buffer.size());
     EXPECT_EQ(SA_BUFFER_SIZE, buffer.capacity());
@@ -18,7 +19,8 @@ TEST(ByteBufferConstructor, DefaultConstructor) {
     EXPECT_EQ(SA_BUFFER_SIZE, buffer.remainingBytes());
 }
 
-TEST(ByteBufferConstructor, BufferSizeConstructor) {
+TEST(ByteBufferConstructor, BufferSizeConstructor)
+{
     const std::uint32_t bufferSize = 1024;
     sa::ByteBuffer buffer(bufferSize);
     EXPECT_EQ(0, buffer.size());
@@ -29,7 +31,8 @@ TEST(ByteBufferConstructor, BufferSizeConstructor) {
     EXPECT_EQ(bufferSize, buffer.remainingBytes());
 }
 
-TEST(ByteBufferConstructor, VectorConstructor) {
+TEST(ByteBufferConstructor, VectorConstructor)
+{
     const std::vector<byte_t> data = {0x01, 0x02, 0x03};
     sa::ByteBuffer buffer(data);
     EXPECT_EQ(data.size(), buffer.size());
@@ -41,7 +44,8 @@ TEST(ByteBufferConstructor, VectorConstructor) {
     EXPECT_EQ(data.size(), buffer.remainingBytes());
 }
 
-TEST(ByteBufferConstructor, ByteArrayConstructor) {
+TEST(ByteBufferConstructor, ByteArrayConstructor)
+{
     const int size = 3;
     const byte_t data[3] = {0x01, 0x02, 0x03};
     sa::ByteBuffer buffer(data, size);

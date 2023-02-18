@@ -668,4 +668,3 @@ TEST(ByteBuffer_ReadWrite, varULong)
     ASSERT_EQ(UINT64_MAX, buffer.readVarULong());
     ASSERT_EQ(55, buffer.readerIndex());
 }
-

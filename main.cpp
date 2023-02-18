@@ -27,16 +27,13 @@ class MessagePacket : public sa::AbstractPacket {
 public:
     MessagePacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP) {};
     explicit MessagePacket(const std::string &message) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP), _message(_message) {};
-    void toBytes(sa::ByteBuffer &byteBuffer) override {
-        byteBuffer.writeString(this->_message);
-    }
-    void fromBytes(sa::ByteBuffer &byteBuffer) override {
-        this->_message = byteBuffer.readString();
-    }
 
-    std::string getMessage() const {
-        return this->_message;
-    }
+    void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeString(this->_message); }
+
+    void fromBytes(sa::ByteBuffer &byteBuffer) override { this->_message = byteBuffer.readString(); }
+
+    std::string getMessage() const { return this->_message; }
+
 private:
     std::string _message;
 };
@@ -46,7 +43,8 @@ public:
     explicit PacketReceivedEvent(const std::shared_ptr<sa::AbstractPacket> &packet) : _packet(packet) {};
 
     template<typename T>
-    std::shared_ptr<T> getPacket() const {
+    std::shared_ptr<T> getPacket() const
+    {
         return this->_packet;
     }
 
@@ -74,22 +72,56 @@ class EntityAddPacket;
 
 class GameListener : public IPacketListener {
 public:
-    void handleEntityAddPacket(EntityAddPacket &packet)
-    {
-        spdlog::info("EntityAddPacket");
-    }
+    void handleEntityAddPacket(EntityAddPacket &packet) { spdlog::info("EntityAddPacket"); }
 };
 
 class EntityAddPacket : public IPacket<GameListener> {
 public:
     void fromBytes(sa::ByteBuffer &byteBuffer) override {}
+
     void toBytes(sa::ByteBuffer &byteBuffer) override {}
 
-    void handle(GameListener &listener) override
-    {
-        listener.handleEntityAddPacket(*this);
-    }
+    void handle(GameListener &listener) override { listener.handleEntityAddPacket(*this); }
 };
+
+sa::PacketRegistry packetRegistry;
+
+void sendPacket(sa::AbstractPacket &packet)
+{
+    sa::ByteBuffer byteBuffer(256);
+    const uint16_t id = packetRegistry.getPacketId(packet);
+    byteBuffer.writeUShort(id);
+    byteBuffer.writeUShort(0);
+    packet.toBytes(byteBuffer);
+    const uint16_t size = byteBuffer.writerIndex();
+    byteBuffer.setWriterIndex(sizeof(uint16_t));
+    byteBuffer.writeUShort(size - sizeof(uint16_t) * 2); // Skip packet id and size
+    byteBuffer.setWriterIndex(size);
+
+    std::cout << typeid(packet).name() << std::endl;
+}
+
+void sendPacket(const std::shared_ptr<sa::AbstractPacket> &packet)
+{
+    sendPacket(*packet);
+}
+
+void sendPacket(const std::unique_ptr<sa::AbstractPacket> &packet)
+{
+    sendPacket(*packet);
+}
+
+/*class Test {
+public:
+    virtual ~Test() = default;
+
+    virtual void needToBeOverrided() = 0;
+};
+
+class ChildTest : public Test {
+public:
+    void needToBeOverrided(const std::string &test) { spdlog::info("Overrided"); }
+};*/
 
 int main(int ac, char **av)
 {
@@ -116,7 +148,6 @@ int main(int ac, char **av)
     spdlog::info("{}", buffer.readVarInt());
     spdlog::info("{}", buffer.size());
 */
-    sa::PacketRegistry packetRegistry;
     packetRegistry.registerPacket<Packet1>(0x1);
     packetRegistry.registerPacket<Packet2>(0x2);
     packetRegistry.registerPacket<MessagePacket>(0x3);
@@ -133,11 +164,13 @@ int main(int ac, char **av)
     }
 
     PacketReceivedEvent event(nullptr);
-    //event.getPacket<MessagePacket>()->getMessage();
+    // event.getPacket<MessagePacket>()->getMessage();
     GameListener listener;
     std::shared_ptr<IPacket<GameListener>> entityAddPacket = std::make_shared<EntityAddPacket>();
     // hmmm
     entityAddPacket->handle(listener);
+
+    sendPacket(std::make_shared<MessagePacket>("Hello World!"));
 
     return 0;
 }

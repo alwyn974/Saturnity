@@ -13,8 +13,7 @@ namespace sa {
 
     std::unique_ptr<PacketRegistry> &PacketRegistry::getInstance()
     {
-        if (PacketRegistry::instance == nullptr)
-            PacketRegistry::instance = std::make_unique<PacketRegistry>();
+        if (PacketRegistry::instance == nullptr) PacketRegistry::instance = std::make_unique<PacketRegistry>();
         return instance;
     }
 

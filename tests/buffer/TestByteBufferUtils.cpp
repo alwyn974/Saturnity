@@ -124,8 +124,8 @@ TEST(ByteBuffer_Utils, getBuffer)
     ASSERT_EQ('l', buffer.getBuffer()[1]);
     ASSERT_EQ('w', buffer.getBuffer()[2]);
     std::uint16_t size = 2;
-    ASSERT_EQ(((byte_t *)(&size))[0], buffer.getBuffer()[3]);
-    ASSERT_EQ(((byte_t *)(&size))[1], buffer.getBuffer()[4]);
+    ASSERT_EQ(((byte_t *) (&size))[0], buffer.getBuffer()[3]);
+    ASSERT_EQ(((byte_t *) (&size))[1], buffer.getBuffer()[4]);
     ASSERT_EQ('y', buffer.getBuffer()[5]);
     ASSERT_EQ('n', buffer.getBuffer()[6]);
 }
@@ -162,8 +162,8 @@ TEST(ByteBuffer_Utils, replaceAt)
     ASSERT_EQ('l', buffer.getBuffer()[1]);
     ASSERT_EQ('w', buffer.getBuffer()[2]);
     std::uint16_t size = 2;
-    ASSERT_EQ(((byte_t *)(&size))[0], buffer.getBuffer()[3]);
-    ASSERT_EQ(((byte_t *)(&size))[1], buffer.getBuffer()[4]);
+    ASSERT_EQ(((byte_t *) (&size))[0], buffer.getBuffer()[3]);
+    ASSERT_EQ(((byte_t *) (&size))[1], buffer.getBuffer()[4]);
     ASSERT_EQ('y', buffer.getBuffer()[5]);
     ASSERT_EQ('n', buffer.getBuffer()[6]);
     buffer.replaceAt(0, {'b'});

@@ -25,7 +25,12 @@ namespace sa {
         this->_readOnly = readOnly;
     }
 
-    ByteBuffer::ByteBuffer(const byte_t *bytes, std::uint32_t size, bool readOnly) : _capacity(size), _maxCapacity(UINT32_MAX), _readPos(0), _writePos(0), _readOnly(readOnly)
+    ByteBuffer::ByteBuffer(const byte_t *bytes, std::uint32_t size, bool readOnly) :
+        _capacity(size),
+        _maxCapacity(UINT32_MAX),
+        _readPos(0),
+        _writePos(0),
+        _readOnly(readOnly)
     {
         this->_buffer.reserve(size);
         this->clear();
@@ -47,7 +52,7 @@ namespace sa {
     std::unique_ptr<ByteBuffer> ByteBuffer::clone()
     {
         auto cloned = std::make_unique<ByteBuffer>(static_cast<std::uint32_t>(this->_buffer.size()));
-        for (const byte_t & i : this->_buffer)
+        for (const byte_t &i : this->_buffer)
             cloned->_buffer.emplace_back(i);
         cloned->setReaderIndex(this->_readPos);
         cloned->setWriterIndex(this->_writePos);
@@ -517,8 +522,7 @@ namespace sa {
     {
         for (unsigned int i = 1; i < MAX_VARSHORT_SIZE; i++) {
             const std::uint64_t mask = (1 << i * 7) - 1;
-            if (value <= mask)
-                return static_cast<int>(i);
+            if (value <= mask) return static_cast<int>(i);
         }
         return MAX_VARSHORT_SIZE;
     }
@@ -533,8 +537,7 @@ namespace sa {
     {
         for (unsigned int i = 1; i < MAX_VARINT_SIZE; i++) {
             const std::uint64_t mask = (1U << i * 7) - 1U;
-            if (value <= mask)
-                return static_cast<int>(i);
+            if (value <= mask) return static_cast<int>(i);
         }
         return MAX_VARINT_SIZE;
     }
@@ -549,16 +552,14 @@ namespace sa {
     {
         for (unsigned int i = 1; i < MAX_VARLONG_SIZE; i++) {
             const std::uint64_t mask = (1ULL << i * 7) - 1ULL;
-            if (value <= mask)
-                return static_cast<int>(i);
+            if (value <= mask) return static_cast<int>(i);
         }
         return MAX_VARLONG_SIZE;
     }
 
     void ByteBuffer::ensureCapacity(std::uint32_t size)
     {
-        if (size > this->_maxCapacity)
-            throw std::out_of_range(spdlog::fmt_lib::format("Cannot ensure capacity: {}, maximum is: {}", size, this->_maxCapacity));
+        if (size > this->_maxCapacity) throw std::out_of_range(spdlog::fmt_lib::format("Cannot ensure capacity: {}, maximum is: {}", size, this->_maxCapacity));
         if (size > this->_capacity) {
             this->_buffer.reserve(size);
             this->_capacity = size;

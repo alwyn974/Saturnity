@@ -18,13 +18,13 @@ namespace sa {
     /**
      * @brief A packet is a data structure that can be serialized and deserialized through bytes.
      * You can create a packet by inheriting from this class and implementing the toBytes and fromBytes methods.
+     * Example:
      * @code
      * class HelloPacket : public sa::AbstractPacket {
      * public:
-     *    HelloPacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP) {}; // This empty constructor is MANDATORY, the packet registry cannot create a packet without it.
-     *    explicit HelloPacket(const std::string &message) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP), _message(message) {};
-     *    void toBytes(sa::ByteBuffer &byteBuffer) override {
-     *         byteBuffer.writeString(this->_message);
+     *    HelloPacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP) {}; // This empty constructor is MANDATORY, the packet registry cannot
+     * create a packet without it. explicit HelloPacket(const std::string &message) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP),
+     * _message(message) {}; void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeString(this->_message);
      *    }
      *    void fromBytes(sa::ByteBuffer &byteBuffer) override {
      *         this->_message = byteBuffer.readString();

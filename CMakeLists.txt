@@ -23,9 +23,15 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF) # Fix dll issues on Windo
 add_library(${PROJECT_NAME}
         src/core/ByteBuffer.cpp
         src/core/PacketRegistry.cpp
+        src/core/network/ConnectionToServer.cpp
+        src/core/network/ConnectionToClient.cpp
+        src/core/asio/tcp/TCPServer.cpp
+        src/core/asio/tcp/TCPClient.cpp
 )
-add_executable(${PROJECT_NAME}-exe main.cpp)
-target_link_libraries(${PROJECT_NAME}-exe PRIVATE ${PROJECT_NAME}) # TODO: remove this later
+add_executable(${PROJECT_NAME}-server main-server.cpp) # TODO: remove this later
+add_executable(${PROJECT_NAME}-client main-client.cpp) # TODO: remove this later
+target_link_libraries(${PROJECT_NAME}-server PRIVATE ${PROJECT_NAME}) # TODO: remove this later
+target_link_libraries(${PROJECT_NAME}-client PRIVATE ${PROJECT_NAME}) # TODO: remove this later
 # Include all headers directories
 target_include_directories(${PROJECT_NAME}
         PRIVATE

@@ -12,16 +12,13 @@ class HelloPacket : public sa::AbstractPacket {
 public:
     HelloPacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP) {};
     explicit HelloPacket(const std::string &message) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP), _message(message) {};
-    void toBytes(sa::ByteBuffer &byteBuffer) override {
-        byteBuffer.writeString(this->_message);
-    }
-    void fromBytes(sa::ByteBuffer &byteBuffer) override {
-        this->_message = byteBuffer.readString();
-    }
 
-    std::string getMessage() const {
-        return this->_message;
-    }
+    void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeString(this->_message); }
+
+    void fromBytes(sa::ByteBuffer &byteBuffer) override { this->_message = byteBuffer.readString(); }
+
+    std::string getMessage() const { return this->_message; }
+
 private:
     std::string _message;
 };
@@ -30,12 +27,16 @@ struct EntityMovePacket : public sa::AbstractPacket {
     int id, x, y;
     EntityMovePacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP), id(-1), x(0), y(0) {};
     explicit EntityMovePacket(int id, int x, int y) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP), id(id), x(x), y(y) {};
-    void toBytes(sa::ByteBuffer &byteBuffer) override {
+
+    void toBytes(sa::ByteBuffer &byteBuffer) override
+    {
         byteBuffer.writeInt(this->id);
         byteBuffer.writeInt(this->x);
         byteBuffer.writeInt(this->y);
     }
-    void fromBytes(sa::ByteBuffer &byteBuffer) override {
+
+    void fromBytes(sa::ByteBuffer &byteBuffer) override
+    {
         this->id = byteBuffer.readInt();
         this->x = byteBuffer.readInt();
         this->y = byteBuffer.readInt();
@@ -46,33 +47,27 @@ struct EntityKillPacket : public sa::AbstractPacket {
     int id;
     EntityKillPacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP), id(-1) {};
     explicit EntityKillPacket(int id) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP), id(id) {};
-    void toBytes(sa::ByteBuffer &byteBuffer) override {
-        byteBuffer.writeInt(this->id);
-    }
-    void fromBytes(sa::ByteBuffer &byteBuffer) override {
-        this->id = byteBuffer.readInt();
-    }
+
+    void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeInt(this->id); }
+
+    void fromBytes(sa::ByteBuffer &byteBuffer) override { this->id = byteBuffer.readInt(); }
 };
 
 struct NopePacket : public sa::AbstractPacket {
     NopePacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP) {};
-    void toBytes(sa::ByteBuffer &byteBuffer) override {
-        byteBuffer.writeInt(0);
-    }
-    void fromBytes(sa::ByteBuffer &byteBuffer) override {
-        byteBuffer.readInt();
-    }
+
+    void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeInt(0); }
+
+    void fromBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.readInt(); }
 };
 
 struct NoEmptyConstructorPacket : public sa::AbstractPacket {
     int id;
     explicit NoEmptyConstructorPacket(int id) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::UDP), id(id) {};
-    void toBytes(sa::ByteBuffer &byteBuffer) override {
-        byteBuffer.writeInt(this->id);
-    }
-    void fromBytes(sa::ByteBuffer &byteBuffer) override {
-        this->id = byteBuffer.readInt();
-    }
+
+    void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeInt(this->id); }
+
+    void fromBytes(sa::ByteBuffer &byteBuffer) override { this->id = byteBuffer.readInt(); }
 };
 
 TEST(PacketRegistry, SimpleRegister)
@@ -135,7 +130,7 @@ TEST(PacketRegistry, MissingEmptyConstructor)
     packetRegistry.registerPacket<EntityMovePacket>(1);
     packetRegistry.registerPacket<EntityKillPacket>(2);
 
-    //ASSERT_THROW(packetRegistry.registerPacket<NoEmptyConstructorPacket>(3), sa::PacketRegistry::PacketMissingEmptyConstructorException);
+    // ASSERT_THROW(packetRegistry.registerPacket<NoEmptyConstructorPacket>(3), sa::PacketRegistry::PacketMissingEmptyConstructorException);
 }
 
 TEST(PacketRegistry, hasPacket)
