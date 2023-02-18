@@ -11,6 +11,7 @@
 #include "ConnectionToClient.hpp"
 #include "saturnity/core/Core.hpp"
 #include "saturnity/core/PacketRegistry.hpp"
+#include "saturnity/Exceptions.hpp"
 
 /**
  * @brief The Saturnity namespace.
