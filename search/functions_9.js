@@ -1,30 +1,5 @@
 var searchData=
 [
-  ['read_0',['read',['../classsa_1_1_byte_buffer.html#a75b7cb814d20eb0891b412eaed087930',1,'sa::ByteBuffer::read(std::uint32_t offset)'],['../classsa_1_1_byte_buffer.html#ab3acf41608bf13accaead81c015b4602',1,'sa::ByteBuffer::read()']]],
-  ['readboolean_1',['readBoolean',['../classsa_1_1_byte_buffer.html#acb5117c2d38aca129435059928fb5144',1,'sa::ByteBuffer']]],
-  ['readbyte_2',['readByte',['../classsa_1_1_byte_buffer.html#ac58fb11d265f9747927b44e12470d76a',1,'sa::ByteBuffer']]],
-  ['readbytes_3',['readBytes',['../classsa_1_1_byte_buffer.html#ac65c54667d5ece47cb8090b01c32ce2a',1,'sa::ByteBuffer::readBytes(std::uint32_t size)'],['../classsa_1_1_byte_buffer.html#a6c3f750ccc3480eec2b3247a9607e726',1,'sa::ByteBuffer::readBytes(std::uint32_t size, std::uint32_t offset)']]],
-  ['readchar_4',['readChar',['../classsa_1_1_byte_buffer.html#a435b5d32b286925e38c777217ed2effc',1,'sa::ByteBuffer']]],
-  ['readdouble_5',['readDouble',['../classsa_1_1_byte_buffer.html#a35085c979e19fc67d5ed35ec94452ede',1,'sa::ByteBuffer']]],
-  ['readerindex_6',['readerIndex',['../classsa_1_1_byte_buffer.html#a450e74477b17cce60afd8e7030e3a4e3',1,'sa::ByteBuffer']]],
-  ['readfloat_7',['readFloat',['../classsa_1_1_byte_buffer.html#aa576493f2d2c3b2102c49d934c7a8d85',1,'sa::ByteBuffer']]],
-  ['readint_8',['readInt',['../classsa_1_1_byte_buffer.html#a575febc5d1346a86fa12bc85ab68a73f',1,'sa::ByteBuffer']]],
-  ['readlong_9',['readLong',['../classsa_1_1_byte_buffer.html#aad5c4d2743154450ff3c0058f42f8f61',1,'sa::ByteBuffer']]],
-  ['readonlyexception_10',['ReadOnlyException',['../classsa_1_1_byte_buffer_1_1_read_only_exception.html#a2cf98db89238cc8e6d7324ec2dfd52bb',1,'sa::ByteBuffer::ReadOnlyException']]],
-  ['readshort_11',['readShort',['../classsa_1_1_byte_buffer.html#a9b175156514f3095dd0cfcdf7120f73d',1,'sa::ByteBuffer']]],
-  ['readstring_12',['readString',['../classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86',1,'sa::ByteBuffer']]],
-  ['readuint_13',['readUInt',['../classsa_1_1_byte_buffer.html#a60e1fe41d91de8280dfe268a511390bf',1,'sa::ByteBuffer']]],
-  ['readulong_14',['readULong',['../classsa_1_1_byte_buffer.html#a2b37a67f5115800d41c143df1d08fcf2',1,'sa::ByteBuffer']]],
-  ['readushort_15',['readUShort',['../classsa_1_1_byte_buffer.html#a93a06008f7a261f1860160bbbff4b121',1,'sa::ByteBuffer']]],
-  ['readvarint_16',['readVarInt',['../classsa_1_1_byte_buffer.html#a3d61c4d96d073ab93d1c9691aee74768',1,'sa::ByteBuffer']]],
-  ['readvarlong_17',['readVarLong',['../classsa_1_1_byte_buffer.html#a9ff25fa7e65711a91614ee1498f13e81',1,'sa::ByteBuffer']]],
-  ['readvarshort_18',['readVarShort',['../classsa_1_1_byte_buffer.html#a1ee9045d0def8ac112d55ea62126fa39',1,'sa::ByteBuffer']]],
-  ['readvaruint_19',['readVarUInt',['../classsa_1_1_byte_buffer.html#ada24620e4ad0910cd19afc6aaf6468f2',1,'sa::ByteBuffer']]],
-  ['readvarulong_20',['readVarULong',['../classsa_1_1_byte_buffer.html#a1231fdedfc5c6c7d51519b264013a401',1,'sa::ByteBuffer']]],
-  ['readvarushort_21',['readVarUShort',['../classsa_1_1_byte_buffer.html#a88a0b6e9cfcc029bce111a9a9bbc0fe7',1,'sa::ByteBuffer']]],
-  ['remainingbytes_22',['remainingBytes',['../classsa_1_1_byte_buffer.html#ac0a107e22875d5551d25d27294714628',1,'sa::ByteBuffer']]],
-  ['replaceat_23',['replaceAt',['../classsa_1_1_byte_buffer.html#a4b67680b1d9a03b76e00dadd846e2c27',1,'sa::ByteBuffer::replaceAt(std::uint32_t offset, const std::vector&lt; byte_t &gt; &amp;bytes)'],['../classsa_1_1_byte_buffer.html#ac25c438293bf89c0f0a49254a013a26b',1,'sa::ByteBuffer::replaceAt(std::uint32_t offset, const T &amp;value)']]],
-  ['resetreaderindex_24',['resetReaderIndex',['../classsa_1_1_byte_buffer.html#af5e6b7d5cc0d3e62665898f7c74830c8',1,'sa::ByteBuffer']]],
-  ['resetwriterindex_25',['resetWriterIndex',['../classsa_1_1_byte_buffer.html#a30ae764e96799b04c275091bcd69ee12',1,'sa::ByteBuffer']]],
-  ['resize_26',['resize',['../classsa_1_1_byte_buffer.html#af9aae222949211ebb155b79cb5377f60',1,'sa::ByteBuffer']]]
+  ['operator_21_3d_0',['operator!=',['../classsa_1_1_byte_buffer.html#a19cf950412e0e55aa74877c27889628c',1,'sa::ByteBuffer']]],
+  ['operator_3d_3d_1',['operator==',['../classsa_1_1_byte_buffer.html#a3352d462ba2cedae61215356ae7e7b18',1,'sa::ByteBuffer']]]
 ];

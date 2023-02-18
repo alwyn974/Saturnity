@@ -1,0 +1,6 @@
+<map id="sa::PacketRegistry" name="sa::PacketRegistry">
+<area shape="rect" id="node1" title="A registry that stores packets, their ids and their factories." alt="" coords="363,56,493,81"/>
+<area shape="rect" id="node4" title=" " alt="" coords="595,49,725,89"/>
+<area shape="rect" id="node2" title=" " alt="" coords="37,5,179,60"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,85,211,125"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="sa::PacketRegistry::PacketAlreadyRegisteredException" name="sa::PacketRegistry::PacketAlreadyRegisteredException">
+<area shape="rect" id="node1" title="Thrown when a packet is already registered." alt="" coords="5,257,236,297"/>
+<area shape="rect" id="node2" href="$classsa_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="71,183,170,208"/>
+<area shape="rect" id="node3" title=" " alt="" coords="49,95,150,120"/>
+<area shape="rect" id="node4" title=" " alt="" coords="175,95,253,120"/>
+<area shape="rect" id="node5" title=" " alt="" coords="152,5,276,45"/>
+</map>

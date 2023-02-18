@@ -5,6 +5,7 @@ var classsa_1_1_abstract_packet =
       [ "TCP", "classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1a375788b68b352808c45ec7a0fcd80255", null ]
     ] ],
     [ "AbstractPacket", "classsa_1_1_abstract_packet.html#af90f8ab773ed12672bf30cf7372543ec", null ],
+    [ "~AbstractPacket", "classsa_1_1_abstract_packet.html#a6369b7a084d2289f4cf8f9f1c086f780", null ],
     [ "fromBytes", "classsa_1_1_abstract_packet.html#a024ff8875b3fc41939b5a172eea6e0b0", null ],
     [ "getType", "classsa_1_1_abstract_packet.html#aa742e5c7ea0113be773ac57ca02f83ef", null ],
     [ "isTCP", "classsa_1_1_abstract_packet.html#a115dbfb97bba140095bae35703efbcfb", null ],

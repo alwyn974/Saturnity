@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['segment_5fbits_0',['SEGMENT_BITS',['../classsa_1_1_byte_buffer.html#ab3424f5ecefa9190ce675649d3b2b123',1,'sa::ByteBuffer']]],
-  ['sign_5fbit_1',['SIGN_BIT',['../classsa_1_1_byte_buffer.html#a6ab3fe2293a390c4727330ee56cea7f4',1,'sa::ByteBuffer']]]
+  ['instance_0',['instance',['../classsa_1_1_packet_registry.html#a665e4e5a1e5e646aeca6d9361adcf9d9',1,'sa::PacketRegistry']]]
 ];

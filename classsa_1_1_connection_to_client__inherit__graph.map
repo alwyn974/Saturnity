@@ -1,0 +1,4 @@
+<map id="sa::ConnectionToClient" name="sa::ConnectionToClient">
+<area shape="rect" id="node1" title="Forward declaration." alt="" coords="6,79,161,104"/>
+<area shape="rect" id="node2" href="$classsa_1_1_abstract_connection.html" title="A connection between a client/server or server/client." alt="" coords="5,5,161,31"/>
+</map>

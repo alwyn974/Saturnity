@@ -1,0 +1,5 @@
+<map id="sa::PacketRegistry::PacketMissingEmptyConstructorException" name="sa::PacketRegistry::PacketMissingEmptyConstructorException">
+<area shape="rect" id="node1" title="Thrown when a packet is missing an empty constructor." alt="" coords="5,152,223,207"/>
+<area shape="rect" id="node2" href="$classsa_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="65,79,163,104"/>
+<area shape="rect" id="node3" title=" " alt="" coords="63,5,165,31"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="sa::ByteBuffer::VariableLengthTooBigException" name="sa::ByteBuffer::VariableLengthTooBigException">
+<area shape="rect" id="node1" title="Throw when a variable length type is too big." alt="" coords="5,257,164,297"/>
+<area shape="rect" id="node2" href="$classsa_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="35,183,134,208"/>
+<area shape="rect" id="node3" title=" " alt="" coords="13,95,114,120"/>
+<area shape="rect" id="node4" title=" " alt="" coords="139,95,217,120"/>
+<area shape="rect" id="node5" title=" " alt="" coords="116,5,240,45"/>
+</map>

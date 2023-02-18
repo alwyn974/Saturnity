@@ -1,6 +1,7 @@
 var classsa_1_1_byte_buffer =
 [
     [ "ReadOnlyException", "classsa_1_1_byte_buffer_1_1_read_only_exception.html", "classsa_1_1_byte_buffer_1_1_read_only_exception" ],
+    [ "VariableLengthTooBigException", "classsa_1_1_byte_buffer_1_1_variable_length_too_big_exception.html", "classsa_1_1_byte_buffer_1_1_variable_length_too_big_exception" ],
     [ "ByteBuffer", "classsa_1_1_byte_buffer.html#a479270441b8dec070f812e28305723aa", null ],
     [ "ByteBuffer", "classsa_1_1_byte_buffer.html#aff8eefb76292716f6d9da46e89046020", null ],
     [ "ByteBuffer", "classsa_1_1_byte_buffer.html#ab9bd871472225091e6d2e2d137b2048d", null ],
@@ -34,6 +35,7 @@ var classsa_1_1_byte_buffer =
     [ "readLong", "classsa_1_1_byte_buffer.html#aad5c4d2743154450ff3c0058f42f8f61", null ],
     [ "readShort", "classsa_1_1_byte_buffer.html#a9b175156514f3095dd0cfcdf7120f73d", null ],
     [ "readString", "classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86", null ],
+    [ "readUChar", "classsa_1_1_byte_buffer.html#a305b42c4ea79459262b056a44e0a10e7", null ],
     [ "readUInt", "classsa_1_1_byte_buffer.html#a60e1fe41d91de8280dfe268a511390bf", null ],
     [ "readULong", "classsa_1_1_byte_buffer.html#a2b37a67f5115800d41c143df1d08fcf2", null ],
     [ "readUShort", "classsa_1_1_byte_buffer.html#a93a06008f7a261f1860160bbbff4b121", null ],
@@ -88,6 +90,5 @@ var classsa_1_1_byte_buffer =
     [ "MAX_VARINT_SIZE", "classsa_1_1_byte_buffer.html#a1a475a94bd7c451245bf7f0759d6d913", null ],
     [ "MAX_VARLONG_SIZE", "classsa_1_1_byte_buffer.html#a2338627a5b06cbe0ff7f3c93c729f2c1", null ],
     [ "MAX_VARSHORT_SIZE", "classsa_1_1_byte_buffer.html#a51f13b85bf09900feb3ad96d9a5a327b", null ],
-    [ "SEGMENT_BITS", "classsa_1_1_byte_buffer.html#ab3424f5ecefa9190ce675649d3b2b123", null ],
-    [ "SIGN_BIT", "classsa_1_1_byte_buffer.html#a6ab3fe2293a390c4727330ee56cea7f4", null ]
+    [ "SEGMENT_BITS", "classsa_1_1_byte_buffer.html#ab3424f5ecefa9190ce675649d3b2b123", null ]
 ];

@@ -131,6 +131,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af90f8ab773ed12672bf30cf7372543ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_packet.html#af90f8ab773ed12672bf30cf7372543ec">AbstractPacket</a> (const <a class="el" href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1">EnumPacketType</a> &amp;type)</td></tr>
 <tr class="memdesc:af90f8ab773ed12672bf30cf7372543ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Abstract Packet object.  <a href="classsa_1_1_abstract_packet.html#af90f8ab773ed12672bf30cf7372543ec">More...</a><br /></td></tr>
 <tr class="separator:af90f8ab773ed12672bf30cf7372543ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6369b7a084d2289f4cf8f9f1c086f780"><td class="memItemLeft" align="right" valign="top"><a id="a6369b7a084d2289f4cf8f9f1c086f780" name="a6369b7a084d2289f4cf8f9f1c086f780"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractPacket</b> ()=default</td></tr>
+<tr class="memdesc:a6369b7a084d2289f4cf8f9f1c086f780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Abstract Packet object. <br /></td></tr>
+<tr class="separator:a6369b7a084d2289f4cf8f9f1c086f780"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a024ff8875b3fc41939b5a172eea6e0b0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_packet.html#a024ff8875b3fc41939b5a172eea6e0b0">fromBytes</a> (<a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;byteBuffer)=0</td></tr>
 <tr class="memdesc:a024ff8875b3fc41939b5a172eea6e0b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize the packet from bytes.  <a href="classsa_1_1_abstract_packet.html#a024ff8875b3fc41939b5a172eea6e0b0">More...</a><br /></td></tr>
 <tr class="separator:a024ff8875b3fc41939b5a172eea6e0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,7 +160,26 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A packet is a data structure that can be serialized and deserialized through bytes. </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<p >You can create a packet by inheriting from this class and implementing the toBytes and fromBytes methods. Example: </p><div class="fragment"><div class="line"><span class="keyword">class </span>HelloPacket : <span class="keyword">public</span> <a class="code hl_class" href="classsa_1_1_abstract_packet.html">sa::AbstractPacket</a> {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">   HelloPacket() : <a class="code hl_namespace" href="namespacesa.html">sa</a>::<a class="code hl_class" href="classsa_1_1_abstract_packet.html">AbstractPacket</a>(<a class="code hl_namespace" href="namespacesa.html">sa</a>::<a class="code hl_class" href="classsa_1_1_abstract_packet.html">AbstractPacket</a>::<a class="code hl_enumeration" href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1">EnumPacketType</a>::UDP) {}; <span class="comment">// This empty constructor is MANDATORY, the packet registry cannot</span></div>
+<div class="line">create a packet without it. <span class="keyword">explicit</span> HelloPacket(<span class="keyword">const</span> std::string &amp;message) : <a class="code hl_namespace" href="namespacesa.html">sa</a>::<a class="code hl_class" href="classsa_1_1_abstract_packet.html">AbstractPacket</a>(<a class="code hl_namespace" href="namespacesa.html">sa</a>::<a class="code hl_class" href="classsa_1_1_abstract_packet.html">AbstractPacket</a>::EnumPacketType::UDP),</div>
+<div class="line">_message(message) {}; <span class="keywordtype">void</span> toBytes(<a class="code hl_class" href="classsa_1_1_byte_buffer.html">sa::ByteBuffer</a> &amp;byteBuffer)<span class="keyword"> override </span>{ byteBuffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a9cc5453be851186c18c1f388b2c0b88b">writeString</a>(this-&gt;_message);</div>
+<div class="line">   }</div>
+<div class="line">   <span class="keywordtype">void</span> fromBytes(<a class="code hl_class" href="classsa_1_1_byte_buffer.html">sa::ByteBuffer</a> &amp;byteBuffer)<span class="keyword"> override </span>{</div>
+<div class="line">        this-&gt;_message = byteBuffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86">readString</a>();</div>
+<div class="line">   }</div>
+<div class="line"> </div>
+<div class="line">   std::string getMessage()<span class="keyword"> const </span>{</div>
+<div class="line">       <span class="keywordflow">return</span> this-&gt;_message;</div>
+<div class="line">   }</div>
+<div class="ttc" id="aclasssa_1_1_abstract_packet_html"><div class="ttname"><a href="classsa_1_1_abstract_packet.html">sa::AbstractPacket</a></div><div class="ttdoc">A packet is a data structure that can be serialized and deserialized through bytes.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:38</div></div>
+<div class="ttc" id="aclasssa_1_1_abstract_packet_html_aa8dcba65fd30d07f2255ada10df819e1"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1">sa::AbstractPacket::EnumPacketType</a></div><div class="ttdeci">EnumPacketType</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:40</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html"><div class="ttname"><a href="classsa_1_1_byte_buffer.html">sa::ByteBuffer</a></div><div class="ttdoc">A byte buffer class, limited to UINT32_MAX bytes.</div><div class="ttdef"><b>Definition:</b> ByteBuffer.hpp:49</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a9cc5453be851186c18c1f388b2c0b88b"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a9cc5453be851186c18c1f388b2c0b88b">sa::ByteBuffer::writeString</a></div><div class="ttdeci">void writeString(const std::string &amp;str)</div><div class="ttdoc">Write a string in the buffer (increase the write position by the 2 + size of the string)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:364</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_adc72a6de314afb9db9dc3ad039b2df86"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86">sa::ByteBuffer::readString</a></div><div class="ttdeci">std::string readString()</div><div class="ttdoc">Read a string from the buffer (increase the read position by 2 + the size of the string)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:193</div></div>
+<div class="ttc" id="anamespacesa_html"><div class="ttname"><a href="namespacesa.html">sa</a></div><div class="ttdoc">The Saturnity namespace.</div><div class="ttdef"><b>Definition:</b> TCPClient.cpp:10</div></div>
+</div><!-- fragment --> </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="aa8dcba65fd30d07f2255ada10df819e1" name="aa8dcba65fd30d07f2255ada10df819e1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa8dcba65fd30d07f2255ada10df819e1">&#9670;&#160;</a></span>EnumPacketType</h2>
 

@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "Saturnity", "index.html", [
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]
     ] ],
@@ -33,9 +34,10 @@ var NAVTREE =
       [ "Data Structure Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Data Fields", "functions.html", [
-        [ "All", "functions.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
+        [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
         [ "Enumerator", "functions_eval.html", null ]
       ] ]
@@ -48,7 +50,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_abstract_packet_8hpp_source.html"
+"_abstract_client_8hpp_source.html",
+"classsa_1_1_byte_buffer.html#a6f0129bca7f11599127fc9307df3b4bc",
+"functions_d.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

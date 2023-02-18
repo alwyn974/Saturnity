@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tcp_0',['TCP',['../classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1a375788b68b352808c45ec7a0fcd80255',1,'sa::AbstractPacket']]]
+  ['connected_0',['CONNECTED',['../classsa_1_1_abstract_client.html#a2198bdf36f959539e578e9bc9363ea44a4155375ea24356a7c2edf0a0c0e228a0',1,'sa::AbstractClient']]]
 ];

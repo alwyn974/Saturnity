@@ -132,7 +132,10 @@ Collaboration diagram for sa::ByteBuffer:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html">ReadOnlyException</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="The ReadOnlyException is thrown when trying to write in a read only buffer.">ReadOnlyException</a> is thrown when trying to write in a read only buffer.  <a href="classsa_1_1_byte_buffer_1_1_read_only_exception.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thrown when trying to write in a read only buffer.  <a href="classsa_1_1_byte_buffer_1_1_read_only_exception.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer_1_1_variable_length_too_big_exception.html">VariableLengthTooBigException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw when a variable length type is too big.  <a href="classsa_1_1_byte_buffer_1_1_variable_length_too_big_exception.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -210,6 +213,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <tr class="memitem:adc72a6de314afb9db9dc3ad039b2df86"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86">readString</a> ()</td></tr>
 <tr class="memdesc:adc72a6de314afb9db9dc3ad039b2df86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a string from the buffer (increase the read position by 2 + the size of the string)  <a href="classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86">More...</a><br /></td></tr>
 <tr class="separator:adc72a6de314afb9db9dc3ad039b2df86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a305b42c4ea79459262b056a44e0a10e7"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a305b42c4ea79459262b056a44e0a10e7">readUChar</a> ()</td></tr>
+<tr class="memdesc:a305b42c4ea79459262b056a44e0a10e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an unsigned char from the buffer (increase the read position by 1)  <a href="classsa_1_1_byte_buffer.html#a305b42c4ea79459262b056a44e0a10e7">More...</a><br /></td></tr>
+<tr class="separator:a305b42c4ea79459262b056a44e0a10e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60e1fe41d91de8280dfe268a511390bf"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a60e1fe41d91de8280dfe268a511390bf">readUInt</a> ()</td></tr>
 <tr class="memdesc:a60e1fe41d91de8280dfe268a511390bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an unsigned int from the buffer (increase the read position by 4)  <a href="classsa_1_1_byte_buffer.html#a60e1fe41d91de8280dfe268a511390bf">More...</a><br /></td></tr>
 <tr class="separator:a60e1fe41d91de8280dfe268a511390bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -238,7 +244,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <tr class="memdesc:a88a0b6e9cfcc029bce111a9a9bbc0fe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a variable length unsigned short from the buffer (increase the read position by 1 to 3)  <a href="classsa_1_1_byte_buffer.html#a88a0b6e9cfcc029bce111a9a9bbc0fe7">More...</a><br /></td></tr>
 <tr class="separator:a88a0b6e9cfcc029bce111a9a9bbc0fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0a107e22875d5551d25d27294714628"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#ac0a107e22875d5551d25d27294714628">remainingBytes</a> () const</td></tr>
-<tr class="memdesc:ac0a107e22875d5551d25d27294714628"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get t nheber uomf bytes remaining in the buffer.  <a href="classsa_1_1_byte_buffer.html#ac0a107e22875d5551d25d27294714628">More...</a><br /></td></tr>
+<tr class="memdesc:ac0a107e22875d5551d25d27294714628"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of bytes remaining in the buffer (capacity - read position)  <a href="classsa_1_1_byte_buffer.html#ac0a107e22875d5551d25d27294714628">More...</a><br /></td></tr>
 <tr class="separator:ac0a107e22875d5551d25d27294714628"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b67680b1d9a03b76e00dadd846e2c27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a4b67680b1d9a03b76e00dadd846e2c27">replaceAt</a> (std::uint32_t offset, const std::vector&lt; byte_t &gt; &amp;bytes)</td></tr>
 <tr class="memdesc:a4b67680b1d9a03b76e00dadd846e2c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace the bytes at a certain offset.  <a href="classsa_1_1_byte_buffer.html#a4b67680b1d9a03b76e00dadd846e2c27">More...</a><br /></td></tr>
@@ -264,7 +270,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>resetWriterIndex</b> 
 <tr class="memdesc:a6f0129bca7f11599127fc9307df3b4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrive the size of the internal vector.  <a href="classsa_1_1_byte_buffer.html#a6f0129bca7f11599127fc9307df3b4bc">More...</a><br /></td></tr>
 <tr class="separator:a6f0129bca7f11599127fc9307df3b4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00ac18f02360b65490e3c1071ede168a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; byte_t &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a00ac18f02360b65490e3c1071ede168a">vector</a> ()</td></tr>
-<tr class="memdesc:a00ac18f02360b65490e3c1071ede168a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the vector used as buffer to store bytes.  <a href="classsa_1_1_byte_buffer.html#a00ac18f02360b65490e3c1071ede168a">More...</a><br /></td></tr>
+<tr class="memdesc:a00ac18f02360b65490e3c1071ede168a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the mutable vector used as buffer to store bytes.  <a href="classsa_1_1_byte_buffer.html#a00ac18f02360b65490e3c1071ede168a">More...</a><br /></td></tr>
 <tr class="separator:a00ac18f02360b65490e3c1071ede168a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85b9dcbd1cb11132cf0e4b7c3f49fad4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_byte_buffer.html#a85b9dcbd1cb11132cf0e4b7c3f49fad4">writeBoolean</a> (bool value)</td></tr>
 <tr class="memdesc:a85b9dcbd1cb11132cf0e4b7c3f49fad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a boolean in the buffer (increase the write position by 1)  <a href="classsa_1_1_byte_buffer.html#a85b9dcbd1cb11132cf0e4b7c3f49fad4">More...</a><br /></td></tr>
@@ -379,10 +385,6 @@ static const constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b
 static const constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>SEGMENT_BITS</b> = 0x7F</td></tr>
 <tr class="memdesc:ab3424f5ecefa9190ce675649d3b2b123"><td class="mdescLeft">&#160;</td><td class="mdescRight">The segment bits is used to extract the least significant bit (7-bit chunk) <br /></td></tr>
 <tr class="separator:ab3424f5ecefa9190ce675649d3b2b123"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ab3fe2293a390c4727330ee56cea7f4"><td class="memItemLeft" align="right" valign="top"><a id="a6ab3fe2293a390c4727330ee56cea7f4" name="a6ab3fe2293a390c4727330ee56cea7f4"></a>
-static const constexpr unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>SIGN_BIT</b> = 0x40</td></tr>
-<tr class="memdesc:a6ab3fe2293a390c4727330ee56cea7f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sign bit is used to check if the number is negative. <br /></td></tr>
-<tr class="separator:a6ab3fe2293a390c4727330ee56cea7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -442,6 +444,50 @@ std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_writePos</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >A byte buffer class, limited to UINT32_MAX bytes. </p>
+<p >A simple example: </p><div class="fragment"><div class="line"><a class="code hl_class" href="classsa_1_1_byte_buffer.html">sa::ByteBuffer</a> buffer; <span class="comment">// or sa::ByteBuffer buffer(1024); to specify the size, max size is UINT32_MAX</span></div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a054303fd210c5ba1ee3341f33c9906d1">writeByte</a>(0x01);</div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a721069e05c45f30c6bf9529c0fd44613">writeChar</a>(<span class="charliteral">&#39;a&#39;</span>);</div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#afdf1dbd10ba989247ec11dc62bb2545b">writeShort</a>(0x0102);</div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a29e2a565b5a019485a000865f6354ed2">writeInt</a>(0x01020304); <span class="comment">//</span></div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a1656c6d1d9496f5e13ec10228b0166df">writeLong</a>(0x0102030405060708); <span class="comment">//</span></div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a32effb0e368f3e75762c859e1e8a7834">writeFloat</a>(1.0f); <span class="comment">//</span></div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a61833762d6030c4935e24e041833bf24">writeDouble</a>(1.0); <span class="comment">//</span></div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a9cc5453be851186c18c1f388b2c0b88b">writeString</a>(<span class="stringliteral">&quot;Hello World!&quot;</span>);</div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a7fb90052612bb027d27dc185e92f5f11">writeBytes</a>({0x01, 0x02, 0x03, 0x04}); <span class="comment">// Using std::vector&lt;byte_t&gt;</span></div>
+<div class="line">buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#abd1e36b15b08feada206cb82e051b2dc">writeVarShort</a>(0x1); <span class="comment">// Variable length short, exists for all integer types (short, int, long)</span></div>
+<div class="line"> </div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#ac58fb11d265f9747927b44e12470d76a">readByte</a>(); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a435b5d32b286925e38c777217ed2effc">readChar</a>(); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a9b175156514f3095dd0cfcdf7120f73d">readShort</a>(); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a575febc5d1346a86fa12bc85ab68a73f">readInt</a>(); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#aad5c4d2743154450ff3c0058f42f8f61">readLong</a>(); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#aa576493f2d2c3b2102c49d934c7a8d85">readFloat</a>(); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a35085c979e19fc67d5ed35ec94452ede">readDouble</a>(); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86">readString</a>(); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#ac65c54667d5ece47cb8090b01c32ce2a">readBytes</a>(4); &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> <span class="comment">// Read 4 bytes</span></div>
+<div class="line">std::cout &lt;&lt; buffer.<a class="code hl_function" href="classsa_1_1_byte_buffer.html#a1ee9045d0def8ac112d55ea62126fa39">readVarShort</a>(); &lt;&lt; std::endl;</div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html"><div class="ttname"><a href="classsa_1_1_byte_buffer.html">sa::ByteBuffer</a></div><div class="ttdoc">A byte buffer class, limited to UINT32_MAX bytes.</div><div class="ttdef"><b>Definition:</b> ByteBuffer.hpp:49</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a054303fd210c5ba1ee3341f33c9906d1"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a054303fd210c5ba1ee3341f33c9906d1">sa::ByteBuffer::writeByte</a></div><div class="ttdeci">void writeByte(const byte_t &amp;byte)</div><div class="ttdoc">Write a byte in the buffer, (increase the write position by 1)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:285</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a1656c6d1d9496f5e13ec10228b0166df"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a1656c6d1d9496f5e13ec10228b0166df">sa::ByteBuffer::writeLong</a></div><div class="ttdeci">void writeLong(std::int64_t value)</div><div class="ttdoc">Write a long in the buffer (increase the write position by 8)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:344</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a1ee9045d0def8ac112d55ea62126fa39"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a1ee9045d0def8ac112d55ea62126fa39">sa::ByteBuffer::readVarShort</a></div><div class="ttdeci">std::int16_t readVarShort()</div><div class="ttdoc">Read a variable length short from the buffer (increase the read position by 1 to 3)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:201</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a29e2a565b5a019485a000865f6354ed2"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a29e2a565b5a019485a000865f6354ed2">sa::ByteBuffer::writeInt</a></div><div class="ttdeci">void writeInt(std::int32_t value)</div><div class="ttdoc">Write a int in the buffer (increase the write position by 4)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:334</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a32effb0e368f3e75762c859e1e8a7834"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a32effb0e368f3e75762c859e1e8a7834">sa::ByteBuffer::writeFloat</a></div><div class="ttdeci">void writeFloat(float value)</div><div class="ttdoc">Write a float in the buffer (increase the write position by 4)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:354</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a35085c979e19fc67d5ed35ec94452ede"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a35085c979e19fc67d5ed35ec94452ede">sa::ByteBuffer::readDouble</a></div><div class="ttdeci">double readDouble()</div><div class="ttdoc">Read a double from the buffer (increase the read position by 8)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:188</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a435b5d32b286925e38c777217ed2effc"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a435b5d32b286925e38c777217ed2effc">sa::ByteBuffer::readChar</a></div><div class="ttdeci">char readChar()</div><div class="ttdoc">Read a char from the buffer (increase the read position by 1)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:138</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a575febc5d1346a86fa12bc85ab68a73f"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a575febc5d1346a86fa12bc85ab68a73f">sa::ByteBuffer::readInt</a></div><div class="ttdeci">std::int32_t readInt()</div><div class="ttdoc">Read an int from the buffer (increase the read position by 4)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:163</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a61833762d6030c4935e24e041833bf24"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a61833762d6030c4935e24e041833bf24">sa::ByteBuffer::writeDouble</a></div><div class="ttdeci">void writeDouble(double value)</div><div class="ttdoc">Write a double in the buffer (increase the write position by 8)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:359</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a721069e05c45f30c6bf9529c0fd44613"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a721069e05c45f30c6bf9529c0fd44613">sa::ByteBuffer::writeChar</a></div><div class="ttdeci">void writeChar(char value)</div><div class="ttdoc">Write a char in the buffer (increase the write position by 1)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:309</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a7fb90052612bb027d27dc185e92f5f11"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a7fb90052612bb027d27dc185e92f5f11">sa::ByteBuffer::writeBytes</a></div><div class="ttdeci">void writeBytes(const ByteBuffer &amp;buffer)</div><div class="ttdoc">Write a vector of bytes in the buffer (increase the write position by the size of the vector)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:304</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a9b175156514f3095dd0cfcdf7120f73d"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a9b175156514f3095dd0cfcdf7120f73d">sa::ByteBuffer::readShort</a></div><div class="ttdeci">std::int16_t readShort()</div><div class="ttdoc">Read a short from the buffer (increase the read position by 2)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:153</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_a9cc5453be851186c18c1f388b2c0b88b"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a9cc5453be851186c18c1f388b2c0b88b">sa::ByteBuffer::writeString</a></div><div class="ttdeci">void writeString(const std::string &amp;str)</div><div class="ttdoc">Write a string in the buffer (increase the write position by the 2 + size of the string)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:364</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_aa576493f2d2c3b2102c49d934c7a8d85"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#aa576493f2d2c3b2102c49d934c7a8d85">sa::ByteBuffer::readFloat</a></div><div class="ttdeci">float readFloat()</div><div class="ttdoc">Read a float from the buffer (increase the read position by 4)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:183</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_aad5c4d2743154450ff3c0058f42f8f61"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#aad5c4d2743154450ff3c0058f42f8f61">sa::ByteBuffer::readLong</a></div><div class="ttdeci">std::int64_t readLong()</div><div class="ttdoc">Read a long from the buffer (increase the read position by 8)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:173</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_abd1e36b15b08feada206cb82e051b2dc"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#abd1e36b15b08feada206cb82e051b2dc">sa::ByteBuffer::writeVarShort</a></div><div class="ttdeci">void writeVarShort(std::int16_t value)</div><div class="ttdoc">Write a variable length short in the buffer (minimum 1 byte, maximum 3 bytes)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:372</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_ac58fb11d265f9747927b44e12470d76a"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#ac58fb11d265f9747927b44e12470d76a">sa::ByteBuffer::readByte</a></div><div class="ttdeci">byte_t readByte()</div><div class="ttdoc">Read a byte from the buffer (increase the read position by 1)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:116</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_ac65c54667d5ece47cb8090b01c32ce2a"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#ac65c54667d5ece47cb8090b01c32ce2a">sa::ByteBuffer::readBytes</a></div><div class="ttdeci">std::vector&lt; byte_t &gt; readBytes(std::uint32_t size)</div><div class="ttdoc">Read a boolean from the buffer (increase the read position by the size)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:121</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_adc72a6de314afb9db9dc3ad039b2df86"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86">sa::ByteBuffer::readString</a></div><div class="ttdeci">std::string readString()</div><div class="ttdoc">Read a string from the buffer (increase the read position by 2 + the size of the string)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:193</div></div>
+<div class="ttc" id="aclasssa_1_1_byte_buffer_html_afdf1dbd10ba989247ec11dc62bb2545b"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#afdf1dbd10ba989247ec11dc62bb2545b">sa::ByteBuffer::writeShort</a></div><div class="ttdeci">void writeShort(std::int16_t value)</div><div class="ttdoc">Write a short in the buffer (increase the write position by 2)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:324</div></div>
+</div><!-- fragment --><p> Unsigned version of the methods are also available, see the documentation for more information </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a479270441b8dec070f812e28305723aa" name="a479270441b8dec070f812e28305723aa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a479270441b8dec070f812e28305723aa">&#9670;&#160;</a></span>ByteBuffer() <span class="overload">[1/3]</span></h2>
@@ -651,7 +697,7 @@ std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>_writePos</b
 </div><div class="memdoc">
 
 <p>Ensure that the buffer has enough space to write a certain size. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p >Will update the capacity if needed </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>the size to check </td></tr>
   </table>
@@ -1358,6 +1404,26 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="a305b42c4ea79459262b056a44e0a10e7" name="a305b42c4ea79459262b056a44e0a10e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a305b42c4ea79459262b056a44e0a10e7">&#9670;&#160;</a></span>readUChar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char sa::ByteBuffer::readUChar </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read an unsigned char from the buffer (increase the read position by 1) </p>
+<dl class="section return"><dt>Returns</dt><dd>the unsigned char read </dd></dl>
+
+</div>
+</div>
 <a id="a60e1fe41d91de8280dfe268a511390bf" name="a60e1fe41d91de8280dfe268a511390bf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a60e1fe41d91de8280dfe268a511390bf">&#9670;&#160;</a></span>readUInt()</h2>
 
@@ -1589,7 +1655,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Get t nheber uomf bytes remaining in the buffer. </p>
+<p>Get the number of bytes remaining in the buffer (capacity - read position) </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of bytes remaining </dd></dl>
 
 </div>
@@ -1631,7 +1697,7 @@ template&lt;typename T &gt; </div>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::out_of_range</td><td>if the offset is greater than the buffer size </td></tr>
-    <tr><td class="paramname"><a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="The ReadOnlyException is thrown when trying to write in a read only buffer.">ReadOnlyException</a></td><td>if the buffer is only readeable </td></tr>
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="Thrown when trying to write in a read only buffer.">ReadOnlyException</a></td><td>if the buffer is only readeable </td></tr>
   </table>
   </dd>
 </dl>
@@ -1714,7 +1780,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Resize the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p >Will update the capacity and the size of the internal vector </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>the new size of the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> </td></tr>
   </table>
@@ -1822,7 +1888,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Return the vector used as buffer to store bytes. </p>
+<p>Return the mutable vector used as buffer to store bytes. </p>
 <dl class="section return"><dt>Returns</dt><dd>the vector </dd></dl>
 
 </div>
@@ -1985,7 +2051,7 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="The ReadOnlyException is thrown when trying to write in a read only buffer.">ReadOnlyException</a></td><td>if the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> is only readeable </td></tr>
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="Thrown when trying to write in a read only buffer.">ReadOnlyException</a></td><td>if the <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> is only readeable </td></tr>
   </table>
   </dd>
 </dl>
