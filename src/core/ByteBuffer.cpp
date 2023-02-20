@@ -432,8 +432,13 @@ namespace sa {
             throw std::out_of_range(
                 spdlog::fmt_lib::format("Can't write at offset ({0}), with a size of ({1}), because maximum is: {2}", offset, size, this->_maxCapacity));
         ensureCapacity(offset + size);
-        for (std::size_t i = 0; i < size; i++)
-            this->_buffer.emplace_back(((byte_t *) &value)[i]); // NOLINT
+        for (std::size_t i = 0; i < size; i++) {
+            byte_t byte = ((byte_t *) &value)[i]; // NOLINT
+            if (offset + i < this->size()) // Ensure that the current vector is big enough, to be overwritten
+                this->_buffer[offset + i] = byte;
+            else
+                this->_buffer.emplace_back(byte);
+        }
         this->_writePos += size;
     }
 
@@ -451,7 +456,7 @@ namespace sa {
             if (offset + i < this->size()) // Ensure that the current vector is big enough, to be overwritten
                 this->_buffer[offset + i] = byte;
             else
-                this->_buffer.push_back(byte);
+                this->_buffer.emplace_back(byte);
         }
     }
 
