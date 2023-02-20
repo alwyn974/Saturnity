@@ -8,11 +8,12 @@
 #ifndef SATURNITY_ABSTRACTCLIENT_HPP
 #define SATURNITY_ABSTRACTCLIENT_HPP
 
-#include <unordered_map>
 #include "ConnectionToServer.hpp"
 #include "saturnity/core/Core.hpp"
-#include "saturnity/core/PacketRegistry.hpp"
+#include "saturnity/core/packet/PacketRegistry.hpp"
 #include "saturnity/Exceptions.hpp"
+#include <unordered_map>
+#include <memory>
 
 /**
  * @brief The Saturnity namespace.
@@ -21,12 +22,12 @@ namespace sa {
     /**
      * @brief The base class for a client.
      */
-    class AbstractClient {
+    class AbstractClient : public std::enable_shared_from_this<AbstractClient> {
     public:
         /**
-         * @brief Throwed when the client is not connected to the server.
+         * @brief Thrown when the client is not connected to the server.
          */
-        class ClientNotConnectedException : public sa::Exception {
+        class ClientNotConnectedException : public sa::ex::Exception {
         public:
             /**
              * @brief Construct a new Client Not Connected Exception object.
@@ -35,10 +36,21 @@ namespace sa {
             explicit ClientNotConnectedException(const std::string &message) : Exception(message) {}
         };
 
+        /**
+         * @brief Thrown when the client cannot connect to the server.
+         */
+        class ClientCannotConnectException : public sa::ex::Exception {
+        public:
+            /**
+             * @brief Construct a new Client Not Connected Exception object.
+             * @param message the message of the exception.
+             */
+            explicit ClientCannotConnectException(const std::string &message) : Exception(message) {}
+        };
+
         enum EnumClientState {
             NONE, /**< The client is not initialized. */
             CONNECTED, /**< The client is connected to the server. */
-            DISCONNECTING, /**< The client is disconnecting from the server. */
             DISCONNECTED /**< The client is disconnected from the server. */
         };
 
@@ -62,6 +74,8 @@ namespace sa {
          * @brief Connect to a server.
          * @param host the host.
          * @param port the port.
+         * @throws std::out_of_range if the port is out of range.
+         * @throws ClientCannotConnectException if the client cannot connect to the server.
          */
         virtual void connect(const std::string &host, uint16_t port) = 0;
 
@@ -79,6 +93,7 @@ namespace sa {
         /**
          * @brief Send a byte buffer to the server.
          * @param buffer the byte buffer.
+         * @deprecated Use send(AbstractPacket &packet) instead.
          */
         virtual void send(ByteBuffer &buffer) = 0;
 
@@ -86,6 +101,7 @@ namespace sa {
          * @brief Send a packet to the server.
          * @param packet the packet.
          * @throws ClientNotConnectedException if the client is not connected to the server.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
          */
         virtual void send(AbstractPacket &packet)
         {
@@ -96,6 +112,7 @@ namespace sa {
             buffer.writeUShort(0);
             packet.toBytes(buffer);
             auto size = static_cast<uint16_t>(buffer.writerIndex());
+            spdlog::info("Sending packet id: {}, size: {}", id, size);
             buffer.setWriterIndex(sizeof(uint16_t)); // Skip id, for rewrite size
             buffer.writeUShort(size - sizeof(uint16_t) * 2); // Skip packet id and size
             buffer.setWriterIndex(size); // Restore writer index
@@ -106,6 +123,7 @@ namespace sa {
          * @brief Send a packet to the server.
          * @param packet the packet.
          * @throws ClientNotConnectedException if the client is not connected to the server.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
          */
         virtual void send(const std::shared_ptr<AbstractPacket> &packet) { this->send(*packet); }
 
@@ -113,6 +131,7 @@ namespace sa {
          * @brief Send a packet to the server.
          * @param packet the packet.
          * @throws ClientNotConnectedException if the client is not connected to the server.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
          */
         virtual void send(const std::unique_ptr<AbstractPacket> &packet) { this->send(*packet); }
 
@@ -120,14 +139,14 @@ namespace sa {
          * @brief Register a packet handler.
          * @tparam T the packet type.
          * @param handler the handler.
-         * @throws PacketHandlerAlreadyExistsException if a handler already exists for the packet.
+         * @throws ex::PacketHandlerAlreadyExistsException if a handler already exists for the packet.
          */
         template<typename T, typename = std::enable_if_t<std::is_base_of<AbstractPacket, T>::value, T>>
         void registerHandler(std::function<void(std::shared_ptr<ConnectionToServer> &server, T &packet)> handler)
         {
             const uint16_t id = this->packetRegistry->getPacketId<T>();
             if (this->packetHandlers.contains(id))
-                throw PacketHandlerAlreadyExistsException(spdlog::fmt_lib::format("A handler already exists for packet id: {}", id));
+                throw ex::PacketHandlerAlreadyExistsException(spdlog::fmt_lib::format("A handler already exists for packet id: {}", id));
 
             this->packetHandlers[id] = [handler](std::shared_ptr<ConnectionToServer> &server, ByteBuffer &buffer) {
                 T packet;
@@ -139,12 +158,13 @@ namespace sa {
         /**
          * @brief Unregister a packet handler.
          * @tparam T the packet type.
+         * @throws ex::PacketHandlerMissingException if no handler exists for the packet.
          */
         template<typename T, typename = std::enable_if_t<std::is_base_of<AbstractPacket, T>::value, T>>
         void unregisterHandler()
         {
             const uint16_t id = this->packetRegistry->getPacketId<T>();
-            if (!this->packetHandlers.contains(id)) throw PacketHandlerMissingException(spdlog::fmt_lib::format("No handler exists for packet id: {}", id));
+            if (!this->packetHandlers.contains(id)) throw ex::PacketHandlerMissingException(spdlog::fmt_lib::format("No handler exists for packet id: {}", id));
             this->packetHandlers.erase(id);
         }
 
@@ -165,6 +185,11 @@ namespace sa {
          * @param log the client logger.
          */
         void setLogger(const spdlog::logger &log) { this->logger = log; }
+
+        std::function<void(ConnectionToServerPtr &server)> onClientConnected; /**< The on client connected callback. */
+        std::function<void(ConnectionToServerPtr &server)> onClientDisconnected; /**< The on client disconnected callback. */
+        std::function<void(ConnectionToServerPtr &server, ByteBuffer &buffer)> onClientDataReceived; /**< The on client data received callback. */
+        std::function<void(ConnectionToServerPtr &server, ByteBuffer &buffer)> onClientDataSent; /**< The on client data sent callback. */
 
     protected:
         std::shared_ptr<PacketRegistry> packetRegistry; /**< The packet registry. */

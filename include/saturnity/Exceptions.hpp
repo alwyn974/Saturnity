@@ -11,25 +11,25 @@
 #include "core/Core.hpp"
 
 /**
- * @brief The Saturnity namespace.
+ * @brief The Saturnity exception namespace.
  */
-namespace sa {
+namespace sa::ex {
     /**
      * @brief Thrown when a packet handler already exists.
      */
-    class PacketHandlerAlreadyExistsException : public sa::Exception {
+    class PacketHandlerAlreadyExistsException : public sa::ex::Exception {
     public:
         /**
          * @brief Construct a new Packet Handler Already Exists Exception object.
          * @param message the message.
          */
-        explicit PacketHandlerAlreadyExistsException(const std::string &message) : Exception(message) {};
+        explicit PacketHandlerAlreadyExistsException(const std::string &message) : sa::ex::Exception(message) {};
     };
 
     /**
      * @brief Thrown when a packet handler is missing.
      */
-    class PacketHandlerMissingException : public sa::Exception {
+    class PacketHandlerMissingException : public sa::ex::Exception {
     public:
         /**
          * @brief Construct a new Packet Handler Missing Exception object.

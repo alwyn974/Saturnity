@@ -45,7 +45,7 @@ namespace sa {
         /**
          * @brief Thrown when a packet is not registered
          */
-        class PacketNotRegisteredException : public Exception {
+        class PacketNotRegisteredException : public sa::ex::Exception {
         public:
             /**
              * @brief Construct a new Packet Not Registered Exception object
@@ -57,7 +57,7 @@ namespace sa {
         /**
          * @brief Thrown when a packet is already registered
          */
-        class PacketAlreadyRegisteredException : public Exception {
+        class PacketAlreadyRegisteredException : public sa::ex::Exception {
         public:
             /**
              * @brief Construct a new Packet Already Registered Exception object
@@ -69,7 +69,7 @@ namespace sa {
         /**
          * @brief Thrown when a packet is missing an empty constructor
          */
-        class PacketMissingEmptyConstructorException : public Exception {
+        class PacketMissingEmptyConstructorException : public sa::ex::Exception {
         public:
             /**
              * @brief Construct a new Packet Missing Empty Constructor Exception object

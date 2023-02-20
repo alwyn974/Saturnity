@@ -51,25 +51,25 @@ namespace sa {
         /**
          * @brief Thrown when trying to write in a read only buffer
          */
-        class ReadOnlyException : public sa::Exception {
+        class ReadOnlyException : public sa::ex::Exception {
         public:
             /**
              * @brief Construct a new Read Only Exception object
              * @param message the message of the exception
              */
-            explicit ReadOnlyException(const std::string &message) : sa::Exception(message) {}
+            explicit ReadOnlyException(const std::string &message) : sa::ex::Exception(message) {}
         };
 
         /**
-         * @brief Throw when a variable length type is too big
+         * @brief Thrown when a variable length type is too big
          */
-        class VariableLengthTooBigException : public sa::Exception {
+        class VariableLengthTooBigException : public sa::ex::Exception {
         public:
             /**
              * @brief Construct a new Variable Length Too Big Exception object
              * @param message the message of the exception
              */
-            explicit VariableLengthTooBigException(const std::string &message) : sa::Exception(message) {}
+            explicit VariableLengthTooBigException(const std::string &message) : sa::ex::Exception(message) {}
         };
 
         /**
@@ -334,7 +334,7 @@ namespace sa {
         void writeChar(char value);
 
         /**
-         * @brief Write a unsigned char in the buffer (increase the write position by 1) (exactly the same as @link writeByte)
+         * @brief Write a unsigned char in the buffer (increase the write position by 1) (exactly the same as @link ByteBuffer#writeByte(const byte_t &) @endlink)
          * @param value the value to write
          */
         void writeUChar(unsigned char value);
@@ -474,7 +474,7 @@ namespace sa {
         /**
          * @brief Set the current reader index
          * @param readerIndex the new index of the reader
-         * @throws std::out_of_range if the index is out of bounds (limit is @link ByteBuffer::_maxCapacity)
+         * @throws std::out_of_range if the index is out of bounds (limit is @link ByteBuffer::_maxCapacity @endlink)
          */
         void setReaderIndex(std::uint32_t readerIndex);
 
@@ -492,7 +492,7 @@ namespace sa {
         /**
          * @brief Set the current writer index
          * @param writerIndex the new index of the writer
-         * @throws std::out_of_range if the index is out of bounds (limit is @link ByteBuffer::_maxCapacity)
+         * @throws std::out_of_range if the index is out of bounds (limit is @link ByteBuffer::_maxCapacity @endlink)
          */
         void setWriterIndex(std::uint32_t writerIndex);
 
@@ -563,7 +563,7 @@ namespace sa {
          * @tparam T the type of the value to read
          * @param offset the offset to read the value
          * @return the value read
-         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity)
+         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity @endlink)
          */
         template<typename T>
         T read(std::uint32_t offset);
@@ -572,7 +572,7 @@ namespace sa {
          * @brief Write a value in the buffer, change the writer index (capacity is increased if needed)
          * @tparam T the type of the value to write
          * @param value the value to write
-         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity)
+         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity @endlink)
          */
         template<typename T>
         void write(const T &value);
@@ -582,7 +582,7 @@ namespace sa {
          * @tparam T the type of the value to write
          * @param value the value to write
          * @param offset the offset to write the value
-         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity)
+         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity @endlink)
          */
         template<typename T>
         void write(const T &value, std::uint32_t offset);
@@ -592,7 +592,7 @@ namespace sa {
          * @tparam T the type of the value to replace
          * @param offset the offset to replace the value
          * @param value the value to replace
-         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity)
+         * @throws std::out_of_range if the offset is out of bounds (limit is @link ByteBuffer::_maxCapacity @endlink)
          */
         template<typename T>
         void replaceAt(std::uint32_t offset, const T &value);

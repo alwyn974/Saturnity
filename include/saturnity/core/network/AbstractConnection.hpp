@@ -8,8 +8,8 @@
 #ifndef SATURNITY_ABSTRACTCONNECTION_HPP
 #define SATURNITY_ABSTRACTCONNECTION_HPP
 
-#include "saturnity/core/AbstractPacket.hpp"
-#include "saturnity/core/PacketRegistry.hpp"
+#include "saturnity/core/packet/AbstractPacket.hpp"
+#include "saturnity/core/packet/PacketRegistry.hpp"
 
 /**
  * @brief The Saturnity namespace.
@@ -60,6 +60,20 @@ namespace sa {
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
          */
         virtual void send(AbstractPacket &packet) = 0;
+
+        /**
+         * @brief Send a packet to the connection.
+         * @param packet the packet to send.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
+         */
+        virtual void send(const std::shared_ptr<AbstractPacket> &packet) { send(*packet); }
+
+        /**
+         * @brief Send a packet to the connection.
+         * @param packet the packet to send.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
+         */
+        virtual void send(const std::unique_ptr<AbstractPacket> &packet) { send(*packet); }
 
     private:
         std::shared_ptr<PacketRegistry> _packetRegistry; /**< The packet registry. */

@@ -5,8 +5,8 @@
 ** ConnectionToClient.cpp
 */
 
-#include "saturnity/core/network/ConnectionToClient.hpp"
-#include "saturnity/core/network/AbstractServer.hpp"
+#include "saturnity/core/network/server/ConnectionToClient.hpp"
+#include "saturnity/core/network/server/AbstractServer.hpp"
 
 namespace sa {
     ConnectionToClient::ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id) : AbstractConnection(packetRegistry), _id(id) {}
@@ -34,5 +34,15 @@ namespace sa {
     void ConnectionToClient::send(AbstractPacket &packet)
     {
         this->_server->sendTo(this->_id, packet);
+    }
+
+    void ConnectionToClient::send(const std::shared_ptr<AbstractPacket> &packet)
+    {
+        AbstractConnection::send(packet);
+    }
+
+    void ConnectionToClient::send(const std::unique_ptr<AbstractPacket> &packet)
+    {
+        AbstractConnection::send(packet);
     }
 } // namespace sa

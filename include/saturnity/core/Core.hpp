@@ -33,7 +33,7 @@ using byte_t = std::uint8_t; // NOLINT
 /**
  * @brief The Saturnity namespace.
  */
-namespace sa {
+namespace sa::ex {
     /**
      * @brief The base exception class for Saturnity
      */
@@ -60,13 +60,13 @@ namespace sa {
     /**                                                                       \
      * @brief The #name exception class. Thrown #doc                          \
      */                                                                       \
-    class name : public sa::Exception {                                       \
+    class name : public sa::ex::Exception {                                       \
     public:                                                                   \
         /**                                                                   \
          * @brief Construct a new #name object                                \
          * @param message the message of the exception                        \
          */                                                                   \
-        explicit name(const std::string &message) : sa::Exception(message) {} \
+        explicit name(const std::string &message) : sa::ex::Exception(message) {} \
     };
 
 #endif // SATURNITY_CORE_HPP

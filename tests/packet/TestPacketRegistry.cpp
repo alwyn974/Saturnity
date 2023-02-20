@@ -6,7 +6,7 @@
 */
 
 #include <gtest/gtest.h>
-#include "saturnity/core/PacketRegistry.hpp"
+#include "saturnity/core/packet/PacketRegistry.hpp"
 
 class HelloPacket : public sa::AbstractPacket {
 public:

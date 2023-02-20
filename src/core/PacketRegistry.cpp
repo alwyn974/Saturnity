@@ -5,7 +5,7 @@
 ** PacketRegistry.cpp
 */
 
-#include "saturnity/core/PacketRegistry.hpp"
+#include "saturnity/core/packet/PacketRegistry.hpp"
 
 namespace sa {
 

@@ -8,8 +8,8 @@
 #ifndef SATURNITY_ABSTRACT_PACKET_HPP
 #define SATURNITY_ABSTRACT_PACKET_HPP
 
-#include "ByteBuffer.hpp"
-#include "Core.hpp"
+#include "saturnity/core/ByteBuffer.hpp"
+#include "saturnity/core/Core.hpp"
 
 /**
  * @brief The Saturnity namespace.

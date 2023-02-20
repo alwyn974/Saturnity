@@ -8,16 +8,16 @@
 #ifndef SATURNITY_CONNECTIONTOSERVER_HPP
 #define SATURNITY_CONNECTIONTOSERVER_HPP
 
-#include "AbstractConnection.hpp"
+#include "saturnity/core/network/AbstractConnection.hpp"
 
 /**
  * @brief The Saturnity namespace.
  */
 namespace sa {
-    class AbstractClient; /**< Forward declaration. */
+    class AbstractClient;
 
     /**
-     * @brief The class for a connection to a server.
+     * @brief Class representing a connection to a server.
      */
     class ConnectionToServer : public AbstractConnection {
     public:
@@ -54,9 +54,24 @@ namespace sa {
 
         /**
          * @brief Send a packet to the server.
-         * @param packet the packet.
+         * @param packet the packet to send.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
          */
         inline void send(AbstractPacket &packet) override;
+
+        /**
+          * @brief Send a packet to the server.
+          * @param packet the packet to send.
+          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
+          */
+        void send(const std::shared_ptr<AbstractPacket> &packet) override;
+
+        /**
+         * @brief Send a packet to the server.
+         * @param packet the packet to send.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
+         */
+        void send(const std::unique_ptr<AbstractPacket> &packet) override;
 
     private:
         std::shared_ptr<AbstractClient> _client; /**< The client. */
