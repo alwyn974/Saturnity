@@ -8,12 +8,12 @@
 #ifndef SATURNITY_ABSTRACTCLIENT_HPP
 #define SATURNITY_ABSTRACTCLIENT_HPP
 
+#include <memory>
+#include <unordered_map>
 #include "ConnectionToServer.hpp"
 #include "saturnity/core/Core.hpp"
 #include "saturnity/core/packet/PacketRegistry.hpp"
 #include "saturnity/Exceptions.hpp"
-#include <unordered_map>
-#include <memory>
 
 /**
  * @brief The Saturnity namespace.

@@ -60,10 +60,10 @@ namespace sa {
         inline void send(AbstractPacket &packet) override;
 
         /**
-          * @brief Send a packet to the server.
-          * @param packet the packet to send.
-          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
-          */
+         * @brief Send a packet to the server.
+         * @param packet the packet to send.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
+         */
         void send(const std::shared_ptr<AbstractPacket> &packet) override;
 
         /**

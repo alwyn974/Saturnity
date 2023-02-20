@@ -31,21 +31,15 @@ int main(int ac, char **av)
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
     auto server = sa::TCPServer::create(packetRegistry, "0.0.0.0", 2409);
-    server->onServerConnected = [&](ConnectionToClientPtr &client) {
-        spdlog::info("Client {} connected!", client->getId());
-    };
+    server->onServerConnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} connected!", client->getId()); };
 
-    server->onServerDisconnected = [&](ConnectionToClientPtr &client) {
-        spdlog::info("Client {} disconnected!", client->getId());
-    };
+    server->onServerDisconnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} disconnected!", client->getId()); };
 
     server->onServerDataReceived = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) {
         spdlog::info("Received data from client {}!", client->getId());
     };
 
-    server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) {
-        spdlog::info("Sent data to client {}!", client->getId());
-    };
+    server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) { spdlog::info("Sent data to client {}!", client->getId()); };
 
     server->registerHandler<MessagePacket>([&](ConnectionToClientPtr &client, MessagePacket &packet) {
         spdlog::info("Received message from client {}: {}", client->getId(), packet.getMessage());

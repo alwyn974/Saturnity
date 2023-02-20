@@ -32,8 +32,7 @@ namespace sa {
             packetRegistry(packetRegistry),
             host(host),
             port(port),
-            logger("Server")
-        {};
+            logger("Server") {};
 
         /**
          * @brief Destroy the Abstract Server object.

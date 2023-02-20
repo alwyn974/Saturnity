@@ -49,12 +49,6 @@ namespace sa {
         virtual void disconnect(const std::string &reason) = 0;
 
         /**
-         * @brief Send a byte buffer to the connection. (Mostly used for packets and never used raw.)
-         * @param buffer the byte buffer to send.
-         */
-        virtual void send(ByteBuffer &buffer) = 0;
-
-        /**
          * @brief Send a packet to the connection.
          * @param packet the packet to send.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
@@ -74,6 +68,14 @@ namespace sa {
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.
          */
         virtual void send(const std::unique_ptr<AbstractPacket> &packet) { send(*packet); }
+
+    protected:
+        /**
+         * @brief Send a byte buffer to the connection. (Mostly used for packets and never used raw.)
+         * @param buffer the byte buffer to send.
+         * @deprecated Use send(AbstractPacket &packet) instead.
+         */
+        virtual void send(ByteBuffer &buffer) = 0;
 
     private:
         std::shared_ptr<PacketRegistry> _packetRegistry; /**< The packet registry. */

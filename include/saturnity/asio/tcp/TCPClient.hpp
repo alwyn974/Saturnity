@@ -8,9 +8,10 @@
 #ifndef SATURNITY_TCPCLIENT_HPP
 #define SATURNITY_TCPCLIENT_HPP
 
-#include "saturnity/core/network/client/AbstractClient.hpp"
-#include <boost/asio.hpp>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <boost/asio.hpp>
+#include <queue>
+#include "saturnity/core/network/client/AbstractClient.hpp"
 
 /**
  * @brief TCP client implementation.
@@ -26,7 +27,8 @@ namespace sa {
          * @param packetRegistry the packet registry.
          * @return the TCP client.
          */
-        static std::shared_ptr<TCPClient> create(const std::shared_ptr<PacketRegistry> &packetRegistry) {
+        static std::shared_ptr<TCPClient> create(const std::shared_ptr<PacketRegistry> &packetRegistry)
+        {
             return std::shared_ptr<TCPClient>(new TCPClient(packetRegistry));
         }
 
@@ -79,12 +81,13 @@ namespace sa {
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
 
-        void receive(int size);
+        // void receive(int size);
 
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
         boost::asio::ip::tcp::socket _socket; /**< The asio tcp socket */
         boost::asio::ip::tcp::resolver::results_type _endpoints; /**< The endpoints found by the resolver */
+        std::queue<ByteBuffer> _sendQueue; /**< The queue of data to send */
 
         /**
          * @brief Create a new TCP client.

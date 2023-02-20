@@ -54,18 +54,18 @@ namespace sa::ex {
     private:
         std::string _msg; /**< The message of the exception  */
     };
-} // namespace sa
+} // namespace sa::ex
 
-#define SA_EXCEPTION(name, doc)                                               \
-    /**                                                                       \
-     * @brief The #name exception class. Thrown #doc                          \
-     */                                                                       \
+#define SA_EXCEPTION(name, doc)                                                   \
+    /**                                                                           \
+     * @brief The #name exception class. Thrown #doc                              \
+     */                                                                           \
     class name : public sa::ex::Exception {                                       \
-    public:                                                                   \
-        /**                                                                   \
-         * @brief Construct a new #name object                                \
-         * @param message the message of the exception                        \
-         */                                                                   \
+    public:                                                                       \
+        /**                                                                       \
+         * @brief Construct a new #name object                                    \
+         * @param message the message of the exception                            \
+         */                                                                       \
         explicit name(const std::string &message) : sa::ex::Exception(message) {} \
     };
 

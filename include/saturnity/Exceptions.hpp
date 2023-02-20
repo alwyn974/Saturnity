@@ -37,6 +37,6 @@ namespace sa::ex {
          */
         explicit PacketHandlerMissingException(const std::string &message) : Exception(message) {};
     };
-} // namespace sa
+} // namespace sa::ex
 
 #endif // SATURNITY_EXCEPTIONS_HPP

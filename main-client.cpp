@@ -31,18 +31,10 @@ int main(int ac, char **av)
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
     auto client = sa::TCPClient::create(packetRegistry);
-    client->onClientConnected = [&](ConnectionToServerPtr &server) {
-        spdlog::info("Connected to server!");
-    };
-    client->onClientDisconnected = [&](ConnectionToServerPtr &server) {
-        spdlog::info("Disconnected from server!");
-    };
-    client->onClientDataReceived = [&](ConnectionToServerPtr &server, sa::ByteBuffer &buffer) {
-        spdlog::info("Received data from server!");
-    };
-    client->onClientDataSent = [&](ConnectionToServerPtr &server, sa::ByteBuffer &buffer) {
-        spdlog::info("Data sent to server! Bytes: {}", buffer.size());
-    };
+    client->onClientConnected = [&](ConnectionToServerPtr &server) { spdlog::info("Connected to server!"); };
+    client->onClientDisconnected = [&](ConnectionToServerPtr &server) { spdlog::info("Disconnected from server!"); };
+    client->onClientDataReceived = [&](ConnectionToServerPtr &server, sa::ByteBuffer &buffer) { spdlog::info("Received data from server!"); };
+    client->onClientDataSent = [&](ConnectionToServerPtr &server, sa::ByteBuffer &buffer) { spdlog::info("Data sent to server! Bytes: {}", buffer.size()); };
 
     bool first = true;
     client->registerHandler<MessagePacket>([&](ConnectionToServerPtr &server, MessagePacket &packet) {
@@ -53,9 +45,13 @@ int main(int ac, char **av)
         }
     });
 
-    client->init();
+    /*std::thread t([&](){
+
+    });
+    t.detach();*/
     try {
         client->connect("localhost", 2409);
+        client->init();
     } catch (const std::exception &e) {
         spdlog::error("Error while connecting to server: {}", e.what());
         return 84;
@@ -64,12 +60,13 @@ int main(int ac, char **av)
     auto packet = std::make_shared<MessagePacket>("Hello world!");
     // Time measurement
     auto start = std::chrono::high_resolution_clock::now();
-    client->send(packet);
+    // client->send(packet);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     spdlog::info("Time taken by function: {} microseconds", duration.count());
 
-    while (true) {}
+    while (true) {
+    }
 
     client->disconnect();
     return 0;

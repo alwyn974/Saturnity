@@ -22,8 +22,7 @@ namespace sa {
 
     void TCPClient::connect(const std::string &host, uint16_t port)
     {
-        if (port < 0 || port > 65535)
-            throw std::out_of_range("Invalid port number");
+        if (port < 0 || port > 65535) throw std::out_of_range("Invalid port number");
         auto resolver = boost::asio::ip::tcp::resolver(_ioContext);
         this->_endpoints = resolver.resolve(host, std::to_string(port));
 
@@ -35,8 +34,7 @@ namespace sa {
             throw ClientCannotConnectException("Failed to connect to server: " + ec.message());
         }
         this->state = EnumClientState::CONNECTED;
-        if (this->onClientConnected)
-            this->onClientConnected(this->connection);
+        if (this->onClientConnected) this->onClientConnected(this->connection);
         this->logger.info("Connected to {} on port {}", host, port);
         this->asyncRead();
     }
@@ -48,27 +46,55 @@ namespace sa {
         this->_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
         this->_socket.close(ec);
         this->state = EnumClientState::DISCONNECTED;
-        if (this->onClientDisconnected)
-            this->onClientDisconnected(this->connection);
+        if (this->onClientDisconnected) this->onClientDisconnected(this->connection);
     }
 
     void TCPClient::send(ByteBuffer &buffer)
     {
-        // TODO: Implement
         this->_socket.send(boost::asio::buffer(buffer.getBuffer()));
 
-        if (this->onClientDataSent)
-            this->onClientDataSent(this->connection, buffer);
+        if (this->onClientDataSent) this->onClientDataSent(this->connection, buffer);
     }
 
     void TCPClient::onRead(boost::system::error_code &ec, std::size_t bytesTransferred)
     {
-
+        if (ec) {
+            this->logger.error("Failed to read from server: {}", ec.message());
+            this->disconnect();
+            return;
+        }
+        //        this->logger.info("Received {} bytes from server", bytesTransferred);
+        /*if (this->onClientDataReceived)
+            this->onClientDataReceived(this->connection, buffer);*/
     }
 
     void TCPClient::asyncRead()
     {
-        /*this->_socket.async_read_some(boost::asio::buffer(this->_buffer, 1024), [this](boost::system::error_code ec, std::size_t bytesTransferred) {
+        std::array<byte_t, 18> data;
+        this->_socket.async_read_some(boost::asio::buffer(data, 18), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (ec) {
+                this->logger.error("Failed to read from server: {}", ec.message());
+                this->disconnect();
+                return;
+            }
+            this->logger.info("Received {} bytes from server", bytesTransferred);
+            this->onRead(ec, bytesTransferred);
+            this->asyncRead();
+        });
+        /*boost::asio::async_read(this->_socket, boost::asio::buffer(buffer.vector()), [this](boost::system::error_code ec, std::size_t bytesTransferred) {
+            spdlog::info("asyncRead callback");
+            if (ec) {
+                this->logger.error("Failed to read from server: {}", ec.message());
+                this->disconnect();
+                return;
+            }
+            this->logger.info("Received {} bytes from server", bytesTransferred);
+            this->onRead(ec, bytesTransferred);
+            this->asyncRead();
+        });*/
+
+        /*this->_socket.async_read_some(boost::asio::buffer(buffer.vector(), 4), [this](boost::system::error_code ec, std::size_t bytesTransferred) {
+            spdlog::info("asyncRead callback");
             if (ec) {
                 this->logger.error("Failed to read from server: {}", ec.message());
                 this->disconnect();

@@ -334,7 +334,8 @@ namespace sa {
         void writeChar(char value);
 
         /**
-         * @brief Write a unsigned char in the buffer (increase the write position by 1) (exactly the same as @link ByteBuffer#writeByte(const byte_t &) @endlink)
+         * @brief Write a unsigned char in the buffer (increase the write position by 1) (exactly the same as @link ByteBuffer#writeByte(const byte_t &)
+         * @endlink)
          * @param value the value to write
          */
         void writeUChar(unsigned char value);

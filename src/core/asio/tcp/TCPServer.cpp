@@ -19,19 +19,14 @@ namespace sa {
         this->logger.info("Initializing TCP server");
     }
 
-    void sa::TCPServer::start()
-    {
-    }
+    void sa::TCPServer::start() {}
 
-    void sa::TCPServer::stop()
-    {
-    }
+    void sa::TCPServer::stop() {}
 
     void sa::TCPServer::broadcast(AbstractPacket &packet, int idToIgnore)
     {
-        for (const auto &[id, con]: this->connections) {
-            if (idToIgnore != -1 && idToIgnore == id)
-                continue;
+        for (const auto &[id, con] : this->connections) {
+            if (idToIgnore != -1 && idToIgnore == id) continue;
             sendTo(id, packet);
         }
     }
@@ -42,9 +37,8 @@ namespace sa {
             spdlog::warn("Tried to send data to a non-existing connection (id: {})", id);
             return;
         }
-        //TODO: Implement
-        if (this->onServerDataSent)
-            this->onServerDataSent(this->connections[id], buffer);
+        // TODO: Implement
+        if (this->onServerDataSent) this->onServerDataSent(this->connections[id], buffer);
     }
 
     void sa::TCPServer::disconnect(int id)
@@ -53,9 +47,8 @@ namespace sa {
             spdlog::warn("Tried to disconnect a non-existing connection (id: {})", id);
             return;
         }
-        //TODO: Implement
-        if (this->onServerDisconnected)
-            this->onServerDisconnected(this->connections[id]);
+        // TODO: Implement
+        if (this->onServerDisconnected) this->onServerDisconnected(this->connections[id]);
         this->connections.erase(id);
     }
 
@@ -70,7 +63,7 @@ namespace sa {
 
     void sa::TCPServer::disconnectAll()
     {
-        for (const auto &[id, con]: this->connections) {
+        for (const auto &[id, con] : this->connections) {
             con->disconnect();
         }
     }

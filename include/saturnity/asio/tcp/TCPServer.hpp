@@ -8,13 +8,15 @@
 #ifndef SATURNITY_TCPSERVER_HPP
 #define SATURNITY_TCPSERVER_HPP
 
-#include "saturnity/core/network/server/AbstractServer.hpp"
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include "saturnity/core/network/server/AbstractServer.hpp"
 
 namespace sa {
     class TCPServer : public AbstractServer {
     public:
-        static std::shared_ptr<TCPServer> create(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409) {
+        static std::shared_ptr<TCPServer> create(
+            const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409)
+        {
             return std::shared_ptr<TCPServer>(new TCPServer(packetRegistry, host, port));
         }
 
@@ -41,6 +43,7 @@ namespace sa {
         void disconnect(int id, const std::string &reason) override;
 
         void disconnectAll() override;
+
     private:
         explicit TCPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409);
     };
