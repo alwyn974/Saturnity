@@ -2,6 +2,7 @@
 #include "server.hpp"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 namespace saturnity {
 
@@ -12,6 +13,7 @@ namespace saturnity {
     }
 
     void server::TCP::run() {
+      	std::cout << "Server running" << std::endl;
         try {
             startAccept();
             _ioContext.run();
@@ -55,6 +57,7 @@ namespace saturnity {
     }
     void server::TCP::broadcast(const std::string &message) {
         for (auto &connection : _connections) {
+            std::cout << "Broadcasting message to " << connection->getUsername() << std::endl;
             connection->post(message);
         }
     }
@@ -90,12 +93,21 @@ namespace saturnity {
     }
 
     void server::connection::TCP::onRead(boost::system::error_code ec, std::size_t bytesTransferred) {
+        std::cout << "Bytes: " << bytesTransferred << std::endl;
+        std::cout << "EC:" << ec.message() << std::endl;
         if (ec) {
             _socket.close(ec);
 
             _errorCallback();
             return;
         }
+
+        // print buffer data as hexa
+        std::cout << "Buffer: ";
+        for (auto it = asio::buffers_begin(_buffer.data()); it != asio::buffers_end(_buffer.data()); ++it) {
+            std::cout << "0x" << std::hex << (int)(*it) << "(" << (*it) << ") ";
+        }
+        std::cout << std::endl;
 
         std::stringstream message;
         message << "Message from " << _username << ": " << std::string(asio::buffers_begin(_buffer.data()), asio::buffers_begin(_buffer.data()) + bytesTransferred);
@@ -107,6 +119,7 @@ namespace saturnity {
     }
 
     void server::connection::TCP::asyncWrite() {
+        spdlog::info("Broadcasting: {}", _queue.front());
         asio::async_write(_socket, asio::buffer(_queue.front()), [self = shared_from_this()](const boost::system::error_code ec, std::size_t bytesTransferred) {
             self->onWrite(ec, bytesTransferred);
         });
