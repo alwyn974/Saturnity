@@ -77,7 +77,7 @@ namespace sa {
                 this->disconnect();
                 return;
             }
-            this->logger.info("Received {} bytes from server", bytesTransferred);
+            //this->logger.info("Received {} bytes from server", bytesTransferred);
             this->onRead(ec, bytesTransferred);
             this->asyncRead();
         });

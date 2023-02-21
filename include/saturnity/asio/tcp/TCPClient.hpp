@@ -95,6 +95,10 @@ namespace sa {
          */
         explicit TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry);
 
+        void readPacketHeader();
+
+        void readPacketBody(uint16_t size);
+
         void onRead(boost::system::error_code &ec, std::size_t bytesTransferred);
 
         void asyncRead();
