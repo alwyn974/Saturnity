@@ -30,7 +30,7 @@ int main(int ac, char **av)
     auto packetRegistry = std::make_shared<sa::PacketRegistry>();
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
-    auto client = sa::TCPClient::create(packetRegistry);
+    auto client = sa::UDPClient::create(packetRegistry);
     client->onClientConnected = [&](ConnectionToServerPtr &server) { spdlog::info("Connected to server!"); };
     client->onClientDisconnected = [&](ConnectionToServerPtr &server) { spdlog::info("Disconnected from server!"); };
     client->onClientDataReceived = [&](ConnectionToServerPtr &server, sa::ByteBuffer &buffer) { spdlog::info("Received data from server!"); };

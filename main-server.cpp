@@ -30,7 +30,7 @@ int main(int ac, char **av)
     auto packetRegistry = std::make_shared<sa::PacketRegistry>();
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
-    auto server = sa::TCPServer::create(packetRegistry, "0.0.0.0", 2409);
+    auto server = sa::UDPServer::create(packetRegistry, "0.0.0.0", 2409);
     server->onServerConnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} connected!", client->getId()); };
 
     server->onServerDisconnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} disconnected!", client->getId()); };

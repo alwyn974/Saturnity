@@ -27,7 +27,7 @@ add_library(${PROJECT_NAME}
         src/core/network/ConnectionToClient.cpp
         src/core/asio/tcp/TCPServer.cpp
         src/core/asio/tcp/TCPClient.cpp
-)
+        src/core/asio/udp/UDPServer.cpp src/core/asio/udp/UDPClient.cpp)
 add_executable(${PROJECT_NAME}-server main-server.cpp) # TODO: remove this later
 add_executable(${PROJECT_NAME}-client main-client.cpp) # TODO: remove this later
 target_link_libraries(${PROJECT_NAME}-server PRIVATE ${PROJECT_NAME}) # TODO: remove this later
