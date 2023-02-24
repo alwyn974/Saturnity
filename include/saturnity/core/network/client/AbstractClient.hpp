@@ -71,6 +71,11 @@ namespace sa {
         virtual void init() = 0;
 
         /**
+         * @brief Run the client. (May be blocking)
+         */
+        virtual void run() = 0;
+
+        /**
          * @brief Connect to a server.
          * @param host the host.
          * @param port the port.

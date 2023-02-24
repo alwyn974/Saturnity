@@ -45,6 +45,11 @@ namespace sa {
         virtual void init() = 0;
 
         /**
+         * @brief Run the server.
+         */
+        virtual void run() = 0;
+
+        /**
          * @brief Start the server.
          */
         virtual void start() = 0;

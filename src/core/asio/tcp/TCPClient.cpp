@@ -8,7 +8,7 @@
 #include "saturnity/asio/tcp/TCPClient.hpp"
 
 namespace sa {
-    TCPClient::TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry) : AbstractClient(packetRegistry), _socket(_ioContext)
+    TCPClient::TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry) : AbstractClient(packetRegistry), _ioContext(2), _socket(_ioContext)
     {
         this->logger = *spdlog::stdout_color_mt("TCPClient");
     }
@@ -17,6 +17,11 @@ namespace sa {
     {
         this->logger.info("Initializing TCP client");
         this->connection = std::make_shared<ConnectionToServer>(packetRegistry, this->shared_from_this());
+    }
+
+    void TCPClient::run()
+    {
+        this->logger.info("Running client");
         this->_ioContext.run();
     }
 
@@ -51,57 +56,44 @@ namespace sa {
 
     void TCPClient::send(ByteBuffer &buffer)
     {
-        this->_socket.send(boost::asio::buffer(buffer.getBuffer()));
+        const bool queueEmpty = this->_sendQueue.empty();
+        this->_sendQueue.push(buffer);
 
-        if (this->onClientDataSent) this->onClientDataSent(this->connection, buffer);
+        if (queueEmpty)
+            this->asyncSend();
     }
 
-    void TCPClient::onRead(boost::system::error_code &ec, std::size_t bytesTransferred)
+    void TCPClient::asyncSend()
     {
-        if (ec) {
-            this->logger.error("Failed to read from server: {}", ec.message());
-            this->disconnect();
+        if (this->_sendQueue.empty())
             return;
-        }
-        //        this->logger.info("Received {} bytes from server", bytesTransferred);
-        /*if (this->onClientDataReceived)
-            this->onClientDataReceived(this->connection, buffer);*/
+        auto buffer = this->_sendQueue.front();
+        this->_socket.async_send(boost::asio::buffer(buffer.getBuffer()), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (ec) {
+                this->logger.error("Failed to send data to server: {}", ec.message());
+                this->disconnect();
+                return;
+            }
+            if (bytesTransferred != buffer.size()) {
+                this->logger.warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
+                return;
+            }
+            this->_sendQueue.pop();
+            if (this->onClientDataSent) this->onClientDataSent(this->connection, buffer);
+            this->asyncSend();
+        });
     }
 
     void TCPClient::asyncRead()
     {
-        std::array<byte_t, 18> data;
+        /*std::array<byte_t, 18> data;
         this->_socket.async_read_some(boost::asio::buffer(data, 18), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
             if (ec) {
                 this->logger.error("Failed to read from server: {}", ec.message());
                 this->disconnect();
                 return;
             }
-            //this->logger.info("Received {} bytes from server", bytesTransferred);
-            this->onRead(ec, bytesTransferred);
-            this->asyncRead();
-        });
-        /*boost::asio::async_read(this->_socket, boost::asio::buffer(buffer.vector()), [this](boost::system::error_code ec, std::size_t bytesTransferred) {
-            spdlog::info("asyncRead callback");
-            if (ec) {
-                this->logger.error("Failed to read from server: {}", ec.message());
-                this->disconnect();
-                return;
-            }
             this->logger.info("Received {} bytes from server", bytesTransferred);
-            this->onRead(ec, bytesTransferred);
-            this->asyncRead();
-        });*/
-
-        /*this->_socket.async_read_some(boost::asio::buffer(buffer.vector(), 4), [this](boost::system::error_code ec, std::size_t bytesTransferred) {
-            spdlog::info("asyncRead callback");
-            if (ec) {
-                this->logger.error("Failed to read from server: {}", ec.message());
-                this->disconnect();
-                return;
-            }
-            this->logger.info("Received {} bytes from server", bytesTransferred);
-            this->onRead(ec, bytesTransferred);
             this->asyncRead();
         });*/
     }

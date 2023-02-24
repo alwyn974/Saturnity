@@ -45,18 +45,19 @@ int main(int ac, char **av)
         }
     });
 
-    std::thread t([&](){
-        try {
-            client->connect("localhost", 2409);
-            client->init();
-            std::cout << "Connected to server!" << std::endl;
-        } catch (const std::exception &e) {
-            spdlog::error("Error while connecting to server: {}", e.what());
-            return 84;
-        }
+    client->init();
+    try {
+        client->connect("localhost", 2409);
+        std::cout << "Connected to server!" << std::endl;
+    } catch (const std::exception &e) {
+        spdlog::error("Error while connecting to server: {}", e.what());
+        return 84;
+    }
+
+    std::thread t([&]() {
+        client->run();
     });
     t.detach();
-
 
     auto packet = std::make_shared<MessagePacket>("Hello world!");
     // Time measurement

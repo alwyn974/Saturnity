@@ -33,10 +33,15 @@ namespace sa {
         }
 
         /**
-         * @brief Initialize the client.
-         * Instantiate the connection and launch the ioContext.
+         * @brief Instanciate the client
          */
         void init() override;
+
+        /**
+         * @brief Run the client. (blocking)
+         * Run the ioContext.
+         */
+        void run() override;
 
         /**
          * @brief Connect the client to the server.
@@ -58,7 +63,7 @@ namespace sa {
         void send(ByteBuffer &buffer) override;
 
         /**
-         * @brief Send a packet to the server.
+         * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
          * @throws ClientNotConnectedException if the client is not connected to the server.
@@ -66,7 +71,7 @@ namespace sa {
         void send(AbstractPacket &packet) override { AbstractClient::send(packet); }
 
         /**
-         * @brief Send a packet to the server.
+         * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
          * @throws ClientNotConnectedException if the client is not connected to the server.
@@ -74,14 +79,12 @@ namespace sa {
         void send(const std::shared_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
 
         /**
-         * @brief Send a packet to the server.
+         * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
          * @throws ClientNotConnectedException if the client is not connected to the server.
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
-
-        // void receive(int size);
 
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
@@ -95,11 +98,14 @@ namespace sa {
          */
         explicit TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry);
 
+        /**
+         * @brief Send the data in the queue.
+         */
+        void asyncSend();
+
         void readPacketHeader();
 
         void readPacketBody(uint16_t size);
-
-        void onRead(boost::system::error_code &ec, std::size_t bytesTransferred);
 
         void asyncRead();
     };

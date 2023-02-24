@@ -14,9 +14,9 @@ namespace sa {
         this->logger = *spdlog::stdout_color_mt("TCPServer");
     }
 
-    void sa::TCPServer::init()
+    void sa::TCPServer::run()
     {
-        this->logger.info("Initializing TCP server");
+        this->logger.info("Running TCP server");
     }
 
     void sa::TCPServer::start() {}

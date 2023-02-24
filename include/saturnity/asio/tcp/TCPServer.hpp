@@ -22,6 +22,8 @@ namespace sa {
 
         void init() override;
 
+        void run() override;
+
         void start() override;
 
         void stop() override;
