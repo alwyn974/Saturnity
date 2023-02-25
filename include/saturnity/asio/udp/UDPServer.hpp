@@ -10,6 +10,7 @@
 
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "saturnity/core/network/server/AbstractServer.hpp"
+#include <boost/asio.hpp>
 
 namespace sa {
     class UDPServer : public AbstractServer {
@@ -46,10 +47,16 @@ namespace sa {
 
         void receive();
 
-    private:
-        explicit UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409);
-        boost::asio::ip::udp::socket _socket;
+        void run();
 
+    private:
+        explicit UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0",
+                           uint16_t port = 2409);
+        boost::asio::io_context _ioCtx;
+        std::vector<byte_t> _recvBuffer;
+        boost::asio::ip::udp::endpoint _remote;
+        boost::asio::ip::udp::socket _socket =
+                boost::asio::ip::udp::socket(_ioCtx, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
     };
 } // namespace sa
 

@@ -5,6 +5,7 @@
 ** UDPClient.cpp
 */
 
+#include <iostream>
 #include "saturnity/asio/udp/UDPClient.hpp"
 
 namespace sa {
@@ -15,7 +16,7 @@ namespace sa {
 
     void UDPClient::init()
     {
-        this->logger.info("Initializing TCP client");
+        this->logger.info("Initializing UDP client");
         this->connection = std::make_shared<ConnectionToServer>(packetRegistry, this->shared_from_this());
         this->_ioContext.run();
     }
@@ -46,7 +47,7 @@ namespace sa {
     {
         this->logger.info("Disconnecting from server");
         boost::system::error_code ec;
-        this->_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+        this->_socket.shutdown(boost::asio::ip::udp::socket::shutdown_both, ec);
         this->_socket.close(ec);
         this->state = EnumClientState::DISCONNECTED;
         if (this->onClientDisconnected) this->onClientDisconnected(this->connection);
@@ -54,8 +55,10 @@ namespace sa {
 
     void UDPClient::send(ByteBuffer &buffer)
     {
-        this->_socket.send_to(boost::asio::buffer(buffer.getBuffer()), _endpoint);
-
+        _socket.async_send_to(boost::asio::buffer(buffer.getBuffer()), _endpoint, [&](boost::system::error_code err, std::size_t len) {
+//            this->logger.info("Sending {} to {}", buffer.getBuffer().data(), _endpoint.address().to_string());
+            std::cout << "Sending data" << std::endl;
+        });
         if (this->onClientDataSent) this->onClientDataSent(this->connection, buffer);
     }
 

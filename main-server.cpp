@@ -45,14 +45,24 @@ int main(int ac, char **av)
         spdlog::info("Received message from client {}: {}", client->getId(), packet.getMessage());
     });
 
-    server->init();
-    server->start();
-
     const auto packet = std::make_shared<MessagePacket>("Hello world!");
 
-    while (true) {
-        server->broadcast(*packet);
-    }
+    std::thread t([&](std::shared_ptr, packet){
+        try {
+            server->init();
+            server->start();
+            std::cout << "Started server!" << std::endl;
+            while (true) {
+                server->broadcast(*packet);
+            }
+        } catch (const std::exception &e) {
+            spdlog::error("Error while creating to server: {}", e.what());
+            return 84;
+        }
+    });
+    t.detach();
+
+
 
     return 0;
 }

@@ -28,7 +28,8 @@ namespace sa {
          * @param host the host. (default 0.0.0.0)
          * @param port the port. (default 2409)
          */
-        explicit AbstractServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409) :
+        explicit AbstractServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0",
+                                uint16_t port = 2409) :
             packetRegistry(packetRegistry),
             host(host),
             port(port),
