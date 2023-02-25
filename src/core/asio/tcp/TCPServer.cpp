@@ -14,6 +14,11 @@ namespace sa {
         this->logger = *spdlog::stdout_color_mt("TCPServer");
     }
 
+    void sa::TCPServer::init()
+    {
+        this->logger.info("Initializing TCP server");
+    }
+
     void sa::TCPServer::run()
     {
         this->logger.info("Running TCP server");
@@ -37,7 +42,7 @@ namespace sa {
             spdlog::warn("Tried to send data to a non-existing connection (id: {})", id);
             return;
         }
-        // TODO: Implement
+        // TODO(alwyn974): Implement
         if (this->onServerDataSent) this->onServerDataSent(this->connections[id], buffer);
     }
 
@@ -47,7 +52,7 @@ namespace sa {
             spdlog::warn("Tried to disconnect a non-existing connection (id: {})", id);
             return;
         }
-        // TODO: Implement
+        // TODO(alwyn974): Implement
         if (this->onServerDisconnected) this->onServerDisconnected(this->connections[id]);
         this->connections.erase(id);
     }

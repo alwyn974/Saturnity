@@ -11,6 +11,7 @@
 #include "ConnectionToClient.hpp"
 #include "saturnity/core/Core.hpp"
 #include "saturnity/core/packet/PacketRegistry.hpp"
+#include "saturnity/core/ThreadSafeQueue.hpp"
 #include "saturnity/Exceptions.hpp"
 
 /**

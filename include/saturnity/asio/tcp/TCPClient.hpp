@@ -10,7 +10,6 @@
 
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
-#include <queue>
 #include "saturnity/core/network/client/AbstractClient.hpp"
 
 /**
@@ -53,7 +52,13 @@ namespace sa {
         /**
          * @brief Disconnect the client from the server.
          */
-        void disconnect() override;
+        void disconnect() override { this->disconnect(false); };
+
+        /**
+         * @brief Disconnect the client from the server.
+         * @param forced true if the disconnection is forced.
+         */
+        void disconnect(bool forced) override;
 
         /**
          * @brief Send data to the server.
@@ -88,9 +93,10 @@ namespace sa {
 
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
+        boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
         boost::asio::ip::tcp::socket _socket; /**< The asio tcp socket */
         boost::asio::ip::tcp::resolver::results_type _endpoints; /**< The endpoints found by the resolver */
-        std::queue<ByteBuffer> _sendQueue; /**< The queue of data to send */
+        TSQueue<ByteBuffer> _sendQueue; /**< The queue of data to send */
 
         /**
          * @brief Create a new TCP client.

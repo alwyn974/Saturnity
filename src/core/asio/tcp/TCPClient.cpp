@@ -8,7 +8,10 @@
 #include "saturnity/asio/tcp/TCPClient.hpp"
 
 namespace sa {
-    TCPClient::TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry) : AbstractClient(packetRegistry), _ioContext(2), _socket(_ioContext)
+    TCPClient::TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry) :
+        AbstractClient(packetRegistry),
+        _workGuard(_ioContext.get_executor()),
+        _socket(_ioContext)
     {
         this->logger = *spdlog::stdout_color_mt("TCPClient");
     }
@@ -44,42 +47,44 @@ namespace sa {
         this->asyncRead();
     }
 
-    void TCPClient::disconnect()
+    void TCPClient::disconnect(bool forced)
     {
         this->logger.info("Disconnecting from server");
         boost::system::error_code ec;
         this->_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
         this->_socket.close(ec);
         this->state = EnumClientState::DISCONNECTED;
-        if (this->onClientDisconnected) this->onClientDisconnected(this->connection);
+        if (this->onClientDisconnected) this->onClientDisconnected(this->connection, forced);
+        this->_workGuard.reset();
     }
 
     void TCPClient::send(ByteBuffer &buffer)
     {
         const bool queueEmpty = this->_sendQueue.empty();
         this->_sendQueue.push(buffer);
+        if (this->_ioContext.stopped()) this->logger.error("IO context is stopped");
 
-        if (queueEmpty)
-            this->asyncSend();
+        if (queueEmpty) this->asyncSend();
     }
 
     void TCPClient::asyncSend()
     {
-        if (this->_sendQueue.empty())
-            return;
-        auto buffer = this->_sendQueue.front();
+        if (this->_sendQueue.empty()) return;
+        if (this->_ioContext.stopped()) return this->logger.error("IO context is stopped");
+        auto &buffer = this->_sendQueue.front();
         this->_socket.async_send(boost::asio::buffer(buffer.getBuffer()), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+            this->logger.info("Send Queue: {}", this->_sendQueue.size());
             if (ec) {
                 this->logger.error("Failed to send data to server: {}", ec.message());
-                this->disconnect();
+                this->disconnect(true);
                 return;
             }
             if (bytesTransferred != buffer.size()) {
                 this->logger.warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
                 return;
             }
-            this->_sendQueue.pop();
             if (this->onClientDataSent) this->onClientDataSent(this->connection, buffer);
+            if (!this->_sendQueue.pop()) this->logger.error("Failed to pop from send queue");
             this->asyncSend();
         });
     }

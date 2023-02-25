@@ -95,6 +95,11 @@ namespace sa {
         explicit ByteBuffer(const byte_t *bytes, std::uint32_t size, bool readOnly = false);
 
         /**
+         * @brief Destroy the Byte Buffer object
+         */
+        ~ByteBuffer() = default;
+
+        /**
          * @brief Clear the buffer and reset the read/write position
          */
         void clear();
