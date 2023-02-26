@@ -37,6 +37,18 @@ namespace sa::ex {
          */
         explicit PacketHandlerMissingException(const std::string &message) : Exception(message) {};
     };
+
+    /**
+     * @brief Thrown when the ioContext used is dead.
+     */
+    class IOContextDeadException : public sa::ex::Exception {
+    public:
+        /**
+         * @brief Construct a new IO Context Dead Exception object.
+         * @param message the message.
+         */
+        explicit IOContextDeadException(const std::string &message) : Exception(message) {};
+    };
 } // namespace sa::ex
 
 #endif // SATURNITY_EXCEPTIONS_HPP

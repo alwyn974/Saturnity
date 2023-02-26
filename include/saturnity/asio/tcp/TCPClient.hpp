@@ -18,6 +18,7 @@
 namespace sa {
     /**
      * @brief Implementation of a TCP client
+     * @throws sa::ex::IOContextDeadException if the ioContext is dead. (send & read)
      */
     class TCPClient : public AbstractClient {
     public:
@@ -63,6 +64,7 @@ namespace sa {
         /**
          * @brief Send data to the server.
          * @param buffer the data.
+         * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @deprecated use send(AbstractPacket &packet) instead.
          */
         void send(ByteBuffer &buffer) override;
@@ -71,6 +73,7 @@ namespace sa {
          * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @throws ClientNotConnectedException if the client is not connected to the server.
          */
         void send(AbstractPacket &packet) override { AbstractClient::send(packet); }
@@ -79,6 +82,7 @@ namespace sa {
          * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @throws ClientNotConnectedException if the client is not connected to the server.
          */
         void send(const std::shared_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
@@ -87,6 +91,7 @@ namespace sa {
          * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @throws ClientNotConnectedException if the client is not connected to the server.
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
@@ -97,6 +102,7 @@ namespace sa {
         boost::asio::ip::tcp::socket _socket; /**< The asio tcp socket */
         boost::asio::ip::tcp::resolver::results_type _endpoints; /**< The endpoints found by the resolver */
         TSQueue<ByteBuffer> _sendQueue; /**< The queue of data to send */
+        TSQueue<ByteBuffer> _receiveQueue; /**< The queue of data received */
 
         /**
          * @brief Create a new TCP client.
@@ -109,11 +115,29 @@ namespace sa {
          */
         void asyncSend();
 
-        void readPacketHeader();
-
-        void readPacketBody(uint16_t size);
-
+        /**
+         * @brief Read data from the server.
+         */
         void asyncRead();
+
+        /**
+         * @brief Read the packet header from the server.
+         */
+        void asyncReadPacketHeader();
+
+        /**
+         * @brief Read the packet body from the server.
+         * @param packetId the packet id.
+         * @param packetSize the packet size.
+         */
+        void asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize);
+
+        /**
+         * @brief Handle the data received from the server.
+         * @param packetId the packet id.
+         * @param buffer the data.
+         */
+        void handlePacketData(std::uint16_t packetId, ByteBuffer &buffer);
     };
 } // namespace sa
 

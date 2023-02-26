@@ -98,7 +98,7 @@ namespace sa {
             packet.toBytes(buffer);
             auto size = static_cast<uint16_t>(buffer.writerIndex());
             buffer.setWriterIndex(sizeof(uint16_t)); // Skip id, for rewrite size
-            buffer.writeUShort(size - sizeof(uint16_t) * 2); // Skip packet id and size
+            buffer.writeUShort(size - (sizeof(uint16_t) * 2)); // Write the packet body size
             buffer.setWriterIndex(size); // Restore writer index
             this->sendTo(id, buffer);
         }

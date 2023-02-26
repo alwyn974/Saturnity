@@ -32,6 +32,8 @@ namespace sa {
     template<typename T>
     class TSQueue {
     public:
+        using Observer = std::function<void(const T&)>;
+
         /**
          * @brief Push an element to the queue. (Can be blocking)
          * @param element the element to push.
@@ -51,9 +53,7 @@ namespace sa {
         T waitPop()
         {
             std::unique_lock<std::mutex> lock(_mutex);
-            _condition.wait(lock, [this] {
-                return !_queue.empty();
-            });
+            _condition.wait(lock, [this] { return !_queue.empty(); });
             T value = std::move(_queue.front());
             _queue.pop();
             return value;
@@ -67,8 +67,7 @@ namespace sa {
         bool tryPop(T& value)
         {
             std::unique_lock<std::mutex> lock(_mutex);
-            if (_queue.empty())
-                return false;
+            if (_queue.empty()) return false;
             value = std::move(_queue.front());
             _queue.pop();
             return true;
@@ -78,7 +77,7 @@ namespace sa {
          * @brief Get the front element of the queue.
          * @return the front element of the queue.
          */
-        T &front()
+        T& front()
         {
             std::unique_lock<std::mutex> lock(_mutex);
             return _queue.front();
@@ -91,8 +90,7 @@ namespace sa {
         bool pop()
         {
             std::unique_lock<std::mutex> lock(_mutex);
-            if (_queue.empty())
-                return false;
+            if (_queue.empty()) return false;
             _queue.pop();
             return true;
         }
@@ -137,10 +135,43 @@ namespace sa {
             return _queue;
         }
 
+        /**
+         * @brief Add an observer to the queue.
+         * @param observer the observer to add.
+         */
+        void addObserver(Observer observer)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _observers.push_back(observer);
+        }
+
+        /**
+         * @brief Remove an observer from the queue.
+         * @param observer the observer to remove.
+         */
+        void removeObserver(Observer observer)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            auto it = std::find(_observers.begin(), _observers.end(), observer);
+            if (it != _observers.end()) _observers.erase(it);
+        }
+
+        /**
+         * @brief Notify all the observers.
+         * @param value the value to notify.
+         */
+        void notifyObservers(const T& value)
+        {
+            std::unique_lock<std::mutex> lock(_mutex);
+            for (auto observer : _observers)
+                observer(value);
+        }
+
     private:
         std::queue<T> _queue; /**< The queue. */
         mutable std::mutex _mutex; /**< The mutex. */
         std::condition_variable _condition; /**< The condition variable. */
+        std::vector<Observer> _observers; /**< The observers. */
     };
 } // namespace sa
 

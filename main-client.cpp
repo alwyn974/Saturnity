@@ -12,6 +12,7 @@
 class MessagePacket : public sa::AbstractPacket {
 public:
     MessagePacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP) {};
+
     explicit MessagePacket(const std::string &message) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP), _message(message) {};
 
     void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeString(this->_message); }
@@ -33,7 +34,9 @@ int main(int ac, char **av)
     auto client = sa::TCPClient::create(packetRegistry);
     client->onClientConnected = [&](ConnectionToServerPtr &server) { spdlog::info("Connected to server!"); };
     client->onClientDisconnected = [&](ConnectionToServerPtr &server, bool forced) { spdlog::info("Disconnected from server!"); };
-    client->onClientDataReceived = [&](ConnectionToServerPtr &server, sa::ByteBuffer &buffer) { spdlog::info("Received data from server!"); };
+    client->onClientDataReceived = [&](ConnectionToServerPtr &server, std::uint16_t packetId, std::uint16_t packetSize, sa::ByteBuffer &buffer) {
+        spdlog::info("Received data from server!");
+    };
     client->onClientDataSent = [&](ConnectionToServerPtr &server, sa::ByteBuffer &buffer) { spdlog::info("Data sent to server! Bytes: {}", buffer.size()); };
 
     bool first = true;
@@ -67,7 +70,7 @@ int main(int ac, char **av)
     while (true) {
         if (client->isConnected()) {
             client->send(packet);
-            std::this_thread::sleep_for(std::chrono::microseconds(1));
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
         }
         /*std::cout << "Enter message to send to server: ";
         std::string input;

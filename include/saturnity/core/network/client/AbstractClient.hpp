@@ -125,7 +125,7 @@ namespace sa {
             packet.toBytes(buffer);
             auto size = static_cast<uint16_t>(buffer.writerIndex());
             buffer.setWriterIndex(sizeof(uint16_t)); // Skip id, for rewrite size
-            buffer.writeUShort(size - sizeof(uint16_t) * 2); // Skip packet id and size
+            buffer.writeUShort(size - (sizeof(uint16_t) * 2)); // Write the packet body size
             buffer.setWriterIndex(size); // Restore writer index
             this->send(buffer);
         }
@@ -204,7 +204,15 @@ namespace sa {
          * @param forced true if the client was disconnected by the server or when an error is thrown on read/write, false otherwise.
          */
         std::function<void(ConnectionToServerPtr &server, bool forced)> onClientDisconnected;
-        std::function<void(ConnectionToServerPtr &server, ByteBuffer &buffer)> onClientDataReceived; /**< The on client data received callback. */
+        /**
+         * @brief The on client data received callback.
+         * Will be called when the client receives the packet header & body
+         * @param server the server connection.
+         * @param packetId the packet id.
+         * @param packetSize the packet size.
+         * @param buffer the packet buffer.
+         */
+        std::function<void(ConnectionToServerPtr &server, std::uint16_t packetId, std::uint16_t packetSize, ByteBuffer &buffer)> onClientDataReceived;
         std::function<void(ConnectionToServerPtr &server, ByteBuffer &buffer)> onClientDataSent; /**< The on client data sent callback. */
 
     protected:
