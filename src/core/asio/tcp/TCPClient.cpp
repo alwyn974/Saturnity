@@ -154,8 +154,11 @@ namespace sa {
             this->logger.error("Received unknown packet with id {}", packetId);
             return;
         }
-        auto packet = this->packetRegistry->createPacket(packetId, buffer);
-        this->logger.info("Received packet '{}' from server", typeid(packet).name());
-        // TODO: handle packet with factories/registry
+        if (!this->packetHandlers.contains(packetId)) {
+            this->logger.error("Received packet with id {} but no handler is registered", packetId);
+            return;
+        }
+        auto handler = this->packetHandlers[packetId];
+        handler(this->connection, buffer);
     }
 } // namespace sa
