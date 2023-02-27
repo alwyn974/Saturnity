@@ -113,7 +113,7 @@ namespace sa {
                 if (bytesTransferred == 0) return this->asyncRead();
                 if (bytesTransferred != AbstractPacket::HEADER_SIZE) {
                     this->logger.error("Failed to read packet header from server: {} bytes read instead of {}", bytesTransferred, AbstractPacket::HEADER_SIZE);
-                    return this->disconnect();
+                    return this->asyncRead();
                 }
                 std::uint16_t packetId = 0, packetSize = 0;
                 std::memcpy(&packetId, header.data(), sizeof(std::uint16_t));

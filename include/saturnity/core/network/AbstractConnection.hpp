@@ -43,12 +43,6 @@ namespace sa {
         virtual void disconnect() = 0;
 
         /**
-         * @brief Disconnect the connection with a reason.
-         * @param reason the reason.
-         */
-        virtual void disconnect(const std::string &reason) = 0;
-
-        /**
          * @brief Send a packet to the connection.
          * @param packet the packet to send.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered.

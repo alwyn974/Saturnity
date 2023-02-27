@@ -27,6 +27,7 @@ add_library(${PROJECT_NAME}
         src/core/network/ConnectionToClient.cpp
         src/core/asio/tcp/TCPServer.cpp
         src/core/asio/tcp/TCPClient.cpp
+        src/core/asio/tcp/TCPConnectionToClient.cpp
 )
 add_executable(${PROJECT_NAME}-server main-server.cpp) # TODO: remove this later
 add_executable(${PROJECT_NAME}-client main-client.cpp) # TODO: remove this later

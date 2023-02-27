@@ -9,31 +9,34 @@
 #include "saturnity/core/network/server/AbstractServer.hpp"
 
 namespace sa {
-    ConnectionToClient::ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id) : AbstractConnection(packetRegistry), _id(id) {}
+    ConnectionToClient::ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<AbstractServer> &server)
+        : AbstractConnection(packetRegistry), id(id), server(server)
+    {
+    }
 
     int ConnectionToClient::getId() const
     {
-        return this->_id;
+        return this->id;
     }
 
     void ConnectionToClient::disconnect()
     {
-        this->_server->disconnect(this->_id);
+        this->server->disconnect(this->id);
     }
 
     void ConnectionToClient::disconnect(const std::string &reason)
     {
-        this->_server->disconnect(this->_id, reason);
+        this->server->disconnect(this->id, reason);
     }
 
     void ConnectionToClient::send(ByteBuffer &buffer)
     {
-        this->_server->sendTo(this->_id, buffer);
+        this->server->sendTo(this->id, buffer);
     }
 
     void ConnectionToClient::send(AbstractPacket &packet)
     {
-        this->_server->sendTo(this->_id, packet);
+        AbstractConnection::send(packet);
     }
 
     void ConnectionToClient::send(const std::shared_ptr<AbstractPacket> &packet)
