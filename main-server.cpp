@@ -30,7 +30,7 @@ int main(int ac, char **av)
     auto packetRegistry = std::make_shared<sa::PacketRegistry>();
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
-    auto server = sa::UDPServer::create(packetRegistry, "0.0.0.0", 2409);
+    auto server = sa::UDPServer::create(packetRegistry);
     server->onServerConnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} connected!", client->getId()); };
 
     server->onServerDisconnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} disconnected!", client->getId()); };
@@ -39,15 +39,14 @@ int main(int ac, char **av)
         spdlog::info("Received data from client {}!", client->getId());
     };
 
-    server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) { spdlog::info("Sent data to client {}!", client->getId()); };
+    server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) { spdlog::info("Sent data to client {}!", -1); };
 
     server->registerHandler<MessagePacket>([&](ConnectionToClientPtr &client, MessagePacket &packet) {
-        spdlog::info("Received message from client {}: {}", client->getId(), packet.getMessage());
+        spdlog::info("Received message from client {}: {}", -1, packet.getMessage());
     });
 
     const auto packet = std::make_shared<MessagePacket>("Hello world!");
 
-    std::thread t([&](std::shared_ptr, packet){
         try {
             server->init();
             server->start();
@@ -59,8 +58,6 @@ int main(int ac, char **av)
             spdlog::error("Error while creating to server: {}", e.what());
             return 84;
         }
-    });
-    t.detach();
 
 
 

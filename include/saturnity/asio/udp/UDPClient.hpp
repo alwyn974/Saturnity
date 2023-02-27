@@ -55,7 +55,7 @@ namespace sa {
          * @param buffer the data.
          * @deprecated use send(AbstractPacket &packet) instead.
          */
-        void send(ByteBuffer &buffer) override;
+        void send(const ByteBuffer &buffer) override;
 
         /**
          * @brief Send a packet to the server.
@@ -81,13 +81,18 @@ namespace sa {
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
 
+        void disconnect(bool forced) override;
+
+        void run() override;
+
         // void receive(int size);
 
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
+        boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
         boost::asio::ip::udp::socket _socket; /**< The asio UDP socket */
         boost::asio::ip::udp::endpoint _endpoint; /**< The endpoints found by the resolver */
-        std::queue<ByteBuffer> _sendQueue; /**< The queue of data to send */
+        TSQueue<ByteBuffer> _sendQueue; /**< The queue of data to send */
 
         /**
          * @brief Create a new UDP client.
@@ -95,13 +100,34 @@ namespace sa {
          */
         explicit UDPClient(const std::shared_ptr<PacketRegistry> &packetRegistry);
 
-        void readPacketHeader();
+        /**
+       * @brief Send the data in the queue.
+       */
+        void asyncSend();
 
-        void readPacketBody(uint16_t size);
-
-        void onRead(boost::system::error_code &ec, std::size_t bytesTransferred);
-
+        /**
+         * @brief Read data from the server.
+         */
         void asyncRead();
+
+        /**
+         * @brief Read the packet header from the server.
+         */
+        void asyncReadPacketHeader();
+
+        /**
+         * @brief Read the packet body from the server.
+         * @param packetId the packet id.
+         * @param packetSize the packet size.
+         */
+        void asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize);
+
+        /**
+         * @brief Handle the data received from the server.
+         * @param packetId the packet id.
+         * @param buffer the data.
+         */
+        void handlePacketData(std::uint16_t packetId, ByteBuffer &buffer);
     };
 } // namespace sa
 
