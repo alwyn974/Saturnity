@@ -8,27 +8,27 @@
 #include "saturnity/asio/tcp/TCPServer.hpp"
 
 namespace sa {
-    sa::TCPServer::TCPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host, uint16_t port) :
+    TCPServer::TCPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host, uint16_t port) :
         AbstractServer(packetRegistry, host, port)
     {
         this->logger = *spdlog::stdout_color_mt("TCPServer");
     }
 
-    void sa::TCPServer::init()
+    void TCPServer::init()
     {
         this->logger.info("Initializing TCP server");
     }
 
-    void sa::TCPServer::run()
+    void TCPServer::run()
     {
         this->logger.info("Running TCP server");
     }
 
-    void sa::TCPServer::start() {}
+    void TCPServer::start() {}
 
-    void sa::TCPServer::stop() {}
+    void TCPServer::stop() {}
 
-    void sa::TCPServer::broadcast(AbstractPacket &packet, int idToIgnore)
+    void TCPServer::broadcast(AbstractPacket &packet, int idToIgnore)
     {
         for (const auto &[id, con] : this->connections) {
             if (idToIgnore != -1 && idToIgnore == id) continue;
@@ -36,7 +36,7 @@ namespace sa {
         }
     }
 
-    void sa::TCPServer::sendTo(int id, const ByteBuffer &buffer)
+    void TCPServer::sendTo(int id, const ByteBuffer &buffer)
     {
         if (!this->connections.contains(id)) {
             spdlog::warn("Tried to send data to a non-existing connection (id: {})", id);
@@ -46,7 +46,7 @@ namespace sa {
         //if (this->onServerDataSent) this->onServerDataSent(this->connections[id], buffer);
     }
 
-    void sa::TCPServer::disconnect(int id)
+    void TCPServer::disconnect(int id)
     {
         if (!this->connections.contains(id)) {
             spdlog::warn("Tried to disconnect a non-existing connection (id: {})", id);
@@ -57,7 +57,7 @@ namespace sa {
         this->connections.erase(id);
     }
 
-    void sa::TCPServer::disconnect(int id, const std::string &reason)
+    void TCPServer::disconnect(int id, const std::string &reason)
     {
         if (!this->connections.contains(id)) {
             spdlog::warn("Tried to disconnect a non-existing connection (id: {})", id);
@@ -66,7 +66,7 @@ namespace sa {
         this->connections[id]->disconnect(reason);
     }
 
-    void sa::TCPServer::disconnectAll()
+    void TCPServer::disconnectAll()
     {
         for (const auto &[id, con] : this->connections) {
             con->disconnect();
