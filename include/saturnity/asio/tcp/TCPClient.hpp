@@ -47,6 +47,7 @@ namespace sa {
          * @brief Connect the client to the server.
          * @param host the host.
          * @param port the port.
+         * @throws std::out_of_range if the port is invalid
          */
         void connect(const std::string &host, uint16_t port) override;
 
