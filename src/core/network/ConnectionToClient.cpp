@@ -36,7 +36,7 @@ namespace sa {
 
     void ConnectionToClient::send(AbstractPacket &packet)
     {
-        AbstractConnection::send(packet);
+        this->server->sendTo(this->id, packet);
     }
 
     void ConnectionToClient::send(const std::shared_ptr<AbstractPacket> &packet)
