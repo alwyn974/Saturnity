@@ -58,7 +58,7 @@ namespace sa {
         this->_workGuard.reset();
     }
 
-    void TCPClient::send(ByteBuffer &buffer)
+    void TCPClient::send(const ByteBuffer &buffer)
     {
         const bool queueEmpty = this->_sendQueue.empty();
         this->_sendQueue.push(buffer);
@@ -102,50 +102,52 @@ namespace sa {
 
     void TCPClient::asyncReadPacketHeader()
     {
-        std::array<byte_t, AbstractPacket::HEADER_SIZE> header = { 0, 0, 0, 0 };
-        this->_socket.async_read_some(boost::asio::buffer(header, AbstractPacket::HEADER_SIZE), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
-            if (ec) {
-                this->logger.error("Failed to read packet header from server: {}", ec.message());
-                this->disconnect();
-                return;
-            }
-            if (bytesTransferred == 0) return this->asyncRead();
-            if (bytesTransferred != AbstractPacket::HEADER_SIZE) {
-                this->logger.error("Failed to read packet header from server: {} bytes read instead of {}", bytesTransferred, AbstractPacket::HEADER_SIZE);
-                return this->disconnect();
-            }
-            std::uint16_t packetId = 0, packetSize = 0;
-            std::memcpy(&packetId, header.data(), sizeof(std::uint16_t));
-            std::memcpy(&packetSize, header.data() + sizeof(std::uint16_t), sizeof(std::uint16_t));
-            if (packetId == 0 || packetSize == 0) {
-                this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
-                return this->asyncRead();
-            }
-            this->asyncReadPacketBody(packetId, packetSize);
-        });
+        std::array<byte_t, AbstractPacket::HEADER_SIZE> header = {0, 0, 0, 0};
+        this->_socket.async_read_some(
+            boost::asio::buffer(header, AbstractPacket::HEADER_SIZE), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+                if (ec) {
+                    this->logger.error("Failed to read packet header from server: {}", ec.message());
+                    this->disconnect();
+                    return;
+                }
+                if (bytesTransferred == 0) return this->asyncRead();
+                if (bytesTransferred != AbstractPacket::HEADER_SIZE) {
+                    this->logger.error("Failed to read packet header from server: {} bytes read instead of {}", bytesTransferred, AbstractPacket::HEADER_SIZE);
+                    return this->disconnect();
+                }
+                std::uint16_t packetId = 0, packetSize = 0;
+                std::memcpy(&packetId, header.data(), sizeof(std::uint16_t));
+                std::memcpy(&packetSize, header.data() + sizeof(std::uint16_t), sizeof(std::uint16_t));
+                if (packetId == 0 || packetSize == 0) {
+                    this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
+                    return this->asyncRead();
+                }
+                this->asyncReadPacketBody(packetId, packetSize);
+            });
     }
 
     void TCPClient::asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize)
     {
         this->logger.info("Reading packet {} body of size {}", packetId, packetSize);
         auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
-        this->_socket.async_receive(boost::asio::buffer(body.get(), packetSize), [&, packetSize, packetId, body](boost::system::error_code ec, std::size_t bytesTransferred) {
-            if (ec) {
-                this->logger.error("Failed to read packet body from server: {}", ec.message());
-                this->disconnect();
-                return;
-            }
-            if (bytesTransferred != packetSize) {
-                this->logger.error("Failed to read packet body from server: {} bytes read instead of {}", bytesTransferred, packetSize);
-                this->disconnect();
-                return;
-            }
-            this->logger.info("Received packet {} of size {}", packetId, packetSize);
-            auto buffer = ByteBuffer(body.get(), packetSize);
-            if (this->onClientDataReceived) this->onClientDataReceived(this->connection, packetId, packetSize, buffer);
-            this->handlePacketData(packetId, buffer);
-            this->asyncRead();
-        });
+        this->_socket.async_receive(
+            boost::asio::buffer(body.get(), packetSize), [&, packetSize, packetId, body](boost::system::error_code ec, std::size_t bytesTransferred) {
+                if (ec) {
+                    this->logger.error("Failed to read packet body from server: {}", ec.message());
+                    this->disconnect();
+                    return;
+                }
+                if (bytesTransferred != packetSize) {
+                    this->logger.error("Failed to read packet body from server: {} bytes read instead of {}", bytesTransferred, packetSize);
+                    this->disconnect();
+                    return;
+                }
+                this->logger.info("Received packet {} of size {}", packetId, packetSize);
+                auto buffer = ByteBuffer(body.get(), packetSize);
+                if (this->onClientDataReceived) this->onClientDataReceived(this->connection, packetId, packetSize, buffer);
+                this->handlePacketData(packetId, buffer);
+                this->asyncRead();
+            });
     }
 
     void TCPClient::handlePacketData(std::uint16_t packetId, ByteBuffer &buffer)

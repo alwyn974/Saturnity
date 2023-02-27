@@ -67,7 +67,7 @@ namespace sa {
          * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @deprecated use send(AbstractPacket &packet) instead.
          */
-        void send(ByteBuffer &buffer) override;
+        void send(const ByteBuffer &buffer) override;
 
         /**
          * @brief Send a packet to the server. (The send can be delayed, due to the queue system)

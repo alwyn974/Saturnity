@@ -107,7 +107,7 @@ namespace sa {
          * @param buffer the byte buffer.
          * @deprecated Use send(AbstractPacket &packet) instead.
          */
-        virtual void send(ByteBuffer &buffer) = 0;
+        virtual void send(const ByteBuffer &buffer) = 0;
 
         /**
          * @brief Send a packet to the server.

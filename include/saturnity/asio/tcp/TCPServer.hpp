@@ -32,7 +32,7 @@ namespace sa {
 
         void broadcast(AbstractPacket &packet) override { AbstractServer::broadcast(packet); }
 
-        void sendTo(int id, ByteBuffer &buffer) override;
+        void sendTo(int id, const ByteBuffer &buffer) override;
 
         void sendTo(int id, AbstractPacket &packet) override { AbstractServer::sendTo(id, packet); }
 

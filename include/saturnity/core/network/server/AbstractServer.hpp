@@ -81,7 +81,7 @@ namespace sa {
          * @param buffer the byte buffer.
          * @deprecated use sendTo(int id, AbstractPacket &packet) instead.
          */
-        virtual void sendTo(int id, ByteBuffer &buffer) = 0;
+        virtual void sendTo(int id, const ByteBuffer &buffer) = 0;
 
         /**
          * @brief Send a packet to a client.
