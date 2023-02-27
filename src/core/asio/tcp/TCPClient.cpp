@@ -30,7 +30,7 @@ namespace sa {
 
     void TCPClient::connect(const std::string &host, uint16_t port)
     {
-        if (port < 0 || port > 65535) throw std::out_of_range("Invalid port number");
+        if (static_cast<std::int16_t>(port) < 0) throw std::out_of_range("Port number can't be negative");
         auto resolver = boost::asio::ip::tcp::resolver(_ioContext);
         this->_endpoints = resolver.resolve(host, std::to_string(port));
 
@@ -85,7 +85,11 @@ namespace sa {
                 this->logger.warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
                 return;
             }
-            if (this->onClientDataSent) this->onClientDataSent(this->connection, buffer);
+            if (this->onClientDataSent) {
+                if (buffer.size() == 14)
+                    this->logger.info("Sent packet {} to server", 0);
+                this->onClientDataSent(this->connection, buffer);
+            }
             if (!this->_sendQueue.pop()) this->logger.error("Failed to pop from send queue");
             this->asyncSend();
         });

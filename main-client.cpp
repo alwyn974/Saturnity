@@ -69,8 +69,8 @@ int main(int ac, char **av)
 
     while (true) {
         if (client->isConnected()) {
-            // client->send(packet);
-            // std::this_thread::sleep_for(std::chrono::milliseconds(500));
+             client->send(packet);
+             std::this_thread::sleep_for(std::chrono::milliseconds(500));
         }
         /*std::cout << "Enter message to send to server: ";
         std::string input;
