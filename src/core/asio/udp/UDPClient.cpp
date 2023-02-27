@@ -37,7 +37,13 @@ namespace sa {
         this->_endpoint = *resolver.resolve(query);
 
         this->logger.info("Connecting to {} on port {}", host, port);
-        this->_socket.open(boost::asio::ip::udp::v4());
+        boost::system::error_code ec;
+        this->_socket.open(boost::asio::ip::udp::v4(), ec);
+
+        if (ec) {
+            this->logger.error("Failed to connect to server: {}", ec.message());
+            throw ClientCannotConnectException("Failed to connect to server: " + ec.message());
+        }
 
         // As UDP is connectionless, there is no need to connect the socket
         this->state = EnumClientState::CONNECTED;
