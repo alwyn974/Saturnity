@@ -36,14 +36,14 @@ namespace sa {
         }
     }
 
-    void sa::TCPServer::sendTo(int id, ByteBuffer &buffer)
+    void sa::TCPServer::sendTo(int id, const ByteBuffer &buffer)
     {
         if (!this->connections.contains(id)) {
             spdlog::warn("Tried to send data to a non-existing connection (id: {})", id);
             return;
         }
         // TODO(alwyn974): Implement
-        if (this->onServerDataSent) this->onServerDataSent(this->connections[id], buffer);
+        //if (this->onServerDataSent) this->onServerDataSent(this->connections[id], buffer);
     }
 
     void sa::TCPServer::disconnect(int id)

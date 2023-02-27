@@ -11,6 +11,9 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "saturnity/core/network/server/AbstractServer.hpp"
 
+/**
+ * @brief TCP server implementation.
+ */
 namespace sa {
     class TCPServer : public AbstractServer {
     public:

@@ -40,12 +40,6 @@ namespace sa {
         inline void disconnect() override;
 
         /**
-         * @brief Disconnect from the server.
-         * @param reason the reason.
-         */
-        inline void disconnect(const std::string &reason) override;
-
-        /**
          * @brief Send a byte buffer to the server.
          * @param buffer the byte buffer.
          * @deprecated Use send(AbstractPacket &packet) instead.

@@ -19,12 +19,6 @@ namespace sa {
         this->_client->disconnect();
     }
 
-    void ConnectionToServer::disconnect(const std::string &reason)
-    {
-        (void) reason;
-        this->_client->disconnect();
-    }
-
     void ConnectionToServer::send(ByteBuffer &buffer)
     {
         this->_client->send(buffer);

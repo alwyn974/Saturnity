@@ -26,7 +26,7 @@ namespace sa {
          * @param packetRegistry the packet registry.
          * @param id the id of the connection.
          */
-        explicit ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id);
+        explicit ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<AbstractServer> &server);
 
         /**
          * @brief Get the id of the connection.
@@ -43,7 +43,7 @@ namespace sa {
          * @brief Disconnect the client with a reason.
          * @param reason the reason.
          */
-        void disconnect(const std::string &reason) override;
+        virtual void disconnect(const std::string &reason);
 
         /**
          * @brief Send a byte buffer to the client.
@@ -72,9 +72,9 @@ namespace sa {
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override;
 
-    private:
-        int _id; /**< The id of the connection. */
-        std::shared_ptr<AbstractServer> _server; /**< The server. */
+    protected:
+        int id; /**< The id of the connection. */
+        std::shared_ptr<AbstractServer> server; /**< The server. */
     };
 } // namespace sa
 
