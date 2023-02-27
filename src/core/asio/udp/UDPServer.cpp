@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "saturnity/asio/udp/UDPServer.hpp"
+#include <boost/asio/streambuf.hpp>
 
 namespace sa {
     sa::UDPServer::UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry,
@@ -42,6 +43,7 @@ namespace sa {
     }
 
     void sa::UDPServer::start() {
+        _socket.set_option(boost::asio::ip::udp::socket::receive_buffer_size(65535));
         asyncRead();
         this->run();
     }
@@ -106,37 +108,43 @@ namespace sa {
     }
 
     void UDPServer::asyncReadPacketHeader() {
-        std::array<byte_t, 4> header = {0, 0, 0, 0};
-
-        _socket.async_receive_from(boost::asio::buffer(header, 4), _remote, [&, this](boost::system::error_code err, std::size_t len) {
+        std::array<byte_t, 4> header = {0};
+        _socket.async_receive_from(buffer.prepare(UINT16_MAX), _remote, [&, this](boost::system::error_code err, std::size_t len) {
+//            this->logger.info("Available: {}", _socket.available());
             if (err) {
                 this->logger.error("Failed to read packet header from server: {}", err.message());
                 return;
             }
             if (len == 0) return this->asyncRead();
-            if (len != 4) {
-                this->logger.error("Failed to read packet header from server: {} bytes read instead of {}", len, 4);
-            }
-            std::uint16_t packetId = 0, packetSize = 0;
-            std::memcpy(&packetId, header.data(), sizeof(std::uint16_t));
-            std::memcpy(&packetSize, header.data() + sizeof(std::uint16_t), sizeof(std::uint16_t));
+            auto bytes = reinterpret_cast<const byte_t *>(this->buffer.data().data());
+//            std::memset(bytes, '\0', len);
+//            for (int i = 0; i < len; i++) {
+//                auto aled = this->buffer.data().data();
+//                this->logger.info("{}", *((byte_t *)(aled) + i));
+//            }
+//            boost::asio::buffer_copy(boost::asio::buffer(bytes, len), this->buffer.data());
+            auto byteBuffer = ByteBuffer(bytes, len);
+
+            std::uint16_t packetId = byteBuffer.readUShort(), packetSize = byteBuffer.readUShort();
+
             if (packetId == 0 || packetSize == 0) {
                 this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
                 return this->asyncRead();
             }
-            this->asyncReadPacketBody(packetId, packetSize);
+            buffer.consume(len);
+            this->handlePacketData(packetId, byteBuffer);
+            this->asyncRead();
+            //this->asyncReadPacketBody(packetId, packetSize);
         });
     }
 
     void UDPServer::asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize) {
+        this->logger.info("ALED PUTAIN {}", this->_ioCtx.stopped());
         this->logger.info("Reading packet {} body of size {} - ctx: {}", packetId, packetSize, this->_ioCtx.stopped());
         auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
-        this->_ioCtx.poll();
-        this->_socket.async_receive_from(boost::asio::buffer(body.get(), packetSize), this->_remote, [&, packetSize, packetId](boost::system::error_code ec, std::size_t bytesTransferred) {
-            if (ec) {
-                this->logger.error("Failed to read packet body from server: {}", ec.message());
-                return;
-            }
+        try {
+            auto bytesTransferred = this->_socket.receive_from(boost::asio::buffer(body.get(), packetSize), _remote);
+            this->logger.info("aled j'suis keblo");
             if (bytesTransferred != packetSize) {
                 this->logger.error("Failed to read packet body from server: {} bytes read instead of {}", bytesTransferred, packetSize);
                 return asyncRead();
@@ -145,7 +153,25 @@ namespace sa {
             auto buffer = ByteBuffer(body.get(), packetSize);
             this->handlePacketData(packetId, buffer);
             this->asyncRead();
-        });
+        } catch (boost::system::system_error &e) {
+            this->logger.error("Failed to read packet body from server: {}", e.what());
+        }
+//        this->logger.info("Available: {}", _socket.available());
+//        this->_socket.async_receive_from(boost::asio::buffer(body.get(), packetSize), this->_remote, [&, packetSize, packetId](boost::system::error_code ec, std::size_t bytesTransferred) {
+//            if (ec) {
+//                this->logger.error("Failed to read packet body from server: {}", ec.message());
+//                return;
+//            }
+//            if (bytesTransferred != packetSize) {
+//                this->logger.error("Failed to read packet body from server: {} bytes read instead of {}", bytesTransferred, packetSize);
+//                return asyncRead();
+//            }
+//            this->logger.info("Received packet {} of size {}", packetId, packetSize);
+//            auto buffer = ByteBuffer(body.get(), packetSize);
+//            this->handlePacketData(packetId, buffer);
+//            this->asyncRead();
+//        });
+//        this->logger.info("aled j'suis keblo");
     }
 
     void UDPServer::handlePacketData(std::uint16_t packetId, ByteBuffer &buffer) {

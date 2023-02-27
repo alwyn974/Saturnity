@@ -77,7 +77,7 @@ namespace sa {
         explicit UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0",
                            uint16_t port = 2409);
         boost::asio::io_context _ioCtx;
-        std::vector<byte_t> _recvBuffer;
+        boost::asio::streambuf buffer;
         boost::asio::ip::udp::endpoint _remote;
         boost::asio::executor_work_guard<decltype(_ioCtx.get_executor())> _work{_ioCtx.get_executor()};
         boost::asio::ip::udp::socket _socket =
