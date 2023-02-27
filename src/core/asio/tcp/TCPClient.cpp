@@ -130,7 +130,7 @@ namespace sa {
     {
         this->logger.info("Reading packet {} body of size {}", packetId, packetSize);
         auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
-        this->_socket.async_receive(
+        this->_socket.async_read_some(
             boost::asio::buffer(body.get(), packetSize), [&, packetSize, packetId, body](boost::system::error_code ec, std::size_t bytesTransferred) {
                 if (ec) {
                     this->logger.error("Failed to read packet body from server: {}", ec.message());
