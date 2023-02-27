@@ -33,7 +33,7 @@ namespace sa {
     {
         if (static_cast<std::int16_t>(port) < 0) throw std::out_of_range("Port number is negative");
         auto resolver = boost::asio::ip::udp::resolver(_ioContext);
-        auto query = boost::asio::ip::udp::resolver::query(host, std::to_string(port));
+        auto query = boost::asio::ip::udp::resolver::query(boost::asio::ip::udp::v4(), host, std::to_string(port));
         this->_endpoint = *resolver.resolve(query);
 
         this->logger.info("Connecting to {} on port {}", host, port);
