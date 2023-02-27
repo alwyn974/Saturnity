@@ -49,7 +49,8 @@ int main(int ac, char **av)
 
     client->init();
     try {
-        client->connect("192.168.1.10", 2409);
+        const std::string ip = ac == 2 ? av[1] : "localhost";
+        client->connect(ip, 2409);
     } catch (const std::exception &e) {
         spdlog::error("Error while connecting to server: {}", e.what());
         return 84;
