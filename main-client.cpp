@@ -49,7 +49,7 @@ int main(int ac, char **av)
 
     client->init();
     try {
-        client->connect(av[1], 2409);
+        client->connect("192.168.1.10", 2409);
     } catch (const std::exception &e) {
         spdlog::error("Error while connecting to server: {}", e.what());
         return 84;

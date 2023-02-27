@@ -9,19 +9,21 @@
 #define SATURNITY_UDPSERVER_HPP
 
 #include <spdlog/sinks/stdout_color_sinks.h>
-#include "saturnity/core/network/server/AbstractServer.hpp"
 #include <boost/asio.hpp>
+#include "saturnity/core/network/server/AbstractServer.hpp"
 
 namespace sa {
     class UDPServer : public AbstractServer {
     public:
-        static std::shared_ptr<UDPServer> create(const std::shared_ptr<PacketRegistry> &packetRegistry,
-            const std::string &host = "0.0.0.0", uint16_t port = 2409)
+        static std::shared_ptr<UDPServer> create(
+            const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409)
         {
             return std::shared_ptr<UDPServer>(new UDPServer(packetRegistry, host, port));
         }
 
         void init() override;
+
+        void run() override;
 
         void start() override;
 
@@ -44,10 +46,6 @@ namespace sa {
         void disconnect(int id, const std::string &reason) override;
 
         void disconnectAll() override;
-
-        void receive();
-
-        void run();
 
         /**
          * @brief Read data from the server.
@@ -74,14 +72,13 @@ namespace sa {
         void handlePacketData(std::uint16_t packetId, ByteBuffer &buffer);
 
     private:
-        explicit UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0",
-                           uint16_t port = 2409);
         boost::asio::io_context _ioCtx;
-        boost::asio::streambuf buffer;
+        boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
+        boost::asio::ip::udp::socket _socket;
+        boost::asio::streambuf _streambuf;
         boost::asio::ip::udp::endpoint _remote;
-        boost::asio::executor_work_guard<decltype(_ioCtx.get_executor())> _work{_ioCtx.get_executor()};
-        boost::asio::ip::udp::socket _socket =
-                boost::asio::ip::udp::socket(_ioCtx, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
+
+        explicit UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409);
     };
 } // namespace sa
 

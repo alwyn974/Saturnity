@@ -32,34 +32,33 @@ int main(int ac, char **av)
 
     auto server = sa::UDPServer::create(packetRegistry);
     server->onServerConnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} connected!", client->getId()); };
-
     server->onServerDisconnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} disconnected!", client->getId()); };
-
     server->onServerDataReceived = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) {
         spdlog::info("Received data from client {}!", client->getId());
     };
-
     server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) { spdlog::info("Sent data to client {}!", -1); };
-
     server->registerHandler<MessagePacket>([&](ConnectionToClientPtr &client, MessagePacket &packet) {
         spdlog::info("Received message from client {}: {}", -1, packet.getMessage());
     });
 
     const auto packet = std::make_shared<MessagePacket>("Hello world!");
 
-        try {
-            server->init();
-            server->start();
-            std::cout << "Started server!" << std::endl;
-            while (true) {
-                server->broadcast(*packet);
-            }
-        } catch (const std::exception &e) {
-            spdlog::error("Error while creating to server: {}", e.what());
-            return 84;
-        }
+    server->init();
+    try {
+        server->start();
+        std::cout << "Started server!" << std::endl;
+    } catch (std::exception &e) {
+        spdlog::error("Error while starting server: {}", e.what());
+        return 84;
+    }
 
+    std::thread t([&]() { server->run(); });
+    t.detach();
 
+    while (true) {
+        server->broadcast(*packet);
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
 
     return 0;
 }

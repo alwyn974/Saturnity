@@ -101,8 +101,8 @@ namespace sa {
         explicit UDPClient(const std::shared_ptr<PacketRegistry> &packetRegistry);
 
         /**
-       * @brief Send the data in the queue.
-       */
+         * @brief Send the data in the queue.
+         */
         void asyncSend();
 
         /**
