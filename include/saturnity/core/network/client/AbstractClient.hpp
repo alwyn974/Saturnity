@@ -13,6 +13,7 @@
 #include "ConnectionToServer.hpp"
 #include "saturnity/core/Core.hpp"
 #include "saturnity/core/packet/PacketRegistry.hpp"
+#include "saturnity/core/ThreadSafeQueue.hpp"
 #include "saturnity/Exceptions.hpp"
 
 /**
@@ -71,6 +72,11 @@ namespace sa {
         virtual void init() = 0;
 
         /**
+         * @brief Run the client. (May be blocking)
+         */
+        virtual void run() = 0;
+
+        /**
          * @brief Connect to a server.
          * @param host the host.
          * @param port the port.
@@ -85,6 +91,12 @@ namespace sa {
         virtual void disconnect() = 0;
 
         /**
+         * @brief Disconnect from the server.
+         * @param forced true if the client is disconnected forcefully, false otherwise.
+         */
+        virtual void disconnect(bool forced) = 0;
+
+        /**
          * @brief Check if the client is connected to the server.
          * @return true if the client is connected to the server, false otherwise.
          */
@@ -95,7 +107,7 @@ namespace sa {
          * @param buffer the byte buffer.
          * @deprecated Use send(AbstractPacket &packet) instead.
          */
-        virtual void send(ByteBuffer &buffer) = 0;
+        virtual void send(const ByteBuffer &buffer) = 0;
 
         /**
          * @brief Send a packet to the server.
@@ -112,9 +124,8 @@ namespace sa {
             buffer.writeUShort(0);
             packet.toBytes(buffer);
             auto size = static_cast<uint16_t>(buffer.writerIndex());
-            spdlog::info("Sending packet id: {}, size: {}", id, size);
             buffer.setWriterIndex(sizeof(uint16_t)); // Skip id, for rewrite size
-            buffer.writeUShort(size - sizeof(uint16_t) * 2); // Skip packet id and size
+            buffer.writeUShort(size - (sizeof(uint16_t) * 2)); // Write the packet body size
             buffer.setWriterIndex(size); // Restore writer index
             this->send(buffer);
         }
@@ -187,8 +198,21 @@ namespace sa {
         void setLogger(const spdlog::logger &log) { this->logger = log; }
 
         std::function<void(ConnectionToServerPtr &server)> onClientConnected; /**< The on client connected callback. */
-        std::function<void(ConnectionToServerPtr &server)> onClientDisconnected; /**< The on client disconnected callback. */
-        std::function<void(ConnectionToServerPtr &server, ByteBuffer &buffer)> onClientDataReceived; /**< The on client data received callback. */
+        /**
+         * @brief The on client disconnected callback.
+         * @param server the server.
+         * @param forced true if the client was disconnected by the server or when an error is thrown on read/write, false otherwise.
+         */
+        std::function<void(ConnectionToServerPtr &server, bool forced)> onClientDisconnected;
+        /**
+         * @brief The on client data received callback.
+         * Will be called when the client receives the packet header & body
+         * @param server the server connection.
+         * @param packetId the packet id.
+         * @param packetSize the packet size.
+         * @param buffer the packet buffer.
+         */
+        std::function<void(ConnectionToServerPtr &server, std::uint16_t packetId, std::uint16_t packetSize, ByteBuffer &buffer)> onClientDataReceived;
         std::function<void(ConnectionToServerPtr &server, ByteBuffer &buffer)> onClientDataSent; /**< The on client data sent callback. */
 
     protected:

@@ -83,6 +83,7 @@ namespace sa {
          */
         inline const EnumPacketType &getType() const { return this->_type; }
 
+        static inline const constexpr int HEADER_SIZE = sizeof(std::uint16_t) * 2; /**< The size of the packet header */
     private:
         EnumPacketType _type; /**< The packet type. */
     };

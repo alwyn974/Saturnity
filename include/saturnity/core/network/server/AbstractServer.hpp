@@ -11,6 +11,7 @@
 #include "ConnectionToClient.hpp"
 #include "saturnity/core/Core.hpp"
 #include "saturnity/core/packet/PacketRegistry.hpp"
+#include "saturnity/core/ThreadSafeQueue.hpp"
 #include "saturnity/Exceptions.hpp"
 
 /**
@@ -46,6 +47,11 @@ namespace sa {
         virtual void init() = 0;
 
         /**
+         * @brief Run the server.
+         */
+        virtual void run() = 0;
+
+        /**
          * @brief Start the server.
          */
         virtual void start() = 0;
@@ -76,7 +82,7 @@ namespace sa {
          * @param buffer the byte buffer.
          * @deprecated use sendTo(int id, AbstractPacket &packet) instead.
          */
-        virtual void sendTo(int id, ByteBuffer &buffer) = 0;
+        virtual void sendTo(int id, const ByteBuffer &buffer) = 0;
 
         /**
          * @brief Send a packet to a client.
@@ -93,7 +99,7 @@ namespace sa {
             packet.toBytes(buffer);
             auto size = static_cast<uint16_t>(buffer.writerIndex());
             buffer.setWriterIndex(sizeof(uint16_t)); // Skip id, for rewrite size
-            buffer.writeUShort(size - sizeof(uint16_t) * 2); // Skip packet id and size
+            buffer.writeUShort(size - (sizeof(uint16_t) * 2)); // Write the packet body size
             buffer.setWriterIndex(size); // Restore writer index
             this->sendTo(id, buffer);
         }

@@ -26,5 +26,6 @@
 #include "core/network/server/ConnectionToClient.hpp"
 #include "core/packet/AbstractPacket.hpp"
 #include "core/packet/PacketRegistry.hpp"
+#include "core/ThreadSafeQueue.hpp"
 
 #endif // SATURNITY_SATURNITY_HPP

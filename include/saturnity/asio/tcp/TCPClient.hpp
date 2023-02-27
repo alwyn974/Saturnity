@@ -10,7 +10,6 @@
 
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
-#include <queue>
 #include "saturnity/core/network/client/AbstractClient.hpp"
 
 /**
@@ -19,6 +18,7 @@
 namespace sa {
     /**
      * @brief Implementation of a TCP client
+     * @throws sa::ex::IOContextDeadException if the ioContext is dead. (send & read)
      */
     class TCPClient : public AbstractClient {
     public:
@@ -33,10 +33,15 @@ namespace sa {
         }
 
         /**
-         * @brief Initialize the client.
-         * Instantiate the connection and launch the ioContext.
+         * @brief Instanciate the client
          */
         void init() override;
+
+        /**
+         * @brief Run the client. (blocking)
+         * Run the ioContext.
+         */
+        void run() override;
 
         /**
          * @brief Connect the client to the server.
@@ -48,46 +53,56 @@ namespace sa {
         /**
          * @brief Disconnect the client from the server.
          */
-        void disconnect() override;
+        void disconnect() override { this->disconnect(false); };
+
+        /**
+         * @brief Disconnect the client from the server.
+         * @param forced true if the disconnection is forced.
+         */
+        void disconnect(bool forced) override;
 
         /**
          * @brief Send data to the server.
          * @param buffer the data.
+         * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @deprecated use send(AbstractPacket &packet) instead.
          */
-        void send(ByteBuffer &buffer) override;
+        void send(const ByteBuffer &buffer) override;
 
         /**
-         * @brief Send a packet to the server.
+         * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @throws ClientNotConnectedException if the client is not connected to the server.
          */
         void send(AbstractPacket &packet) override { AbstractClient::send(packet); }
 
         /**
-         * @brief Send a packet to the server.
+         * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @throws ClientNotConnectedException if the client is not connected to the server.
          */
         void send(const std::shared_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
 
         /**
-         * @brief Send a packet to the server.
+         * @brief Send a packet to the server. (The send can be delayed, due to the queue system)
          * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @throws ClientNotConnectedException if the client is not connected to the server.
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
 
-        // void receive(int size);
-
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
+        boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
         boost::asio::ip::tcp::socket _socket; /**< The asio tcp socket */
         boost::asio::ip::tcp::resolver::results_type _endpoints; /**< The endpoints found by the resolver */
-        std::queue<ByteBuffer> _sendQueue; /**< The queue of data to send */
+        TSQueue<ByteBuffer> _sendQueue; /**< The queue of data to send */
+        TSQueue<ByteBuffer> _receiveQueue; /**< The queue of data received */
 
         /**
          * @brief Create a new TCP client.
@@ -95,13 +110,34 @@ namespace sa {
          */
         explicit TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry);
 
-        void readPacketHeader();
+        /**
+         * @brief Send the data in the queue.
+         */
+        void asyncSend();
 
-        void readPacketBody(uint16_t size);
-
-        void onRead(boost::system::error_code &ec, std::size_t bytesTransferred);
-
+        /**
+         * @brief Read data from the server.
+         */
         void asyncRead();
+
+        /**
+         * @brief Read the packet header from the server.
+         */
+        void asyncReadPacketHeader();
+
+        /**
+         * @brief Read the packet body from the server.
+         * @param packetId the packet id.
+         * @param packetSize the packet size.
+         */
+        void asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize);
+
+        /**
+         * @brief Handle the data received from the server.
+         * @param packetId the packet id.
+         * @param buffer the data.
+         */
+        void handlePacketData(std::uint16_t packetId, ByteBuffer &buffer);
     };
 } // namespace sa
 
