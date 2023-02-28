@@ -40,10 +40,12 @@ int main(int ac, char **av)
     client->onClientDataSent = [&](ConnectionToServerPtr &server, sa::ByteBuffer &buffer) { spdlog::info("Data sent to server! Bytes: {}", buffer.size()); };
 
     bool first = true;
-    client->registerHandler<MessagePacket>([&](ConnectionToServerPtr &server, MessagePacket &packet) {
+    spdlog::info("client ptr {}", fmt::ptr(client.get()));
+    client->registerHandler<MessagePacket>([&, client](ConnectionToServerPtr &server, MessagePacket &packet) {
         spdlog::info("Received message from server: {}", packet.getMessage());
         if (first) {
             first = false;
+            spdlog::info("client ptr {}", fmt::ptr(client.get()));
             server->send(std::make_shared<MessagePacket>("Success!"));
         }
     });

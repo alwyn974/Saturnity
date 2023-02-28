@@ -75,7 +75,7 @@ namespace sa {
         if (this->_sendQueue.empty()) return;
         if (this->_ioContext.stopped()) return this->logger.error("IO context is stopped");
         auto &buffer = this->_sendQueue.front();
-        this->_socket.async_send(boost::asio::buffer(buffer.getBuffer()), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+        this->_socket.async_send(boost::asio::buffer(buffer.getBuffer()), [this, &buffer](boost::system::error_code ec, std::size_t bytesTransferred) {
             if (ec) {
                 this->logger.error("Failed to send data to server: {}", ec.message());
                 this->disconnect(true);
@@ -85,10 +85,7 @@ namespace sa {
                 this->logger.warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
                 return;
             }
-            if (this->onClientDataSent) {
-                if (buffer.size() == 14) this->logger.info("Sent packet {} to server", 0);
-                this->onClientDataSent(this->connection, buffer);
-            }
+            if (this->onClientDataSent) this->onClientDataSent(this->connection, buffer);
             if (!this->_sendQueue.pop()) this->logger.error("Failed to pop from send queue");
             this->asyncSend();
         });
@@ -105,9 +102,10 @@ namespace sa {
 
     void TCPClient::asyncReadPacketHeader()
     {
-        std::array<byte_t, AbstractPacket::HEADER_SIZE> header = {0, 0, 0, 0};
+        auto header = std::shared_ptr<byte_t>(new byte_t[AbstractPacket::HEADER_SIZE], std::default_delete<byte_t[]>()); // NOLINT
         this->_socket.async_read_some(
-            boost::asio::buffer(header, AbstractPacket::HEADER_SIZE), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+            boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE), [this, header](boost::system::error_code ec, std::size_t bytesTransferred) {
+                this->logger.info("available: {}", this->_socket.available());
                 if (ec) {
                     this->logger.error("Failed to read packet header from server: {}", ec.message());
                     this->disconnect();
@@ -119,8 +117,8 @@ namespace sa {
                     return this->asyncRead();
                 }
                 std::uint16_t packetId = 0, packetSize = 0;
-                std::memcpy(&packetId, header.data(), sizeof(std::uint16_t));
-                std::memcpy(&packetSize, header.data() + sizeof(std::uint16_t), sizeof(std::uint16_t));
+                std::memcpy(&packetId, header.get(), sizeof(std::uint16_t));
+                std::memcpy(&packetSize, header.get() + sizeof(std::uint16_t), sizeof(std::uint16_t));
                 if (packetId == 0 || packetSize == 0) {
                     this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
                     return this->asyncRead();
