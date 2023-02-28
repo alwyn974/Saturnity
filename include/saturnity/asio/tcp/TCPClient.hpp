@@ -17,7 +17,7 @@
  */
 namespace sa {
     /**
-     * @brief Implementation of a TCP client
+     * @brief Implementation of a TCP client with boost::asio.
      * @throws sa::ex::IOContextDeadException if the ioContext is dead. (send & read)
      */
     class TCPClient : public AbstractClient {

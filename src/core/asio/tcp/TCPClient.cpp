@@ -18,7 +18,7 @@ namespace sa {
 
     void TCPClient::init()
     {
-        this->logger.info("Initializing TCP client");
+        this->logger.info("Initializing client");
         this->connection = std::make_shared<ConnectionToServer>(packetRegistry, this->shared_from_this());
     }
 
@@ -52,7 +52,9 @@ namespace sa {
         this->logger.info("Disconnecting from server");
         boost::system::error_code ec;
         this->_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+        if (ec) this->logger.error("Failed to shutdown socket: {}", ec.message());
         this->_socket.close(ec);
+        if (ec) this->logger.error("Failed to close socket: {}", ec.message());
         this->state = EnumClientState::DISCONNECTED;
         if (this->onClientDisconnected) this->onClientDisconnected(this->connection, forced);
         this->_workGuard.reset();
