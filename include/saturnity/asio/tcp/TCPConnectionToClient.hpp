@@ -22,8 +22,7 @@ namespace sa {
         void disconnect(const std::string &reason) override;
 
     private:
-
     };
-}
+} // namespace sa
 
-#endif //SATURNITY_ASIOCONNECTIONTOCLIENT_HPP
+#endif // SATURNITY_ASIOCONNECTIONTOCLIENT_HPP

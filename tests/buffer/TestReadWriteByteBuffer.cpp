@@ -5,9 +5,9 @@
 ** TestReadWriteByteBuffer.cpp
 */
 
+#include "saturnity/core/ByteBuffer.hpp"
 #include <gtest/gtest.h>
 #include <random>
-#include "saturnity/core/ByteBuffer.hpp"
 
 TEST(ByteBuffer_ReadWrite, byte)
 {

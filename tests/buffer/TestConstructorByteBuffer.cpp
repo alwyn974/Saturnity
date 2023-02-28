@@ -5,8 +5,8 @@
 ** TestConstructorByteBuffer.cpp
 */
 
-#include <gtest/gtest.h>
 #include "saturnity/core/ByteBuffer.hpp"
+#include <gtest/gtest.h>
 
 TEST(ByteBufferConstructor, DefaultConstructor)
 {

@@ -8,8 +8,8 @@
 #ifndef SATURNITY_TCPSERVER_HPP
 #define SATURNITY_TCPSERVER_HPP
 
-#include <spdlog/sinks/stdout_color_sinks.h>
 #include "saturnity/core/network/server/AbstractServer.hpp"
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 /**
  * @brief TCP server implementation.

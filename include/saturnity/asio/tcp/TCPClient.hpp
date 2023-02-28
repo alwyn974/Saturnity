@@ -8,9 +8,9 @@
 #ifndef SATURNITY_TCPCLIENT_HPP
 #define SATURNITY_TCPCLIENT_HPP
 
+#include "saturnity/core/network/client/AbstractClient.hpp"
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
-#include "saturnity/core/network/client/AbstractClient.hpp"
 
 /**
  * @brief TCP client implementation.

@@ -33,7 +33,7 @@ namespace sa {
         if (static_cast<std::int16_t>(port) < 0) throw std::out_of_range("Port number can't be negative");
         auto resolver = boost::asio::ip::tcp::resolver(_ioContext);
         this->_endpoints = resolver.resolve(host, std::to_string(port));
-        //TODO: add running state and others
+        // TODO: add running state and others
         this->logger.info("Connecting to {} on port {}", host, port);
         boost::system::error_code ec;
         boost::asio::connect(this->_socket, this->_endpoints, ec);
@@ -86,8 +86,7 @@ namespace sa {
                 return;
             }
             if (this->onClientDataSent) {
-                if (buffer.size() == 14)
-                    this->logger.info("Sent packet {} to server", 0);
+                if (buffer.size() == 14) this->logger.info("Sent packet {} to server", 0);
                 this->onClientDataSent(this->connection, buffer);
             }
             if (!this->_sendQueue.pop()) this->logger.error("Failed to pop from send queue");
