@@ -49,6 +49,19 @@ namespace sa::ex {
          */
         explicit IOContextDeadException(const std::string &message) : Exception(message) {};
     };
+
+    /**
+     * @brief Thrown when a callback is not set.
+     */
+    class CallbackNotSetException : public sa::ex::Exception {
+    public:
+        /**
+         * @brief Construct a new Callback Not Set Exception object.
+         * @param message the message.
+         */
+        explicit CallbackNotSetException(const std::string &message) : Exception(message) {};
+    };
+
 } // namespace sa::ex
 
 #endif // SATURNITY_EXCEPTIONS_HPP

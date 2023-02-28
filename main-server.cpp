@@ -31,14 +31,14 @@ int main(int ac, char **av)
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
     auto server = sa::TCPServer::create(packetRegistry, "0.0.0.0", 2409);
-    server->onServerConnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} connected!", client->getId()); };
-
-    server->onServerDisconnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} disconnected!", client->getId()); };
-
+    server->onClientConnect = [&](ConnectionToClientPtr &client) {
+        spdlog::info("Client {} connected!", client->getId());
+        return true; // boolean to accept or not the connection
+    };
+    server->onClientDisconnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} disconnected!", client->getId()); };
     server->onServerDataReceived = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) {
         spdlog::info("Received data from client {}!", client->getId());
     };
-
     server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) { spdlog::info("Sent data to client {}!", client->getId()); };
 
     server->registerHandler<MessagePacket>([&](ConnectionToClientPtr &client, MessagePacket &packet) {
@@ -46,12 +46,21 @@ int main(int ac, char **av)
     });
 
     server->init();
-    server->start();
+    try {
+        server->start();
+    } catch (std::exception &e) {
+        spdlog::error("Error while starting server: {}", e.what());
+        return 84;
+    }
+
+    std::thread t([&]() { server->run(); });
+    t.detach();
 
     const auto packet = std::make_shared<MessagePacket>("Hello world!");
 
     while (true) {
-        server->broadcast(*packet);
+        server->broadcast(packet);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
     return 0;
