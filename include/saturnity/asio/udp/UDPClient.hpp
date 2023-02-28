@@ -5,13 +5,14 @@
 ** UDPClient.hpp
 */
 
-#ifndef SATURNITY_UDPClient_HPP
-#define SATURNITY_UDPClient_HPP
+#ifndef SATURNITY_UDPCLIENT_HPP
+#define SATURNITY_UDPCLIENT_HPP
 
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
 #include <queue>
 #include "saturnity/core/network/client/AbstractClient.hpp"
+#include "AbstractUDPProtocol.hpp"
 
 /**
  * @brief UDP client implementation.
@@ -19,8 +20,9 @@
 namespace sa {
     /**
      * @brief Implementation of a UDP client
+     * By default the udp client will read only a maximum of 1024 bytes. @see AbstractUDPProtocol::setMaxBufferSize @endsee
      */
-    class UDPClient : public AbstractClient {
+    class UDPClient : public AbstractClient, public AbstractUDPProtocol {
     public:
         /**
          * @brief Create a new UDP client.
@@ -85,13 +87,11 @@ namespace sa {
 
         void run() override;
 
-        // void receive(int size);
-
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
         boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
         boost::asio::ip::udp::socket _socket; /**< The asio UDP socket */
-        boost::asio::ip::udp::endpoint _endpoint; /**< The endpoints found by the resolver */
+        boost::asio::ip::udp::resolver::results_type _endpoints; /**< The endpoints found by the resolver */
         TSQueue<ByteBuffer> _sendQueue; /**< The queue of data to send */
 
         /**
@@ -111,18 +111,6 @@ namespace sa {
         void asyncRead();
 
         /**
-         * @brief Read the packet header from the server.
-         */
-        void asyncReadPacketHeader();
-
-        /**
-         * @brief Read the packet body from the server.
-         * @param packetId the packet id.
-         * @param packetSize the packet size.
-         */
-        void asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize);
-
-        /**
          * @brief Handle the data received from the server.
          * @param packetId the packet id.
          * @param buffer the data.
@@ -131,4 +119,4 @@ namespace sa {
     };
 } // namespace sa
 
-#endif // SATURNITY_UDPClient_HPP
+#endif // SATURNITY_UDPCLIENT_HPP

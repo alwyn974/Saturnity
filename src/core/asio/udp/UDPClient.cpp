@@ -6,7 +6,6 @@
 */
 
 #include "saturnity/asio/udp/UDPClient.hpp"
-#include <iostream> //TODO: remove this
 
 namespace sa {
     UDPClient::UDPClient(const std::shared_ptr<PacketRegistry> &packetRegistry) :
@@ -34,11 +33,11 @@ namespace sa {
         if (static_cast<std::int16_t>(port) < 0) throw std::out_of_range("Port number is negative");
         auto resolver = boost::asio::ip::udp::resolver(_ioContext);
         auto query = boost::asio::ip::udp::resolver::query(boost::asio::ip::udp::v4(), host, std::to_string(port));
-        this->_endpoint = *resolver.resolve(query);
+        this->_endpoints = resolver.resolve(query);
 
         this->logger.info("Connecting to {} on port {}", host, port);
         boost::system::error_code ec;
-        this->_socket.open(boost::asio::ip::udp::v4(), ec);
+        boost::asio::connect(this->_socket, this->_endpoints, ec);
 
         if (ec) {
             this->logger.error("Failed to connect to server: {}", ec.message());
@@ -48,7 +47,7 @@ namespace sa {
         // As UDP is connectionless, there is no need to connect the socket
         this->state = EnumClientState::CONNECTED;
         if (this->onClientConnected) this->onClientConnected(this->connection);
-        this->logger.info("Connected to {} on port {}", _endpoint.address().to_string(), _endpoint.port());
+        this->logger.info("Connected to {} on port {}", host, port);
         this->asyncRead();
     }
 
@@ -84,7 +83,7 @@ namespace sa {
         if (this->_sendQueue.empty()) return;
         if (this->_ioContext.stopped()) return this->logger.error("IO context is stopped");
         auto &buffer = this->_sendQueue.front();
-        this->_socket.async_send_to(boost::asio::buffer(buffer.getBuffer()), _endpoint, [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+        this->_socket.async_send(boost::asio::buffer(buffer.getBuffer()), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
             if (ec) {
                 this->logger.error("Failed to send data to server: {}", ec.message());
                 this->disconnect(true);
@@ -106,56 +105,27 @@ namespace sa {
             this->logger.error("IO context is dead");
             throw ex::IOContextDeadException("IO context is dead");
         }
-        this->asyncReadPacketHeader();
-    }
-
-    void UDPClient::asyncReadPacketHeader()
-    {
-        std::array<byte_t, AbstractPacket::HEADER_SIZE> header = {0, 0, 0, 0};
-        this->_socket.async_receive(boost::asio::buffer(header, AbstractPacket::HEADER_SIZE), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+        auto buffer = std::shared_ptr<byte_t>(new byte_t[this->getMaxBufferSize()], std::default_delete<byte_t[]>()); // NOLINT
+        this->_socket.async_receive(boost::asio::buffer(buffer.get(), this->getMaxBufferSize()), [this, buffer](boost::system::error_code ec, std::size_t bytesTransferred) {
             if (ec) {
-                this->logger.error("Failed to read packet header from server: {}", ec.message());
-                this->disconnect();
+                this->logger.error("Failed to read packet data from server: {}", ec.message());
+                this->disconnect(true);
                 return;
             }
             if (bytesTransferred == 0) return this->asyncRead();
-            if (bytesTransferred != AbstractPacket::HEADER_SIZE) {
-                this->logger.error("Failed to read packet header from server: {} bytes read instead of {}", bytesTransferred, AbstractPacket::HEADER_SIZE);
-                return this->asyncRead();
-            }
             std::uint16_t packetId = 0, packetSize = 0;
-            std::memcpy(&packetId, header.data(), sizeof(std::uint16_t));
-            std::memcpy(&packetSize, header.data() + sizeof(std::uint16_t), sizeof(std::uint16_t));
+            std::memcpy(&packetId, buffer.get(), sizeof(std::uint16_t));
+            std::memcpy(&packetSize, buffer.get() + sizeof(std::uint16_t), sizeof(std::uint16_t));
             if (packetId == 0 || packetSize == 0) {
                 this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
                 return this->asyncRead();
             }
-            this->asyncReadPacketBody(packetId, packetSize);
+            this->logger.info("Received packet {} of size {}", packetId, packetSize);
+            ByteBuffer byteBuffer(buffer.get() + (sizeof(std::uint16_t) * 2), packetSize);
+            if (this->onClientDataReceived) this->onClientDataReceived(this->connection, packetId, packetSize, byteBuffer);
+            this->handlePacketData(packetId, byteBuffer);
+            this->asyncRead();
         });
-    }
-
-    void UDPClient::asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize)
-    {
-        this->logger.info("Reading packet {} body of size {}", packetId, packetSize);
-        auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
-        this->_socket.async_receive(
-            boost::asio::buffer(body.get(), packetSize), [&, packetSize, packetId, body](boost::system::error_code ec, std::size_t bytesTransferred) {
-                if (ec) {
-                    this->logger.error("Failed to read packet body from server: {}", ec.message());
-                    this->disconnect();
-                    return;
-                }
-                if (bytesTransferred != packetSize) {
-                    this->logger.error("Failed to read packet body from server: {} bytes read instead of {}", bytesTransferred, packetSize);
-                    this->disconnect();
-                    return;
-                }
-                this->logger.info("Received packet {} of size {}", packetId, packetSize);
-                auto buffer = ByteBuffer(body.get(), packetSize);
-                if (this->onClientDataReceived) this->onClientDataReceived(this->connection, packetId, packetSize, buffer);
-                this->handlePacketData(packetId, buffer);
-                this->asyncRead();
-            });
     }
 
     void UDPClient::handlePacketData(std::uint16_t packetId, ByteBuffer &buffer)

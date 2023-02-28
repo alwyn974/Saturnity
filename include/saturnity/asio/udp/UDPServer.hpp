@@ -11,9 +11,10 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
 #include "saturnity/core/network/server/AbstractServer.hpp"
+#include "AbstractUDPProtocol.hpp"
 
 namespace sa {
-    class UDPServer : public AbstractServer {
+    class UDPServer : public AbstractServer, public AbstractUDPProtocol {
     public:
         static std::shared_ptr<UDPServer> create(
             const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409)

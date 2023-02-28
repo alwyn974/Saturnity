@@ -11,7 +11,9 @@
 
 namespace sa {
     sa::UDPServer::UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host, uint16_t port) :
-        AbstractServer(packetRegistry, host, port), _workGuard(_ioCtx.get_executor()), _socket(_ioCtx, boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string(host), port))
+        AbstractServer(packetRegistry, host, port),
+        _workGuard(_ioCtx.get_executor()),
+        _socket(_ioCtx, boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string(host), port))
     {
         // TODO: Implement UDP Server initialisation
         // TODO: add needed variables for server, and implement receive and send
@@ -65,10 +67,15 @@ namespace sa {
 
     void sa::UDPServer::sendTo(int id, const ByteBuffer &buffer)
     {
-        if (!this->connections.contains(id)) {
+        try {
+            this->_socket.send_to(boost::asio::buffer(buffer.getBuffer(), buffer.size()), this->_remote);
+        } catch (std::exception &e) {
+            this->logger.error("Failed to send data to client {}: {}", id, e.what());
+        }
+        /*if (!this->connections.contains(id)) {
             spdlog::warn("Tried to send data to a non-existing connection (id: {})", id);
             return;
-        }
+        }*/
         // TODO: Implement
         //        if (this->onServerDataSent) this->onServerDataSent(this->connections[id], buffer);
     }
@@ -116,7 +123,7 @@ namespace sa {
             //            this->logger.info("Available: {}", _socket.available());
             if (err) {
                 this->logger.error("Failed to read packet header from server: {}", err.message());
-                return;
+                return this->asyncRead();
             }
             if (len == 0) return this->asyncRead();
             auto bytes = reinterpret_cast<const byte_t *>(this->_streambuf.data().data()); // NOLINT
