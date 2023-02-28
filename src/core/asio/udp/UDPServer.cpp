@@ -11,7 +11,7 @@
 
 namespace sa {
     sa::UDPServer::UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host, uint16_t port) :
-        AbstractServer(packetRegistry, host, port), _workGuard(_ioCtx.get_executor()), _socket(_ioCtx, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port))
+        AbstractServer(packetRegistry, host, port), _workGuard(_ioCtx.get_executor()), _socket(_ioCtx, boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string(host), port))
     {
         // TODO: Implement UDP Server initialisation
         // TODO: add needed variables for server, and implement receive and send
@@ -46,7 +46,6 @@ namespace sa {
     {
         _socket.set_option(boost::asio::ip::udp::socket::receive_buffer_size(65535));
         asyncRead();
-        this->run();
     }
 
     void sa::UDPServer::run()
