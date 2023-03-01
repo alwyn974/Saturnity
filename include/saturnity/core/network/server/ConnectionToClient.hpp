@@ -29,10 +29,9 @@ namespace sa {
         explicit ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<AbstractServer> &server);
 
         /**
-         * @brief Get the id of the connection.
-         * @return the id of the connection.
+         * @brief Start the connection.
          */
-        int getId() const override;
+        virtual void start();
 
         /**
          * @brief Disconnect the client.
@@ -72,9 +71,28 @@ namespace sa {
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override;
 
+        /**
+         * @brief Get the id of the connection.
+         * @return the id of the connection.
+         */
+        int getId() const override;
+
+        /**
+         * @brief Check if the client is connected.
+         * @return true if the client is connected.
+         */
+        bool isConnected() const;
+
+        /**
+         * @brief Set the id of the connection.
+         * @param connectionId the id of the connection.
+         */
+        void setId(int connectionId);
+
     protected:
         int id; /**< The id of the connection. */
         std::shared_ptr<AbstractServer> server; /**< The server. */
+        bool connected; /**< If the client is connected. */
     };
 } // namespace sa
 

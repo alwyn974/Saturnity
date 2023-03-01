@@ -5,8 +5,8 @@
 ** TestPacketRegistry.cpp
 */
 
-#include <gtest/gtest.h>
 #include "saturnity/core/packet/PacketRegistry.hpp"
+#include <gtest/gtest.h>
 
 class HelloPacket : public sa::AbstractPacket {
 public:

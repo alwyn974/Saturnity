@@ -8,16 +8,16 @@
 #ifndef SATURNITY_TCPCLIENT_HPP
 #define SATURNITY_TCPCLIENT_HPP
 
+#include "saturnity/core/network/client/AbstractClient.hpp"
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
-#include "saturnity/core/network/client/AbstractClient.hpp"
 
 /**
  * @brief TCP client implementation.
  */
 namespace sa {
     /**
-     * @brief Implementation of a TCP client
+     * @brief Implementation of a TCP client with boost::asio.
      * @throws sa::ex::IOContextDeadException if the ioContext is dead. (send & read)
      */
     class TCPClient : public AbstractClient {
@@ -40,13 +40,27 @@ namespace sa {
         /**
          * @brief Run the client. (blocking)
          * Run the ioContext.
+         * @throws sa::ex::AlreadyRunningException if the client is already running.
          */
         void run() override;
+
+        /**
+         * @brief Run the client asynchronously.
+         * Run the ioContext in a thread.
+         * @throws sa::ex::AlreadyRunningException if the client is already running.
+         */
+        void asyncRun();
+
+        /**
+         * @brief Stop the client.
+         */
+        void stop() override;
 
         /**
          * @brief Connect the client to the server.
          * @param host the host.
          * @param port the port.
+         * @throws std::out_of_range if the port is invalid
          */
         void connect(const std::string &host, uint16_t port) override;
 
@@ -102,7 +116,8 @@ namespace sa {
         boost::asio::ip::tcp::socket _socket; /**< The asio tcp socket */
         boost::asio::ip::tcp::resolver::results_type _endpoints; /**< The endpoints found by the resolver */
         TSQueue<ByteBuffer> _sendQueue; /**< The queue of data to send */
-        TSQueue<ByteBuffer> _receiveQueue; /**< The queue of data received */
+        bool _asyncRun; /**< True if the asyncRun was called */
+        std::thread _runThread; /**< The thread of the ioContext */
 
         /**
          * @brief Create a new TCP client.

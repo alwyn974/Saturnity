@@ -5,13 +5,14 @@
 ** main.cpp
 */
 
+#include "saturnity/Saturnity.hpp"
 #include <spdlog/spdlog.h>
 #include <iostream>
-#include "saturnity/Saturnity.hpp"
 
 class MessagePacket : public sa::AbstractPacket {
 public:
     MessagePacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP) {};
+
     explicit MessagePacket(const std::string &message) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP), _message(message) {};
 
     void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeString(this->_message); }
@@ -49,26 +50,25 @@ int main(int ac, char **av)
 
     client->init();
     try {
-        const std::string ip = ac == 2 ? av[1] : "localhost";
-        client->connect(ip, 2409);
+        client->connect("localhost", 2409);
     } catch (const std::exception &e) {
         spdlog::error("Error while connecting to server: {}", e.what());
         return 84;
     }
-
-    std::thread t([&]() { client->run(); });
-    t.detach();
+    client->asyncRun();
 
     auto packet = std::make_shared<MessagePacket>("Hello world!");
 
-    while (true) {
-        std::cout << "Enter message to send to server: ";
-        std::string input;
-        std::getline(std::cin, input);
-        if (input == "exit") break;
-        client->send(std::make_shared<MessagePacket>(input));
+    while (true && client->getState() != sa::AbstractClient::EnumClientState::DISCONNECTED) {
+        if (client->isConnected()) {
+            std::cout << "Enter message to send to server: ";
+            std::string input;
+            std::getline(std::cin, input);
+            if (input == "exit") break;
+            client->send(std::make_shared<MessagePacket>(input));
+        }
     }
 
-    client->disconnect();
+    client->stop();
     return 0;
 }
