@@ -36,16 +36,14 @@ namespace sa {
         if (this->_asyncRun) throw ex::AlreadyRunningException("Client is already running asynchronously");
         this->logger.info("Running client asynchronously");
         this->_asyncRun = true;
-        this->_runThread = std::thread([this] {
-            this->run();
-        });
+        this->_runThread = std::thread([this] { this->run(); });
         this->_runThread.detach();
     }
 
     void TCPClient::stop()
     {
         this->logger.info("Stopping client");
-        this->disconnect();
+        if (this->state != EnumClientState::DISCONNECTED) this->disconnect();
         this->_workGuard.reset();
         this->_ioContext.stop();
         if (_asyncRun && this->_runThread.joinable()) this->_runThread.join();
@@ -133,7 +131,6 @@ namespace sa {
         auto header = std::shared_ptr<byte_t>(new byte_t[AbstractPacket::HEADER_SIZE], std::default_delete<byte_t[]>()); // NOLINT
         this->_socket.async_read_some(
             boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE), [this, header](boost::system::error_code ec, std::size_t bytesTransferred) {
-                this->logger.info("available: {}", this->_socket.available());
                 if (ec) {
                     this->logger.error("Failed to read packet header from server: {}", ec.message());
                     this->disconnect();
@@ -157,7 +154,6 @@ namespace sa {
 
     void TCPClient::asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize)
     {
-        this->logger.info("Reading packet {} body of size {}", packetId, packetSize);
         auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
         this->_socket.async_read_some(
             boost::asio::buffer(body.get(), packetSize), [&, packetSize, packetId, body](boost::system::error_code ec, std::size_t bytesTransferred) {

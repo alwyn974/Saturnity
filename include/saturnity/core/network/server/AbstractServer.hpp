@@ -34,7 +34,8 @@ namespace sa {
             host(host),
             port(port),
             logger("Server"),
-            running(false) {};
+            running(false),
+            nextId(0) {};
 
         /**
          * @brief Destroy the Abstract Server object.
@@ -113,7 +114,7 @@ namespace sa {
          * @param buffer the byte buffer.
          * @deprecated use sendTo(int id, AbstractPacket &packet) instead.
          */
-        virtual void sendTo(int id, const ByteBuffer &buffer) = 0;
+        virtual void sendTo(int id, ByteBuffer &buffer) = 0;
 
         /**
          * @brief Send a packet to a client.
@@ -215,13 +216,33 @@ namespace sa {
         uint16_t getPort() const { return port; }
 
         /**
+         * @brief Get the server logger.
+         * @return the logger.
+         */
+        const spdlog::logger &getLogger() const { return logger; }
+
+        /**
+         * @brief Get the server logger.
+         * @return the logger.
+         */
+        spdlog::logger &getLogger() { return logger; }
+
+        /**
          * @brief The on client connect callback, this callback is used to accept or reject a client connection.
          * @param client the client.
          */
         std::function<bool(ConnectionToClientPtr &client)> onClientConnect;
         std::function<void(ConnectionToClientPtr &client)> onClientConnected; /**< The on client connected callback. */
         std::function<void(ConnectionToClientPtr &client)> onClientDisconnected; /**< The on client disconnected callback. */
-        std::function<void(ConnectionToClientPtr &client, ByteBuffer &buffer)> onServerDataReceived; /**< The on server data received callback. */
+        /**
+         * @brief The on server data received callback.
+         * Will be called when the server receives a packet header & body
+         * @param client the client connection.
+         * @param packetId the packet id.
+         * @param packetSize the packet size.
+         * @param buffer the packet buffer.
+         */
+        std::function<void(ConnectionToClientPtr &client, std::uint16_t packetId, uint16_t packetSize, ByteBuffer &buffer)> onServerDataReceived;
         std::function<void(ConnectionToClientPtr &client, ByteBuffer &buffer)> onServerDataSent; /**< The on server data sent callback. */
 
     protected:
@@ -232,6 +253,7 @@ namespace sa {
         uint16_t port; /**< The port. */
         spdlog::logger logger; /**< The logger. */
         bool running; /**< The running state. */
+        int nextId; /**< The next id. */
     };
 } // namespace sa
 

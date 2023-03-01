@@ -62,7 +62,7 @@ int main(int ac, char **av)
 
     auto packet = std::make_shared<MessagePacket>("Hello world!");
 
-    while (true) {
+    while (true && client->getState() != sa::AbstractClient::EnumClientState::DISCONNECTED) {
         if (client->isConnected()) {
             std::cout << "Enter message to send to server: ";
             std::string input;

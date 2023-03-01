@@ -13,11 +13,13 @@ namespace sa {
         AbstractConnection(packetRegistry),
         id(id),
         server(server)
-    {}
-
-    int ConnectionToClient::getId() const
     {
-        return this->id;
+        this->connected = false;
+    }
+
+    void ConnectionToClient::start()
+    {
+        this->connected = true;
     }
 
     void ConnectionToClient::disconnect()
@@ -48,5 +50,20 @@ namespace sa {
     void ConnectionToClient::send(const std::unique_ptr<AbstractPacket> &packet)
     {
         AbstractConnection::send(packet);
+    }
+
+    int ConnectionToClient::getId() const
+    {
+        return this->id;
+    }
+
+    bool ConnectionToClient::isConnected() const
+    {
+        return connected;
+    }
+
+    void ConnectionToClient::setId(int connectionId)
+    {
+        this->id = connectionId;
     }
 } // namespace sa

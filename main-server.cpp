@@ -5,9 +5,9 @@
 ** main.cpp
 */
 
+#include "saturnity/Saturnity.hpp"
 #include <spdlog/spdlog.h>
 #include <iostream>
-#include "saturnity/Saturnity.hpp"
 
 class MessagePacket : public sa::AbstractPacket {
 public:
@@ -31,19 +31,16 @@ int main(int ac, char **av)
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
     auto server = sa::UDPServer::create(packetRegistry);
-    server->onServerConnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} connected!", client->getId()); };
-    server->onServerDisconnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} disconnected!", client->getId()); };
-    server->onServerDataReceived = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) {
+//    server->onServerConnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} connected!", client->getId()); };
+//    server->onServerDisconnected = [&](ConnectionToClientPtr &client) { spdlog::info("Client {} disconnected!", client->getId()); };
+    server->onServerDataReceived = [&](ConnectionToClientPtr &client, std::uint16_t packetId, std::uint16_t packetSize, sa::ByteBuffer &buffer) {
         spdlog::info("Received data from client {}!", client->getId());
     };
-
     server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) { spdlog::info("Sent data to client {}!", client->getId()); };
 
     server->registerHandler<MessagePacket>([&](ConnectionToClientPtr &client, MessagePacket &packet) {
         spdlog::info("Received message from client {}: {}", client->getId(), packet.getMessage());
     });
-
-    const auto packet = std::make_shared<MessagePacket>("Hello world!");
 
     server->init();
     try {
@@ -57,11 +54,13 @@ int main(int ac, char **av)
     std::thread t([&]() { server->run(); });
     t.detach();
 
+    const auto packet = std::make_shared<MessagePacket>("Hello world!");
+
     while (true) {
-        server->broadcast(packet);
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-        server->sendTo(-1, packet);
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        server->broadcast(*packet);
+//        std::this_thread::sleep_for(std::chrono::seconds(1));
+//        server->sendTo(-1, packet);
+//        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 
     return 0;

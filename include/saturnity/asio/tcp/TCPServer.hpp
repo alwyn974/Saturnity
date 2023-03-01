@@ -9,6 +9,7 @@
 #define SATURNITY_TCPSERVER_HPP
 
 #include "saturnity/core/network/server/AbstractServer.hpp"
+#include "TCPConnectionToClient.hpp"
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
 
@@ -22,6 +23,8 @@ namespace sa {
      */
     class TCPServer : public AbstractServer {
     public:
+        friend class TCPConnectionToClient;
+
         /**
          * @brief Create a new TCP server.
          * @param packetRegistry the packet registry.
@@ -43,8 +46,16 @@ namespace sa {
         /**
          * @brief Run the server. (blocking)
          * Run the ioContext.
+         * @throws sa::ex::AlreadyRunningException if the server is already running.
          */
         void run() override;
+
+        /**
+         * @brief Run the server. (non-blocking)
+         * Run the ioContext.
+         * @throws sa::ex::AlreadyRunningException if the server is already running.
+         */
+        void asyncRun();
 
         /**
          * @brief Start the server.
@@ -108,7 +119,7 @@ namespace sa {
          * @throws sa::ex::IOContextDeadException if the ioContext is dead.
          * @deprecated use sendTo(int, AbstractPacket &) instead.
          */
-        void sendTo(int id, const ByteBuffer &buffer) override;
+        void sendTo(int id, ByteBuffer &buffer) override;
 
         /**
          * @brief Send a packet to a client.
@@ -155,6 +166,7 @@ namespace sa {
          */
         void disconnectAll() override;
 
+    protected:
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
         boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
@@ -171,6 +183,25 @@ namespace sa {
          */
         explicit TCPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409);
 
+        /**
+         * @brief Simply wait for a connection.
+         */
+        void waitForConnection();
+
+    protected:
+        /**
+         * @brief Called when a client is disconnected.
+         * @param client the client.
+         */
+        void clientDisconnected(const std::shared_ptr<TCPConnectionToClient> &client);
+
+        /**
+         * @brief Called when a client has sent a packet.
+         * @param client the client.
+         * @param packetId the packet id.
+         * @param buffer the buffer.
+         */
+        void clientSentPacket(const std::shared_ptr<TCPConnectionToClient> &client, std::uint16_t packetId, ByteBuffer &buffer);
     };
 } // namespace sa
 
