@@ -41,14 +41,11 @@ namespace sa {
         this->disconnectAll();
         boost::system::error_code ec;
         this->_acceptor.close(ec);
-        if (ec)
-            this->logger.error("Failed to close acceptor: {}", ec.message());
+        if (ec) this->logger.error("Failed to close acceptor: {}", ec.message());
         this->_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
-        if (ec)
-            this->logger.error("Failed to shutdown socket: {}", ec.message());
+        if (ec) this->logger.error("Failed to shutdown socket: {}", ec.message());
         this->_socket.close(ec);
-        if (ec)
-            this->logger.error("Failed to close socket: {}", ec.message());
+        if (ec) this->logger.error("Failed to close socket: {}", ec.message());
         this->_workGuard.reset();
         this->_ioContext.stop();
     }

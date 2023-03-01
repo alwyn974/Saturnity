@@ -160,6 +160,8 @@ namespace sa {
         boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
         boost::asio::ip::tcp::acceptor _acceptor; /**< The asio tcp acceptor */
         boost::asio::ip::tcp::socket _socket; /**< The asio tcp socket */
+        bool _asyncRun; /**< If the server is running asynchronously */
+        std::thread _runThread; /**< The thread for the asynchronous run */
 
         /**
          * @brief Instanciate the server
@@ -168,8 +170,6 @@ namespace sa {
          * @param port the port.
          */
         explicit TCPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409);
-
-
 
     };
 } // namespace sa

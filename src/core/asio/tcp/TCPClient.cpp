@@ -11,7 +11,8 @@ namespace sa {
     TCPClient::TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry) :
         AbstractClient(packetRegistry),
         _workGuard(_ioContext.get_executor()),
-        _socket(_ioContext)
+        _socket(_ioContext),
+        _asyncRun(false)
     {
         this->logger = *spdlog::stdout_color_mt("TCPClient");
     }
@@ -24,8 +25,32 @@ namespace sa {
 
     void TCPClient::run()
     {
+        if (this->running) throw ex::AlreadyRunningException("Client is already running");
         this->logger.info("Running client");
+        this->running = true;
         this->_ioContext.run();
+    }
+
+    void TCPClient::asyncRun()
+    {
+        if (this->_asyncRun) throw ex::AlreadyRunningException("Client is already running asynchronously");
+        this->logger.info("Running client asynchronously");
+        this->_asyncRun = true;
+        this->_runThread = std::thread([this] {
+            this->run();
+        });
+        this->_runThread.detach();
+    }
+
+    void TCPClient::stop()
+    {
+        this->logger.info("Stopping client");
+        this->disconnect();
+        this->_workGuard.reset();
+        this->_ioContext.stop();
+        if (_asyncRun && this->_runThread.joinable()) this->_runThread.join();
+        this->running = false;
+        this->_asyncRun = false;
     }
 
     void TCPClient::connect(const std::string &host, uint16_t port)
@@ -33,7 +58,6 @@ namespace sa {
         if (static_cast<std::int16_t>(port) < 0) throw std::out_of_range("Port number can't be negative");
         auto resolver = boost::asio::ip::tcp::resolver(_ioContext);
         this->_endpoints = resolver.resolve(host, std::to_string(port));
-        // TODO: add running state and others
         this->logger.info("Connecting to {} on port {}", host, port);
         boost::system::error_code ec;
         boost::asio::connect(this->_socket, this->_endpoints, ec);
@@ -57,7 +81,9 @@ namespace sa {
         if (ec) this->logger.error("Failed to close socket: {}", ec.message());
         this->state = EnumClientState::DISCONNECTED;
         if (this->onClientDisconnected) this->onClientDisconnected(this->connection, forced);
-        this->_workGuard.reset();
+        this->_ioContext.reset();
+        this->_sendQueue.clear();
+        this->logger.info("Disconnected from server");
     }
 
     void TCPClient::send(const ByteBuffer &buffer)

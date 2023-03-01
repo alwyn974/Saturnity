@@ -57,34 +57,20 @@ int main(int ac, char **av)
         spdlog::error("Error while connecting to server: {}", e.what());
         return 84;
     }
-
-    std::thread t([&]() { client->run(); });
-    t.detach();
+    client->asyncRun();
 
     auto packet = std::make_shared<MessagePacket>("Hello world!");
-    // Time measurement
-    //    auto start = std::chrono::high_resolution_clock::now();
-    if (client->isConnected()) client->send(packet);
-    //    auto end = std::chrono::high_resolution_clock::now();
-    //    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    //    spdlog::info("Time taken by function: {} microseconds", duration.count());
 
     while (true) {
         if (client->isConnected()) {
-            client->send(packet);
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            std::cout << "Enter message to send to server: ";
+            std::string input;
+            std::getline(std::cin, input);
+            if (input == "exit") break;
+            client->send(std::make_shared<MessagePacket>(input));
         }
-        /*std::cout << "Enter message to send to server: ";
-        std::string input;
-        std::getline(std::cin, input);
-        if (input == "exit") break;
-        start = std::chrono::high_resolution_clock::now();
-        client->send(std::make_shared<MessagePacket>(input));
-        end = std::chrono::high_resolution_clock::now();
-        duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-        spdlog::info("Time taken by function: {} microseconds", duration.count());*/
     }
 
-    client->disconnect();
+    client->stop();
     return 0;
 }

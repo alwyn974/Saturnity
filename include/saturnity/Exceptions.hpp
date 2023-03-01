@@ -62,6 +62,18 @@ namespace sa::ex {
         explicit CallbackNotSetException(const std::string &message) : Exception(message) {};
     };
 
+    /**
+     * @brief Thrown when the client is already running.
+     */
+    class AlreadyRunningException : public sa::ex::Exception {
+    public:
+        /**
+         * @brief Construct a new Already Running Exception object.
+         * @param message the message.
+         */
+        explicit AlreadyRunningException(const std::string &message) : Exception(message) {};
+    };
+
 } // namespace sa::ex
 
 #endif // SATURNITY_EXCEPTIONS_HPP

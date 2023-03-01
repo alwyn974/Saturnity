@@ -33,7 +33,8 @@ namespace sa {
             packetRegistry(packetRegistry),
             host(host),
             port(port),
-            logger("Server") {};
+            logger("Server"),
+            running(false) {};
 
         /**
          * @brief Destroy the Abstract Server object.
@@ -230,6 +231,7 @@ namespace sa {
         std::string host; /**< The host. */
         uint16_t port; /**< The port. */
         spdlog::logger logger; /**< The logger. */
+        bool running; /**< The running state. */
     };
 } // namespace sa
 

@@ -40,8 +40,21 @@ namespace sa {
         /**
          * @brief Run the client. (blocking)
          * Run the ioContext.
+         * @throws sa::ex::AlreadyRunningException if the client is already running.
          */
         void run() override;
+
+        /**
+         * @brief Run the client asynchronously.
+         * Run the ioContext in a thread.
+         * @throws sa::ex::AlreadyRunningException if the client is already running.
+         */
+        void asyncRun();
+
+        /**
+         * @brief Stop the client.
+         */
+        void stop() override;
 
         /**
          * @brief Connect the client to the server.
@@ -103,7 +116,8 @@ namespace sa {
         boost::asio::ip::tcp::socket _socket; /**< The asio tcp socket */
         boost::asio::ip::tcp::resolver::results_type _endpoints; /**< The endpoints found by the resolver */
         TSQueue<ByteBuffer> _sendQueue; /**< The queue of data to send */
-        TSQueue<ByteBuffer> _receiveQueue; /**< The queue of data received */
+        bool _asyncRun; /**< True if the asyncRun was called */
+        std::thread _runThread; /**< The thread of the ioContext */
 
         /**
          * @brief Create a new TCP client.
