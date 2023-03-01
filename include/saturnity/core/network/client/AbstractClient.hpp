@@ -59,7 +59,11 @@ namespace sa {
          * @brief Construct a new Abstract Client object.
          * @param packetRegistry the packet registry.
          */
-        explicit AbstractClient(const std::shared_ptr<PacketRegistry> &packetRegistry) : packetRegistry(packetRegistry), state(NONE), logger("Client"), running(false) {};
+        explicit AbstractClient(const std::shared_ptr<PacketRegistry> &packetRegistry) :
+            packetRegistry(packetRegistry),
+            state(NONE),
+            logger("Client"),
+            running(false) {};
 
         /**
          * @brief Destroy the Abstract Client object.
@@ -207,10 +211,7 @@ namespace sa {
          * @brief Check if the client is running.
          * @return true if the client is running, false otherwise.
          */
-        bool isRunning() const
-        {
-            return running;
-        }
+        bool isRunning() const { return running; }
 
         std::function<void(ConnectionToServerPtr &server)> onClientConnected; /**< The on client connected callback. */
         /**

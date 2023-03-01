@@ -87,7 +87,9 @@ namespace sa {
          * @param socket the socket of the client.
          * @return the created TCPConnectionToClient.
          */
-        static std::shared_ptr<ConnectionToClient> create(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket &&socket) {
+        static std::shared_ptr<ConnectionToClient> create(
+            const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket &&socket)
+        {
             return std::shared_ptr<TCPConnectionToClient>(new TCPConnectionToClient(packetRegistry, id, server, std::move(socket)));
         }
 
@@ -106,7 +108,8 @@ namespace sa {
          * @server the server.
          * @param socket the socket of the client.
          */
-        explicit TCPConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket socket);
+        explicit TCPConnectionToClient(
+            const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket socket);
 
         /**
          * @brief Async send data to the client.

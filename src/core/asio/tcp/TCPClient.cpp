@@ -36,9 +36,7 @@ namespace sa {
         if (this->_asyncRun) throw ex::AlreadyRunningException("Client is already running asynchronously");
         this->logger.info("Running client asynchronously");
         this->_asyncRun = true;
-        this->_runThread = std::thread([this] {
-            this->run();
-        });
+        this->_runThread = std::thread([this] { this->run(); });
         this->_runThread.detach();
     }
 

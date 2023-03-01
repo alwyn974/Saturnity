@@ -167,8 +167,6 @@ namespace sa {
         void disconnectAll() override;
 
     protected:
-
-
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
         boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */

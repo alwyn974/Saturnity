@@ -9,7 +9,8 @@
 #include "saturnity/asio/tcp/TCPServer.hpp"
 #include "saturnity/core/network/server/AbstractServer.hpp"
 
-sa::TCPConnectionToClient::TCPConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket socket) :
+sa::TCPConnectionToClient::TCPConnectionToClient(
+    const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket socket) :
     ConnectionToClient(packetRegistry, id, server),
     _tcpServer(server),
     _socket(std::move(socket))
@@ -82,21 +83,23 @@ void sa::TCPConnectionToClient::asyncSend()
 {
     if (this->_sendQueue.empty()) return;
     auto &buffer = this->_sendQueue.front();
-    this->_socket.async_send(boost::asio::buffer(buffer.getBuffer()), [this, &buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
-        if (ec) {
-            this->server->getLogger().error("Failed to send data to client ({}): {}", this->id, ec.message());
-            this->disconnect();
-            return;
-        }
-        if (bytesTransferred != buffer.size()) {
-            this->server->getLogger().warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
-            return;
-        }
-        auto client = std::static_pointer_cast<ConnectionToClient>(clientPtr);
-        if (this->server->onServerDataSent) this->server->onServerDataSent(client, buffer);
-        if (!this->_sendQueue.pop()) this->server->getLogger().error("Failed to pop from send queue");
-        this->asyncSend();
-    });
+    this->_socket.async_send(
+        boost::asio::buffer(buffer.getBuffer()),
+        [this, &buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (ec) {
+                this->server->getLogger().error("Failed to send data to client ({}): {}", this->id, ec.message());
+                this->disconnect();
+                return;
+            }
+            if (bytesTransferred != buffer.size()) {
+                this->server->getLogger().warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
+                return;
+            }
+            auto client = std::static_pointer_cast<ConnectionToClient>(clientPtr);
+            if (this->server->onServerDataSent) this->server->onServerDataSent(client, buffer);
+            if (!this->_sendQueue.pop()) this->server->getLogger().error("Failed to pop from send queue");
+            this->asyncSend();
+        });
 }
 
 void sa::TCPConnectionToClient::asyncReadPacketHeader()
@@ -111,7 +114,8 @@ void sa::TCPConnectionToClient::asyncReadPacketHeader()
             }
             if (bytesTransferred == 0) return this->asyncReadPacketHeader();
             if (bytesTransferred != AbstractPacket::HEADER_SIZE) {
-                this->server->getLogger().error("Failed to read packet header from client ({}): {} bytes read instead of {}", this->getId(), bytesTransferred, AbstractPacket::HEADER_SIZE);
+                this->server->getLogger().error(
+                    "Failed to read packet header from client ({}): {} bytes read instead of {}", this->getId(), bytesTransferred, AbstractPacket::HEADER_SIZE);
                 return this->asyncReadPacketHeader();
             }
             std::uint16_t packetId = 0, packetSize = 0;
@@ -130,7 +134,8 @@ void sa::TCPConnectionToClient::asyncReadPacketBody(std::uint16_t packetId, std:
     this->server->getLogger().info("Reading packet {} body of size {}", packetId, packetSize);
     auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
     this->_socket.async_read_some(
-        boost::asio::buffer(body.get(), packetSize), [this, packetSize, packetId, body, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+        boost::asio::buffer(body.get(), packetSize),
+        [this, packetSize, packetId, body, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
             if (ec) {
                 this->server->getLogger().error("Failed to read packet body from server: {}", ec.message());
                 this->disconnect();
@@ -144,7 +149,7 @@ void sa::TCPConnectionToClient::asyncReadPacketBody(std::uint16_t packetId, std:
             this->server->getLogger().info("Received packet {} of size {}", packetId, packetSize);
             auto buffer = ByteBuffer(body.get(), packetSize);
             auto client = std::static_pointer_cast<ConnectionToClient>(clientPtr);
-            if (this->server->onServerDataReceived) this->server->onServerDataReceived(client, packetId,packetSize, buffer);
+            if (this->server->onServerDataReceived) this->server->onServerDataReceived(client, packetId, packetSize, buffer);
             this->_tcpServer->clientSentPacket(clientPtr, packetId, buffer);
             this->asyncReadPacketHeader();
         });

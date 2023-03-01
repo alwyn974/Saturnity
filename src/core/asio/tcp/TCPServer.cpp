@@ -21,8 +21,7 @@ namespace sa {
     void TCPServer::init()
     {
         this->logger.info("Initializing server");
-        if (this->onClientConnect == nullptr)
-            throw sa::ex::CallbackNotSetException("onClientConnect callback is not set");
+        if (this->onClientConnect == nullptr) throw sa::ex::CallbackNotSetException("onClientConnect callback is not set");
     }
 
     void TCPServer::run()
@@ -38,9 +37,7 @@ namespace sa {
         if (this->_asyncRun) throw ex::AlreadyRunningException("Server is already running asynchronously");
         this->logger.info("Running asynchronously");
         this->_asyncRun = true;
-        this->_runThread = std::thread([this] {
-            this->run();
-        });
+        this->_runThread = std::thread([this] { this->run(); });
         this->_runThread.detach();
     }
 
@@ -90,9 +87,8 @@ namespace sa {
 
     void TCPServer::broadcast(AbstractPacket &packet, int idToIgnore)
     {
-        for (const auto &[id, con]: this->connections) {
-            if (idToIgnore != -1 && idToIgnore == id)
-                continue;
+        for (const auto &[id, con] : this->connections) {
+            if (idToIgnore != -1 && idToIgnore == id) continue;
             sendTo(id, packet);
         }
     }
@@ -108,7 +104,7 @@ namespace sa {
 
     void TCPServer::disconnect(int id)
     {
-       this->disconnect(id, "");
+        this->disconnect(id, "");
     }
 
     void TCPServer::disconnect(int id, const std::string &reason)
@@ -122,7 +118,7 @@ namespace sa {
 
     void TCPServer::disconnectAll()
     {
-        for (const auto &[id, con]: this->connections)
+        for (const auto &[id, con] : this->connections)
             con->disconnect();
     }
 
