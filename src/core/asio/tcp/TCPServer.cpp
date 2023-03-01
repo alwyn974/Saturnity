@@ -12,7 +12,8 @@ namespace sa {
         AbstractServer(packetRegistry, host, port),
         _acceptor(_ioContext, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)),
         _socket(_ioContext),
-        _workGuard(_ioContext.get_executor())
+        _workGuard(_ioContext.get_executor()),
+        _asyncRun(false)
     {
         this->logger = *spdlog::stdout_color_mt("TCPServer");
     }
@@ -26,13 +27,27 @@ namespace sa {
 
     void TCPServer::run()
     {
+        if (this->running) throw ex::AlreadyRunningException("Server is already running");
         this->logger.info("Running server");
+        this->running = true;
         this->_ioContext.run();
+    }
+
+    void TCPServer::asyncRun()
+    {
+        if (this->_asyncRun) throw ex::AlreadyRunningException("Server is already running asynchronously");
+        this->logger.info("Running asynchronously");
+        this->_asyncRun = true;
+        this->_runThread = std::thread([this] {
+            this->run();
+        });
+        this->_runThread.detach();
     }
 
     void TCPServer::start()
     {
-
+        this->logger.info("Starting...");
+        this->waitForConnection();
     }
 
     void TCPServer::stop()
@@ -50,6 +65,29 @@ namespace sa {
         this->_ioContext.stop();
     }
 
+    void TCPServer::waitForConnection()
+    {
+        auto casted = std::static_pointer_cast<TCPServer>(this->shared_from_this());
+        this->_acceptor.async_accept([this, casted](boost::system::error_code ec, boost::asio::ip::tcp::socket socket) {
+            if (ec) {
+                this->logger.error("Failed to accept connection: {}", ec.message());
+                return this->waitForConnection();
+            }
+            this->logger.info("New connection from {}:{}", socket.remote_endpoint().address().to_string(), socket.remote_endpoint().port());
+            auto connection = TCPConnectionToClient::create(this->packetRegistry, 0, casted, std::move(socket));
+            if (!this->onClientConnect(connection)) {
+                this->logger.info("Connection refused");
+                return this->waitForConnection();
+            }
+            const int id = this->nextId++;
+            connection->setId(id);
+            this->connections[id] = connection;
+            if (this->onClientConnected) this->onClientConnected(connection);
+            connection->start();
+            this->waitForConnection();
+        });
+    }
+
     void TCPServer::broadcast(AbstractPacket &packet, int idToIgnore)
     {
         for (const auto &[id, con]: this->connections) {
@@ -59,26 +97,18 @@ namespace sa {
         }
     }
 
-    void TCPServer::sendTo(int id, const ByteBuffer &buffer)
+    void TCPServer::sendTo(int id, ByteBuffer &buffer)
     {
         if (!this->connections.contains(id)) {
             spdlog::warn("Tried to send data to a non-existing connection (id: {})", id);
             return;
         }
-        // TODO(alwyn974): Implement
-        // if (this->onServerDataSent) this->onServerDataSent(this->connections[id], buffer);
+        this->connections[id]->send(buffer);
     }
 
     void TCPServer::disconnect(int id)
     {
-        if (!this->connections.contains(id)) {
-            spdlog::warn("Tried to disconnect a non-existing connection (id: {})", id);
-            return;
-        }
-        // TODO(alwyn974): Implement
-        if (this->onClientDisconnected)
-            this->onClientDisconnected(this->connections[id]);
-        this->connections.erase(id);
+       this->disconnect(id, "");
     }
 
     void TCPServer::disconnect(int id, const std::string &reason)
@@ -94,5 +124,35 @@ namespace sa {
     {
         for (const auto &[id, con]: this->connections)
             con->disconnect();
+    }
+
+    void TCPServer::clientDisconnected(const std::shared_ptr<TCPConnectionToClient> &client)
+    {
+        if (!this->connections.contains(client->getId())) {
+            this->logger.warn("Tried to disconnect a non-existing connection (id: {})", client->getId());
+            return;
+        }
+        auto con = this->connections[client->getId()];
+        if (this->onClientDisconnected) this->onClientDisconnected(con);
+        this->connections.erase(client->getId());
+    }
+
+    void TCPServer::clientSentPacket(const std::shared_ptr<TCPConnectionToClient> &client, std::uint16_t packetId, ByteBuffer &buffer)
+    {
+        if (!this->connections.contains(client->getId())) {
+            this->logger.warn("Tried to send data to a non-existing connection (id: {})", client->getId());
+            return;
+        }
+        auto con = this->connections[client->getId()];
+        if (!this->packetRegistry->hasPacket(packetId)) {
+            this->logger.error("Received unknown packet with id {}", packetId);
+            return;
+        }
+        if (!this->packetHandlers.contains(packetId)) {
+            this->logger.error("Received packet with id {} but no handler is registered", packetId);
+            return;
+        }
+        auto handler = this->packetHandlers[packetId];
+        handler(con, buffer);
     }
 } // namespace sa
