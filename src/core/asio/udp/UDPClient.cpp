@@ -74,11 +74,6 @@ namespace sa {
         this->asyncRead();
     }
 
-    void UDPClient::disconnect()
-    {
-        this->disconnect(false);
-    }
-
     void UDPClient::disconnect(bool forced)
     {
         this->logger.info("Disconnecting from server");
@@ -134,26 +129,26 @@ namespace sa {
             throw ex::IOContextDeadException("IO context is dead");
         }
         auto buffer = std::shared_ptr<byte_t>(new byte_t[this->getMaxBufferSize()], std::default_delete<byte_t[]>()); // NOLINT
-        this->_socket.async_receive(boost::asio::buffer(buffer.get(), this->getMaxBufferSize()), [this, buffer](boost::system::error_code ec, std::size_t bytesTransferred) {
-            if (ec) {
-                this->logger.error("Failed to read packet data from server: {}", ec.message());
-                this->disconnect(true);
-                return;
-            }
-            if (bytesTransferred == 0) return this->asyncRead();
-            std::uint16_t packetId = 0, packetSize = 0;
-            std::memcpy(&packetId, buffer.get(), sizeof(std::uint16_t));
-            std::memcpy(&packetSize, buffer.get() + sizeof(std::uint16_t), sizeof(std::uint16_t));
-            if (packetId == 0 || packetSize == 0) {
-                this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
-                return this->asyncRead();
-            }
-            this->logger.info("Received packet {} of size {}", packetId, packetSize);
-            ByteBuffer byteBuffer(buffer.get() + (sizeof(std::uint16_t) * 2), packetSize);
-            if (this->onClientDataReceived) this->onClientDataReceived(this->connection, packetId, packetSize, byteBuffer);
-            this->handlePacketData(packetId, byteBuffer);
-            this->asyncRead();
-        });
+        this->_socket.async_receive(
+            boost::asio::buffer(buffer.get(), this->getMaxBufferSize()), [this, buffer](boost::system::error_code ec, std::size_t bytesTransferred) {
+                if (ec) {
+                    this->logger.error("Failed to read packet data from server: {}", ec.message());
+                    this->disconnect(true);
+                    return;
+                }
+                if (bytesTransferred == 0) return this->asyncRead();
+                std::uint16_t packetId = 0, packetSize = 0;
+                std::memcpy(&packetId, buffer.get(), sizeof(std::uint16_t));
+                std::memcpy(&packetSize, buffer.get() + sizeof(std::uint16_t), sizeof(std::uint16_t));
+                if (packetId == 0 || packetSize == 0) {
+                    this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
+                    return this->asyncRead();
+                }
+                ByteBuffer byteBuffer(buffer.get() + (sizeof(std::uint16_t) * 2), packetSize);
+                if (this->onClientDataReceived) this->onClientDataReceived(this->connection, packetId, packetSize, byteBuffer);
+                this->handlePacketData(packetId, byteBuffer);
+                this->asyncRead();
+            });
     }
 
     void UDPClient::handlePacketData(std::uint16_t packetId, ByteBuffer &buffer)

@@ -167,6 +167,20 @@ namespace sa {
         void disconnectAll() override;
 
     protected:
+        /**
+         * @brief Called when a client is disconnected.
+         * @param client the client.
+         */
+        void clientDisconnected(const std::shared_ptr<TCPConnectionToClient> &client);
+
+        /**
+         * @brief Called when a client has sent a packet.
+         * @param client the client.
+         * @param packetId the packet id.
+         * @param buffer the buffer.
+         */
+        void clientSentPacket(const std::shared_ptr<TCPConnectionToClient> &client, std::uint16_t packetId, ByteBuffer &buffer);
+
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
         boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
@@ -187,21 +201,6 @@ namespace sa {
          * @brief Simply wait for a connection.
          */
         void waitForConnection();
-
-    protected:
-        /**
-         * @brief Called when a client is disconnected.
-         * @param client the client.
-         */
-        void clientDisconnected(const std::shared_ptr<TCPConnectionToClient> &client);
-
-        /**
-         * @brief Called when a client has sent a packet.
-         * @param client the client.
-         * @param packetId the packet id.
-         * @param buffer the buffer.
-         */
-        void clientSentPacket(const std::shared_ptr<TCPConnectionToClient> &client, std::uint16_t packetId, ByteBuffer &buffer);
     };
 } // namespace sa
 

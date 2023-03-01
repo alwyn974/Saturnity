@@ -26,6 +26,11 @@ namespace sa {
           public std::enable_shared_from_this<TCPConnectionToClient> {
     public:
         /**
+         * @brief Start the connection.
+         */
+        void start() override;
+
+        /**
          * @brief Send data to the client.
          * @param buffer the data to send.
          * @deprecated use send(AbstractPacket &packet) instead.
@@ -92,8 +97,6 @@ namespace sa {
         {
             return std::shared_ptr<TCPConnectionToClient>(new TCPConnectionToClient(packetRegistry, id, server, std::move(socket)));
         }
-
-        void start() override;
 
     private:
         std::shared_ptr<TCPServer> _tcpServer; /**< The server */

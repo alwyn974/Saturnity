@@ -8,11 +8,11 @@
 #ifndef SATURNITY_UDPCLIENT_HPP
 #define SATURNITY_UDPCLIENT_HPP
 
+#include "AbstractUDPProtocol.hpp"
+#include "saturnity/core/network/client/AbstractClient.hpp"
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
 #include <queue>
-#include "saturnity/core/network/client/AbstractClient.hpp"
-#include "AbstractUDPProtocol.hpp"
 
 /**
  * @brief UDP client implementation.
@@ -23,7 +23,9 @@ namespace sa {
      * By default the udp client will read only a maximum of 1024 bytes. @see AbstractUDPProtocol::setMaxBufferSize @endsee
      * @throws sa::ex::IOContextDeadException if the ioContext is dead. (send & read)
      */
-    class UDPClient : public AbstractClient, public AbstractUDPProtocol {
+    class UDPClient
+        : public AbstractClient,
+          public AbstractUDPProtocol {
     public:
         /**
          * @brief Create a new UDP client.
@@ -109,8 +111,6 @@ namespace sa {
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
 
-        void stop() override;
-
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
         boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
@@ -125,10 +125,6 @@ namespace sa {
         void asyncSend();
 
         void asyncRead();
-
-        void asyncReadPacketHeader();
-
-        void asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize);
 
         void handlePacketData(std::uint16_t packetId, ByteBuffer &buffer);
     };

@@ -71,7 +71,7 @@ namespace sa {
                 return this->waitForConnection();
             }
             this->logger.info("New connection from {}:{}", socket.remote_endpoint().address().to_string(), socket.remote_endpoint().port());
-            auto connection = TCPConnectionToClient::create(this->packetRegistry, 0, casted, std::move(socket));
+            auto connection = TCPConnectionToClient::create(this->packetRegistry, -1, casted, std::move(socket));
             if (!this->onClientConnect(connection)) {
                 this->logger.info("Connection refused");
                 return this->waitForConnection();

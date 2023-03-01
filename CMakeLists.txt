@@ -30,7 +30,8 @@ add_library(${PROJECT_NAME}
         src/core/asio/tcp/TCPConnectionToClient.cpp
         src/core/asio/udp/UDPServer.cpp
         src/core/asio/udp/UDPClient.cpp
-        src/core/asio/udp/UDPConnectionToClient.cpp include/saturnity/asio/udp/UDPConnectionToClient.hpp)
+        src/core/asio/udp/UDPConnectionToClient.cpp
+)
 add_executable(${PROJECT_NAME}-server main-server.cpp) # TODO: remove this later
 add_executable(${PROJECT_NAME}-client main-client.cpp) # TODO: remove this later
 target_link_libraries(${PROJECT_NAME}-server PRIVATE ${PROJECT_NAME}) # TODO: remove this later
@@ -130,7 +131,7 @@ if (SATURNITY_INSTALL OR SATURNITY_CPACK)
     install(EXPORT ${PROJECT_NAME}Targets
             FILE ${PROJECT_NAME}Targets.cmake
             NAMESPACE ${PROJECT_NAME}::
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME} COMPONENT cmake
     )
 
     # Setup the version file
@@ -152,7 +153,7 @@ if (SATURNITY_INSTALL OR SATURNITY_CPACK)
     install(FILES
             ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
             ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME} COMPONENT cmake
     )
 
     export(EXPORT ${PROJECT_NAME}Targets FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake")
