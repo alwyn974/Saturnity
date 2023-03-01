@@ -33,7 +33,8 @@ namespace sa {
             packetRegistry(packetRegistry),
             host(host),
             port(port),
-            logger("Server") {};
+            logger("Server"),
+            running(false) {};
 
         /**
          * @brief Destroy the Abstract Server object.
@@ -42,6 +43,7 @@ namespace sa {
 
         /**
          * @brief Initialize the server.
+         * @throws sa::ex::CallbackNotSetException if some callbacks are not set.
          */
         virtual void init() = 0;
 
@@ -71,9 +73,39 @@ namespace sa {
         /**
          * @brief Send a packet to all clients.
          * @param packet the packet.
+         * @param idToIgnore the client id to ignore. (-1 to ignore no one)
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         */
+        virtual void broadcast(const std::shared_ptr<AbstractPacket> &packet, int idToIgnore) { this->broadcast(*packet, idToIgnore); }
+
+        /**
+         * @brief Send a packet to all clients.
+         * @param packet the packet.
+         * @param idToIgnore the client id to ignore. (-1 to ignore no one)
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         */
+        virtual void broadcast(const std::unique_ptr<AbstractPacket> &packet, int idToIgnore) { this->broadcast(*packet, idToIgnore); }
+
+        /**
+         * @brief Send a packet to all clients.
+         * @param packet the packet.
          * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
          */
         virtual void broadcast(AbstractPacket &packet) { this->broadcast(packet, -1); }
+
+        /**
+         * @brief Send a packet to all clients.
+         * @param packet the packet.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         */
+        virtual void broadcast(const std::shared_ptr<AbstractPacket> &packet) { this->broadcast(*packet); }
+
+        /**
+         * @brief Send a packet to all clients.
+         * @param packet the packet.
+         * @throws sa::PacketRegistry::PacketNotRegisteredException if the packet is not registered
+         */
+        virtual void broadcast(const std::unique_ptr<AbstractPacket> &packet) { this->broadcast(*packet); }
 
         /**
          * @brief Send a byte buffer to a client.
@@ -182,8 +214,13 @@ namespace sa {
          */
         uint16_t getPort() const { return port; }
 
-        std::function<void(ConnectionToClientPtr &client)> onServerConnected; /**< The on server connected callback. */
-        std::function<void(ConnectionToClientPtr &client)> onServerDisconnected; /**< The on server disconnected callback. */
+        /**
+         * @brief The on client connect callback, this callback is used to accept or reject a client connection.
+         * @param client the client.
+         */
+        std::function<bool(ConnectionToClientPtr &client)> onClientConnect;
+        std::function<void(ConnectionToClientPtr &client)> onClientConnected; /**< The on client connected callback. */
+        std::function<void(ConnectionToClientPtr &client)> onClientDisconnected; /**< The on client disconnected callback. */
         std::function<void(ConnectionToClientPtr &client, ByteBuffer &buffer)> onServerDataReceived; /**< The on server data received callback. */
         std::function<void(ConnectionToClientPtr &client, ByteBuffer &buffer)> onServerDataSent; /**< The on server data sent callback. */
 
@@ -194,6 +231,7 @@ namespace sa {
         std::string host; /**< The host. */
         uint16_t port; /**< The port. */
         spdlog::logger logger; /**< The logger. */
+        bool running; /**< The running state. */
     };
 } // namespace sa
 

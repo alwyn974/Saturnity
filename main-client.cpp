@@ -12,6 +12,7 @@
 class MessagePacket : public sa::AbstractPacket {
 public:
     MessagePacket() : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP) {};
+
     explicit MessagePacket(const std::string &message) : sa::AbstractPacket(sa::AbstractPacket::EnumPacketType::TCP), _message(message) {};
 
     void toBytes(sa::ByteBuffer &byteBuffer) override { byteBuffer.writeString(this->_message); }
@@ -62,11 +63,13 @@ int main(int ac, char **av)
     auto packet = std::make_shared<MessagePacket>("Hello world!");
 
     while (true) {
-        std::cout << "Enter message to send to server: ";
-        std::string input;
-        std::getline(std::cin, input);
-        if (input == "exit") break;
-        client->send(std::make_shared<MessagePacket>(input));
+        if (client->isConnected()) {
+            std::cout << "Enter message to send to server: ";
+            std::string input;
+            std::getline(std::cin, input);
+            if (input == "exit") break;
+            client->send(std::make_shared<MessagePacket>(input));
+        }
     }
 
     client->disconnect();

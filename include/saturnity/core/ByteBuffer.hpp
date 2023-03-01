@@ -8,11 +8,11 @@
 #ifndef SATURNITY_BYTEBUFFER_HPP
 #define SATURNITY_BYTEBUFFER_HPP
 
+#include "Core.hpp"
 #include <exception>
 #include <memory>
 #include <stdexcept>
 #include <vector>
-#include "Core.hpp"
 
 /**
  * @brief The Saturnity namespace.

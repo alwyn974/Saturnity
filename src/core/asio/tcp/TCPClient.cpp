@@ -11,29 +11,53 @@ namespace sa {
     TCPClient::TCPClient(const std::shared_ptr<PacketRegistry> &packetRegistry) :
         AbstractClient(packetRegistry),
         _workGuard(_ioContext.get_executor()),
-        _socket(_ioContext)
+        _socket(_ioContext),
+        _asyncRun(false)
     {
         this->logger = *spdlog::stdout_color_mt("TCPClient");
     }
 
     void TCPClient::init()
     {
-        this->logger.info("Initializing TCP client");
+        this->logger.info("Initializing client");
         this->connection = std::make_shared<ConnectionToServer>(packetRegistry, this->shared_from_this());
     }
 
     void TCPClient::run()
     {
+        if (this->running) throw ex::AlreadyRunningException("Client is already running");
         this->logger.info("Running client");
+        this->running = true;
         this->_ioContext.run();
+    }
+
+    void TCPClient::asyncRun()
+    {
+        if (this->_asyncRun) throw ex::AlreadyRunningException("Client is already running asynchronously");
+        this->logger.info("Running client asynchronously");
+        this->_asyncRun = true;
+        this->_runThread = std::thread([this] {
+            this->run();
+        });
+        this->_runThread.detach();
+    }
+
+    void TCPClient::stop()
+    {
+        this->logger.info("Stopping client");
+        this->disconnect();
+        this->_workGuard.reset();
+        this->_ioContext.stop();
+        if (_asyncRun && this->_runThread.joinable()) this->_runThread.join();
+        this->running = false;
+        this->_asyncRun = false;
     }
 
     void TCPClient::connect(const std::string &host, uint16_t port)
     {
-        if (port < 0 || port > 65535) throw std::out_of_range("Invalid port number");
+        if (static_cast<std::int16_t>(port) < 0) throw std::out_of_range("Port number can't be negative");
         auto resolver = boost::asio::ip::tcp::resolver(_ioContext);
         this->_endpoints = resolver.resolve(host, std::to_string(port));
-
         this->logger.info("Connecting to {} on port {}", host, port);
         boost::system::error_code ec;
         boost::asio::connect(this->_socket, this->_endpoints, ec);
@@ -52,10 +76,14 @@ namespace sa {
         this->logger.info("Disconnecting from server");
         boost::system::error_code ec;
         this->_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+        if (ec) this->logger.error("Failed to shutdown socket: {}", ec.message());
         this->_socket.close(ec);
+        if (ec) this->logger.error("Failed to close socket: {}", ec.message());
         this->state = EnumClientState::DISCONNECTED;
         if (this->onClientDisconnected) this->onClientDisconnected(this->connection, forced);
-        this->_workGuard.reset();
+        this->_ioContext.reset();
+        this->_sendQueue.clear();
+        this->logger.info("Disconnected from server");
     }
 
     void TCPClient::send(const ByteBuffer &buffer)
@@ -75,7 +103,7 @@ namespace sa {
         if (this->_sendQueue.empty()) return;
         if (this->_ioContext.stopped()) return this->logger.error("IO context is stopped");
         auto &buffer = this->_sendQueue.front();
-        this->_socket.async_send(boost::asio::buffer(buffer.getBuffer()), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+        this->_socket.async_send(boost::asio::buffer(buffer.getBuffer()), [this, &buffer](boost::system::error_code ec, std::size_t bytesTransferred) {
             if (ec) {
                 this->logger.error("Failed to send data to server: {}", ec.message());
                 this->disconnect(true);
@@ -102,9 +130,10 @@ namespace sa {
 
     void TCPClient::asyncReadPacketHeader()
     {
-        std::array<byte_t, AbstractPacket::HEADER_SIZE> header = {0, 0, 0, 0};
+        auto header = std::shared_ptr<byte_t>(new byte_t[AbstractPacket::HEADER_SIZE], std::default_delete<byte_t[]>()); // NOLINT
         this->_socket.async_read_some(
-            boost::asio::buffer(header, AbstractPacket::HEADER_SIZE), [&](boost::system::error_code ec, std::size_t bytesTransferred) {
+            boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE), [this, header](boost::system::error_code ec, std::size_t bytesTransferred) {
+                this->logger.info("available: {}", this->_socket.available());
                 if (ec) {
                     this->logger.error("Failed to read packet header from server: {}", ec.message());
                     this->disconnect();
@@ -116,8 +145,8 @@ namespace sa {
                     return this->asyncRead();
                 }
                 std::uint16_t packetId = 0, packetSize = 0;
-                std::memcpy(&packetId, header.data(), sizeof(std::uint16_t));
-                std::memcpy(&packetSize, header.data() + sizeof(std::uint16_t), sizeof(std::uint16_t));
+                std::memcpy(&packetId, header.get(), sizeof(std::uint16_t));
+                std::memcpy(&packetSize, header.get() + sizeof(std::uint16_t), sizeof(std::uint16_t));
                 if (packetId == 0 || packetSize == 0) {
                     this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
                     return this->asyncRead();
@@ -130,7 +159,7 @@ namespace sa {
     {
         this->logger.info("Reading packet {} body of size {}", packetId, packetSize);
         auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
-        this->_socket.async_receive(
+        this->_socket.async_read_some(
             boost::asio::buffer(body.get(), packetSize), [&, packetSize, packetId, body](boost::system::error_code ec, std::size_t bytesTransferred) {
                 if (ec) {
                     this->logger.error("Failed to read packet body from server: {}", ec.message());

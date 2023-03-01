@@ -8,13 +8,13 @@
 #ifndef SATURNITY_ABSTRACTCLIENT_HPP
 #define SATURNITY_ABSTRACTCLIENT_HPP
 
-#include <memory>
-#include <unordered_map>
 #include "ConnectionToServer.hpp"
 #include "saturnity/core/Core.hpp"
 #include "saturnity/core/packet/PacketRegistry.hpp"
 #include "saturnity/core/ThreadSafeQueue.hpp"
 #include "saturnity/Exceptions.hpp"
+#include <memory>
+#include <unordered_map>
 
 /**
  * @brief The Saturnity namespace.
@@ -59,7 +59,7 @@ namespace sa {
          * @brief Construct a new Abstract Client object.
          * @param packetRegistry the packet registry.
          */
-        explicit AbstractClient(const std::shared_ptr<PacketRegistry> &packetRegistry) : packetRegistry(packetRegistry), state(NONE), logger("Client") {};
+        explicit AbstractClient(const std::shared_ptr<PacketRegistry> &packetRegistry) : packetRegistry(packetRegistry), state(NONE), logger("Client"), running(false) {};
 
         /**
          * @brief Destroy the Abstract Client object.
@@ -73,8 +73,14 @@ namespace sa {
 
         /**
          * @brief Run the client. (May be blocking)
+         * @throws sa::ex::AlreadyRunningException if the client is already running.
          */
         virtual void run() = 0;
+
+        /**
+         * @brief Stop the client.
+         */
+        virtual void stop() = 0;
 
         /**
          * @brief Connect to a server.
@@ -197,6 +203,15 @@ namespace sa {
          */
         void setLogger(const spdlog::logger &log) { this->logger = log; }
 
+        /**
+         * @brief Check if the client is running.
+         * @return true if the client is running, false otherwise.
+         */
+        bool isRunning() const
+        {
+            return running;
+        }
+
         std::function<void(ConnectionToServerPtr &server)> onClientConnected; /**< The on client connected callback. */
         /**
          * @brief The on client disconnected callback.
@@ -221,6 +236,7 @@ namespace sa {
         std::unordered_map<uint16_t, std::function<void(ConnectionToServerPtr &server, ByteBuffer &buffer)>> packetHandlers; /**< The packet handlers. */
         EnumClientState state; /**< The client state. */
         spdlog::logger logger; /**< The logger. */
+        bool running; /**< True if the client is running, false otherwise. */
     };
 } // namespace sa
 

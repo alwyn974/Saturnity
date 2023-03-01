@@ -5,8 +5,8 @@
 ** TestByteBufferUtils.cpp
 */
 
-#include <gtest/gtest.h>
 #include "saturnity/core/ByteBuffer.hpp"
+#include <gtest/gtest.h>
 
 TEST(ByteBuffer_Utils, isEmpty)
 {

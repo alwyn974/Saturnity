@@ -36,9 +36,11 @@ int main(int ac, char **av)
     server->onServerDataReceived = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) {
         spdlog::info("Received data from client {}!", client->getId());
     };
-    server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) { spdlog::info("Sent data to client {}!", -1); };
+
+    server->onServerDataSent = [&](ConnectionToClientPtr &client, sa::ByteBuffer &buffer) { spdlog::info("Sent data to client {}!", client->getId()); };
+
     server->registerHandler<MessagePacket>([&](ConnectionToClientPtr &client, MessagePacket &packet) {
-        spdlog::info("Received message from client {}: {}", -1, packet.getMessage());
+        spdlog::info("Received message from client {}: {}", client->getId(), packet.getMessage());
     });
 
     const auto packet = std::make_shared<MessagePacket>("Hello world!");
@@ -56,6 +58,8 @@ int main(int ac, char **av)
     t.detach();
 
     while (true) {
+        server->broadcast(packet);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         server->sendTo(-1, packet);
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }

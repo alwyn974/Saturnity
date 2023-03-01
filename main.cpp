@@ -5,9 +5,9 @@
 ** main.cpp
 */
 
+#include "saturnity/Saturnity.hpp"
 #include <spdlog/spdlog.h>
 #include <iostream>
-#include "saturnity/Saturnity.hpp"
 
 class Packet1 : public sa::AbstractPacket {
 public:

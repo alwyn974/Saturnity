@@ -8,10 +8,10 @@
 #ifndef SATURNITY_PACKETREGISTRY_HPP
 #define SATURNITY_PACKETREGISTRY_HPP
 
+#include "AbstractPacket.hpp"
 #include <functional>
 #include <typeindex>
 #include <unordered_map>
-#include "AbstractPacket.hpp"
 
 /**
  * @brief The namespace of the Saturnity library
