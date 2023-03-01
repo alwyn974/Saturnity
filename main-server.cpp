@@ -58,7 +58,7 @@ int main(int ac, char **av)
     const auto packet = std::make_shared<MessagePacket>("Hello world!");
 
     while (true) {
-        server->broadcast(packet);
+        server->broadcast(*packet);
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 

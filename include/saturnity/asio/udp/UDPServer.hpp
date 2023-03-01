@@ -10,8 +10,10 @@
 
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <boost/asio.hpp>
+#include <unordered_map>
 #include "saturnity/core/network/server/AbstractServer.hpp"
 #include "AbstractUDPProtocol.hpp"
+#include "UDPConnectionToClient.hpp"
 
 namespace sa {
     class UDPServer : public AbstractServer, public AbstractUDPProtocol {
@@ -26,6 +28,8 @@ namespace sa {
 
         void run() override;
 
+        void asyncRun();
+
         void start() override;
 
         void stop() override;
@@ -34,7 +38,7 @@ namespace sa {
 
         void broadcast(AbstractPacket &packet) override { AbstractServer::broadcast(packet); }
 
-        void sendTo(int id, const ByteBuffer &buffer) override;
+        void sendTo(int id, ByteBuffer &buffer) override;
 
         void sendTo(int id, AbstractPacket &packet) override { AbstractServer::sendTo(id, packet); }
 
@@ -48,29 +52,9 @@ namespace sa {
 
         void disconnectAll() override;
 
-        /**
-         * @brief Read data from the server.
-         */
+        void clientSentPacket(const std::shared_ptr<UDPConnectionToClient> &client, std::uint16_t packetId, ByteBuffer &buffer);
+
         void asyncRead();
-
-        /**
-         * @brief Read the packet header from the server.
-         */
-        void asyncReadPacketHeader();
-
-        /**
-         * @brief Read the packet body from the server.
-         * @param packetId the packet id.
-         * @param packetSize the packet size.
-         */
-        void asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize);
-
-        /**
-         * @brief Handle the data received from the server.
-         * @param packetId the packet id.
-         * @param buffer the data.
-         */
-        void handlePacketData(std::uint16_t packetId, ByteBuffer &buffer);
 
     private:
         boost::asio::io_context _ioCtx;
@@ -78,6 +62,9 @@ namespace sa {
         boost::asio::ip::udp::socket _socket;
         boost::asio::streambuf _streambuf;
         boost::asio::ip::udp::endpoint _remote;
+        bool _asyncRun;
+        std::thread _runThread;
+        std::unordered_map<uint16_t, boost::asio::ip::udp::endpoint> _clientList;
 
         explicit UDPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host = "0.0.0.0", uint16_t port = 2409);
     };

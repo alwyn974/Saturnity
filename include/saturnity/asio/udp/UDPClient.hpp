@@ -70,7 +70,7 @@ namespace sa {
         /**
          * @brief Disconnect the client from the server.
          */
-        void disconnect() override;
+        void disconnect() override { this->disconnect(false); };
 
         /**
          * @brief Disconnect the client from the server.
@@ -109,6 +109,8 @@ namespace sa {
          */
         void send(const std::unique_ptr<AbstractPacket> &packet) override { AbstractClient::send(packet); }
 
+        void stop() override;
+
     private:
         boost::asio::io_context _ioContext; /**< The asio io context */
         boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
@@ -118,27 +120,16 @@ namespace sa {
         bool _asyncRun; /**< True if the asyncRun was called */
         std::thread _runThread; /**< The thread of the ioContext */
 
-        /**
-         * @brief Create a new UDP client.
-         * @param packetRegistry the packet registry.
-         */
         explicit UDPClient(const std::shared_ptr<PacketRegistry> &packetRegistry);
 
-        /**
-         * @brief Send the data in the queue.
-         */
         void asyncSend();
 
-        /**
-         * @brief Read data from the server.
-         */
         void asyncRead();
 
-        /**
-         * @brief Handle the data received from the server.
-         * @param packetId the packet id.
-         * @param buffer the data.
-         */
+        void asyncReadPacketHeader();
+
+        void asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize);
+
         void handlePacketData(std::uint16_t packetId, ByteBuffer &buffer);
     };
 } // namespace sa
