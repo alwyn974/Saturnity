@@ -11,7 +11,8 @@ namespace sa {
     UDPClient::UDPClient(const std::shared_ptr<PacketRegistry> &packetRegistry) :
         AbstractClient(packetRegistry),
         _workGuard(_ioContext.get_executor()),
-        _socket(_ioContext)
+        _socket(_ioContext),
+        _asyncRun(false)
     {
         this->logger = *spdlog::stdout_color_mt("UDPClient");
     }
@@ -24,8 +25,30 @@ namespace sa {
 
     void UDPClient::run()
     {
-        this->logger.info("Running Client");
+        if (this->running) throw ex::AlreadyRunningException("Client is already running");
+        this->logger.info("Running client");
+        this->running = true;
         this->_ioContext.run();
+    }
+
+    void UDPClient::asyncRun()
+    {
+        if (this->_asyncRun) throw ex::AlreadyRunningException("Client is already running asynchronously");
+        this->logger.info("Running client asynchronously");
+        this->_asyncRun = true;
+        this->_runThread = std::thread([this] { this->run(); });
+        this->_runThread.detach();
+    }
+
+    void UDPClient::stop()
+    {
+        this->logger.info("Stopping client");
+        if (this->state != EnumClientState::DISCONNECTED) this->disconnect();
+        this->_workGuard.reset();
+        this->_ioContext.stop();
+        if (_asyncRun && this->_runThread.joinable()) this->_runThread.join();
+        this->running = false;
+        this->_asyncRun = false;
     }
 
     void UDPClient::connect(const std::string &host, uint16_t port)
@@ -60,10 +83,15 @@ namespace sa {
     {
         this->logger.info("Disconnecting from server");
         boost::system::error_code ec;
-        this->_socket.shutdown(boost::asio::ip::udp::socket::shutdown_both, ec);
+        this->_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+        if (ec) this->logger.error("Failed to shutdown socket: {}", ec.message());
         this->_socket.close(ec);
+        if (ec) this->logger.error("Failed to close socket: {}", ec.message());
         this->state = EnumClientState::DISCONNECTED;
         if (this->onClientDisconnected) this->onClientDisconnected(this->connection, forced);
+        this->_ioContext.reset();
+        this->_sendQueue.clear();
+        this->logger.info("Disconnected from server");
     }
 
     void UDPClient::send(const ByteBuffer &buffer)
@@ -141,5 +169,4 @@ namespace sa {
         auto handler = this->packetHandlers[packetId];
         handler(this->connection, buffer);
     }
-
 } // namespace sa
