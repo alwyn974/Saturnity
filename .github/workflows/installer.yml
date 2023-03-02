@@ -26,12 +26,21 @@ jobs:
         working-directory: ./build
         run: cpack -G "DEB;RPM"
 
-      - name: Upload Installer
-        uses: actions/upload-artifact@v2
+#      - name: Upload Installer
+#        uses: actions/upload-artifact@v2
+#        with:
+#          path: |
+#            ./build/Saturnity*.deb
+#            ./build/Saturnity*.rpm
+
+      - uses: ncipollo/release-action@v1
         with:
-          path: |
-            ./build/Saturnity*.deb
-            ./build/Saturnity*.rpm
+          allowUpdates: true
+          artifacts: "build/Saturnity*.deb,build/Saturnity*.rpm"
+          body: "Automated release of ${{ github.ref }}"
+          generateReleaseNotes: true
+          name: "Saturnity ${{ github.ref }}"
+          tag: "${{ github.ref }}"
 
   windows_installer:
     runs-on: windows-latest
@@ -52,8 +61,17 @@ jobs:
         working-directory: ./build
         run: cpack -G "NSIS"
 
-      - name: Upload Installer
-        uses: actions/upload-artifact@v2
+#      - name: Upload Installer
+#        uses: actions/upload-artifact@v2
+#        with:
+#          path: |
+#            ./build/Saturnity*.exe
+
+      - uses: ncipollo/release-action@v1
         with:
-          path: |
-            ./build/Saturnity*.exe
+          allowUpdates: true
+          artifacts: "build/Release/Saturnity*.exe"
+          body: "Automated release of ${{ github.ref }}"
+          generateReleaseNotes: true
+          name: "Saturnity ${{ github.ref }}"
+          tag: "${{ github.ref }}"
