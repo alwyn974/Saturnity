@@ -17,7 +17,7 @@ set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
 # Set some resource files
-set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/README.md") # TODO: change this later
+set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.txt")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 
@@ -32,32 +32,51 @@ if (TARGET_TYPE STREQUAL "EXECUTABLE")
 endif ()
 
 # Components
-# TODO: create component for library (shared/static) and headers
-# TODO: create component for only the dll/so
-#[[include(CPackComponent)
+include(CPackComponent)
+cpack_add_install_type(Full DISPLAY_NAME "Everything")
+cpack_add_install_type(Developer DISPLAY_NAME "Development")
+cpack_add_install_type(Application DISPLAY_NAME "Runtime")
+
 cpack_add_component(headers
         DISPLAY_NAME "Headers"
         DESCRIPTION "C++ Header files"
         GROUP "Development"
-        REQUIRED
+        INSTALL_TYPES Developer Full
 )
 cpack_add_component(archive
         DISPLAY_NAME "Archive"
         DESCRIPTION "Static library"
         GROUP "Development"
-        REQUIRED
+        DEPENDS headers
+        INSTALL_TYPES Developer Full
+)
+cpack_add_component(cmake
+        DISPLAY_NAME "CMake"
+        DESCRIPTION "CMake files"
+        GROUP "Development"
+        DEPENDS headers archive
+        INSTALL_TYPES Developer Full
 )
 cpack_add_component(library
         DISPLAY_NAME "Library"
         DESCRIPTION "Shared library"
-        GROUP "Runtime"
-        REQUIRED
+        GROUP "Software"
+        INSTALL_TYPES Developer Full Runtime
+)
+cpack_add_component(runtime
+        DISPLAY_NAME "Runtime"
+        DESCRIPTION "Runtime files"
+        GROUP "Software"
+        INSTALL_TYPES Full Runtime
 )
 cpack_add_component_group(Development
         EXPANDED
-        DESCRIPTION
-        "All of the tools you'll ever need to develop software"
-)]]
+        DESCRIPTION "All of the tools you'll ever need to develop software"
+)
+cpack_add_component_group(Software
+        EXPANDED
+        DESCRIPTION  "All of the tools you'll ever need to run software"
+)
 
 # Source package generator
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PROJECT_VERSION}-src")

@@ -20,7 +20,11 @@ option(USE_CLANG_TIDY_WITH_ERRORS "Use clang tidy but all warnings are errors" O
 option(USE_CLANG_TIDY_WITH_FIX "Use clang-tidy with fix" OFF) # Used by the CI
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF) # Fix dll issues on Windows
 
-add_library(${PROJECT_NAME}
+if(WIN32)
+    set(${PROJECT_NAME}_ICON ${CMAKE_CURRENT_SOURCE_DIR}/assets/app.rc)
+endif()
+
+add_executable(${PROJECT_NAME} main-server.cpp ${${PROJECT_NAME}_ICON}
         src/core/ByteBuffer.cpp
         src/core/PacketRegistry.cpp
         src/core/network/ConnectionToServer.cpp
@@ -32,10 +36,10 @@ add_library(${PROJECT_NAME}
         src/core/asio/udp/UDPClient.cpp
         src/core/asio/udp/UDPConnectionToClient.cpp
 )
-add_executable(${PROJECT_NAME}-server main-server.cpp ${CMAKE_CURRENT_SOURCE_DIR}/assets/app.rc) # TODO: remove this later
-add_executable(${PROJECT_NAME}-client main-client.cpp ${CMAKE_CURRENT_SOURCE_DIR}/assets/app.rc) # TODO: remove this later
-target_link_libraries(${PROJECT_NAME}-server PRIVATE ${PROJECT_NAME}) # TODO: remove this later
-target_link_libraries(${PROJECT_NAME}-client PRIVATE ${PROJECT_NAME}) # TODO: remove this later
+#add_executable(${PROJECT_NAME}-server main-server.cpp ${${PROJECT_NAME}_ICON}) # TODO: remove this later
+#add_executable(${PROJECT_NAME}-client main-client.cpp ${${PROJECT_NAME}_ICON}) # TODO: remove this later
+#target_link_libraries(${PROJECT_NAME}-server PRIVATE ${PROJECT_NAME}) # TODO: remove this later
+#target_link_libraries(${PROJECT_NAME}-client PRIVATE ${PROJECT_NAME}) # TODO: remove this later
 
 # Include all headers directories
 target_include_directories(${PROJECT_NAME}
