@@ -32,6 +32,7 @@ int main(int ac, char **av)
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
     auto client = sa::UDPClient::create(packetRegistry);
+    client->setMaxBufferSize(1024);
     client->onClientConnected = [&](ConnectionToServerPtr &server) { spdlog::info("Connected to server!"); };
     client->onClientDisconnected = [&](ConnectionToServerPtr &server, bool forced) { spdlog::info("Disconnected from server!"); };
     client->onClientDataReceived = [&](ConnectionToServerPtr &server, std::uint16_t packetId, std::uint16_t packetSize, sa::ByteBuffer &buffer) {

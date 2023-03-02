@@ -2,9 +2,84 @@ name: Installer Action
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main, dev ]
+    branches: [ 'v*' ]
   workflow_dispatch:
 
 jobs:
+  linux_installer:
+    runs-on: ubuntu-latest
+    container: docker://alwyn974/rtype-build:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure CMake
+        shell: bash
+        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON
+
+      - name: Build Release
+        shell: bash
+        run: cmake --build ./build --config Release -j`nproc`
+
+      - name: Create Installer
+        shell: bash
+        working-directory: ./build
+        run: cpack -G "DEB;RPM"
+
+      - name: Upload Installer
+        uses: actions/upload-artifact@v2
+        with:
+          path: |
+            ./build/Saturnity*.deb
+            ./build/Saturnity*.rpm
+
+  windows_installer:
+    runs-on: windows-latest
+    steps:
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        - name: Configure CMake
+          shell: bash
+          run: cmake -B ./build -S . -DSATURNITY_CPACK=ON
+
+        - name: Build Release
+          shell: pwsh
+          run: cmake --build ./build --config Release -j"$env:NUMBER_OF_PROCESSORS"
+
+        - name: Create Installer
+          shell: pwsh
+          working-directory: ./build
+          run: cpack -G "NSIS"
+
+        - name: Upload Installer
+          uses: actions/upload-artifact@v2
+          with:
+            path: |
+              ./build/Saturnity*.exe
+
+  macosx_installer:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure CMake
+        shell: bash
+        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON
+
+      - name: Build Release
+        shell: bash
+        run: cmake --build ./build --config Release
+
+      - name: Create Installer
+        shell: bash
+        working-directory: ./build
+        run: cpack
+
+      - name: Upload Installer
+        uses: actions/upload-artifact@v2
+        with:
+          path: |
+            ./build/Saturnity*.dmg

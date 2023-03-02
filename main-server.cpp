@@ -31,6 +31,7 @@ int main(int ac, char **av)
     packetRegistry->registerPacket<MessagePacket>(0x1);
 
     auto server = sa::UDPServer::create(packetRegistry, "0.0.0.0", 2409);
+    server->setMaxBufferSize(1024);
     server->onClientConnect = [&](ConnectionToClientPtr &client) {
         spdlog::info("Client asking for connection!");
         return true; // boolean to accept or not the connection
