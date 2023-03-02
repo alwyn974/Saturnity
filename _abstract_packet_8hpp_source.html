@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Saturnity: /github/workspace/include/saturnity/core/AbstractPacket.hpp Source File</title>
+<title>Saturnity: /github/workspace/include/saturnity/core/packet/AbstractPacket.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -41,7 +41,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.ico"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Saturnity
-   &#160;<span id="projectnumber">0.0.1.0</span>
+   &#160;<span id="projectnumber">1.0.1.0</span>
    </div>
    <div id="projectbrief">Saturnity is a library to handle networking</div>
   </td>
@@ -119,8 +119,8 @@ $(document).ready(function(){initNavTree('_abstract_packet_8hpp_source.html','')
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef SATURNITY_ABSTRACT_PACKET_HPP</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define SATURNITY_ABSTRACT_PACKET_HPP</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;ByteBuffer.hpp&quot;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;Core.hpp&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;saturnity/core/ByteBuffer.hpp&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;saturnity/core/Core.hpp&quot;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacesa.html">sa</a> {</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classsa_1_1_abstract_packet.html">   38</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> {</div>
@@ -144,32 +144,34 @@ $(document).ready(function(){initNavTree('_abstract_packet_8hpp_source.html','')
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="classsa_1_1_abstract_packet.html#aa742e5c7ea0113be773ac57ca02f83ef">   84</a></span>        <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code hl_enumeration" href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1">EnumPacketType</a> &amp;<a class="code hl_function" href="classsa_1_1_abstract_packet.html#aa742e5c7ea0113be773ac57ca02f83ef">getType</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20">_type</a>; }</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20">   87</a></span>        <a class="code hl_enumeration" href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1">EnumPacketType</a> <a class="code hl_variable" href="classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20">_type</a>; </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    };</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>} <span class="comment">// namespace sa</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="preprocessor">#endif </span><span class="comment">// SATURNITY_ABSTRACT_PACKET_HPP</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classsa_1_1_abstract_packet.html#aa5a1276099162ac429f75a5887cdc23f">   86</a></span>        <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keyword">constexpr</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="classsa_1_1_abstract_packet.html#aa5a1276099162ac429f75a5887cdc23f">HEADER_SIZE</a> = <span class="keyword">sizeof</span>(std::uint16_t) * 2; </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20">   88</a></span>        <a class="code hl_enumeration" href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1">EnumPacketType</a> <a class="code hl_variable" href="classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20">_type</a>; </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    };</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>} <span class="comment">// namespace sa</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#endif </span><span class="comment">// SATURNITY_ABSTRACT_PACKET_HPP</span></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html"><div class="ttname"><a href="classsa_1_1_abstract_packet.html">sa::AbstractPacket</a></div><div class="ttdoc">A packet is a data structure that can be serialized and deserialized through bytes.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:38</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_a024ff8875b3fc41939b5a172eea6e0b0"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#a024ff8875b3fc41939b5a172eea6e0b0">sa::AbstractPacket::fromBytes</a></div><div class="ttdeci">virtual void fromBytes(ByteBuffer &amp;byteBuffer)=0</div><div class="ttdoc">Deserialize the packet from bytes.</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_a115dbfb97bba140095bae35703efbcfb"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#a115dbfb97bba140095bae35703efbcfb">sa::AbstractPacket::isTCP</a></div><div class="ttdeci">bool isTCP() const</div><div class="ttdoc">Check if the packet is a TCP packet.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:78</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_a6369b7a084d2289f4cf8f9f1c086f780"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#a6369b7a084d2289f4cf8f9f1c086f780">sa::AbstractPacket::~AbstractPacket</a></div><div class="ttdeci">virtual ~AbstractPacket()=default</div><div class="ttdoc">Destroy the Abstract Packet object.</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_a831c4f0b543cbeb1f41526d4cb8cb865"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#a831c4f0b543cbeb1f41526d4cb8cb865">sa::AbstractPacket::isUDP</a></div><div class="ttdeci">bool isUDP() const</div><div class="ttdoc">Check if the packet is a UDP packet.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:72</div></div>
+<div class="ttc" id="aclasssa_1_1_abstract_packet_html_aa5a1276099162ac429f75a5887cdc23f"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#aa5a1276099162ac429f75a5887cdc23f">sa::AbstractPacket::HEADER_SIZE</a></div><div class="ttdeci">static const constexpr int HEADER_SIZE</div><div class="ttdoc">The size of the packet header.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:86</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_aa742e5c7ea0113be773ac57ca02f83ef"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#aa742e5c7ea0113be773ac57ca02f83ef">sa::AbstractPacket::getType</a></div><div class="ttdeci">const EnumPacketType &amp; getType() const</div><div class="ttdoc">Get the packet type.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:84</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_aa8dcba65fd30d07f2255ada10df819e1"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1">sa::AbstractPacket::EnumPacketType</a></div><div class="ttdeci">EnumPacketType</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:40</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_aa8dcba65fd30d07f2255ada10df819e1a375788b68b352808c45ec7a0fcd80255"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1a375788b68b352808c45ec7a0fcd80255">sa::AbstractPacket::TCP</a></div><div class="ttdeci">@ TCP</div><div class="ttdoc">TCP packet.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:42</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_aa8dcba65fd30d07f2255ada10df819e1af7d73ef8b1796d410a9172bd356ec1b6"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#aa8dcba65fd30d07f2255ada10df819e1af7d73ef8b1796d410a9172bd356ec1b6">sa::AbstractPacket::UDP</a></div><div class="ttdeci">@ UDP</div><div class="ttdoc">UDP packet.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:41</div></div>
-<div class="ttc" id="aclasssa_1_1_abstract_packet_html_abda4e6323989b7c67c638ac5ac471d20"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20">sa::AbstractPacket::_type</a></div><div class="ttdeci">EnumPacketType _type</div><div class="ttdoc">The packet type.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:87</div></div>
+<div class="ttc" id="aclasssa_1_1_abstract_packet_html_abda4e6323989b7c67c638ac5ac471d20"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20">sa::AbstractPacket::_type</a></div><div class="ttdeci">EnumPacketType _type</div><div class="ttdoc">The packet type.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:88</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_ae949e8c13731dc4578f0b0319c6be107"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#ae949e8c13731dc4578f0b0319c6be107">sa::AbstractPacket::toBytes</a></div><div class="ttdeci">virtual void toBytes(ByteBuffer &amp;byteBuffer)=0</div><div class="ttdoc">Serialize the packet into bytes.</div></div>
 <div class="ttc" id="aclasssa_1_1_abstract_packet_html_af90f8ab773ed12672bf30cf7372543ec"><div class="ttname"><a href="classsa_1_1_abstract_packet.html#af90f8ab773ed12672bf30cf7372543ec">sa::AbstractPacket::AbstractPacket</a></div><div class="ttdeci">AbstractPacket(const EnumPacketType &amp;type)</div><div class="ttdoc">Construct a new Abstract Packet object.</div><div class="ttdef"><b>Definition:</b> AbstractPacket.hpp:49</div></div>
 <div class="ttc" id="aclasssa_1_1_byte_buffer_html"><div class="ttname"><a href="classsa_1_1_byte_buffer.html">sa::ByteBuffer</a></div><div class="ttdoc">A byte buffer class, limited to UINT32_MAX bytes.</div><div class="ttdef"><b>Definition:</b> ByteBuffer.hpp:49</div></div>
-<div class="ttc" id="anamespacesa_html"><div class="ttname"><a href="namespacesa.html">sa</a></div><div class="ttdoc">The Saturnity namespace.</div><div class="ttdef"><b>Definition:</b> TCPClient.cpp:10</div></div>
+<div class="ttc" id="anamespacesa_html"><div class="ttname"><a href="namespacesa.html">sa</a></div><div class="ttdoc">TCP client implementation.</div><div class="ttdef"><b>Definition:</b> TCPClient.cpp:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c1e087bf0082f175d501220259eaf506.html">saturnity</a></li><li class="navelem"><a class="el" href="dir_b324bebf999f27f7009941f1a1607326.html">core</a></li><li class="navelem"><b>AbstractPacket.hpp</b></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c1e087bf0082f175d501220259eaf506.html">saturnity</a></li><li class="navelem"><a class="el" href="dir_b324bebf999f27f7009941f1a1607326.html">core</a></li><li class="navelem"><a class="el" href="dir_3ca8fdf4dcd50cc18fa42d5d519a63c9.html">packet</a></li><li class="navelem"><b>AbstractPacket.hpp</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5 </li>
   </ul>
 </div>

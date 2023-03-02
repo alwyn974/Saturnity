@@ -1,4 +1,6 @@
 <map id="sa::ConnectionToClient" name="sa::ConnectionToClient">
-<area shape="rect" id="node1" title="Forward declaration." alt="" coords="6,79,161,104"/>
-<area shape="rect" id="node2" href="$classsa_1_1_abstract_connection.html" title="A connection between a client/server or server/client." alt="" coords="5,5,161,31"/>
+<area shape="rect" id="node1" title="Class representing a connection to a client." alt="" coords="121,79,276,104"/>
+<area shape="rect" id="node3" href="$classsa_1_1_t_c_p_connection_to_client.html" title="Class representing a asio tcp connection to a client." alt="" coords="5,152,187,177"/>
+<area shape="rect" id="node4" href="$classsa_1_1_u_d_p_connection_to_client.html" title="Class representing a asio udp connection to a client." alt="" coords="211,152,394,177"/>
+<area shape="rect" id="node2" href="$classsa_1_1_abstract_connection.html" title="A connection between a client/server or server/client." alt="" coords="121,5,277,31"/>
 </map>

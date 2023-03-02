@@ -11,5 +11,6 @@ var classsa_1_1_abstract_packet =
     [ "isTCP", "classsa_1_1_abstract_packet.html#a115dbfb97bba140095bae35703efbcfb", null ],
     [ "isUDP", "classsa_1_1_abstract_packet.html#a831c4f0b543cbeb1f41526d4cb8cb865", null ],
     [ "toBytes", "classsa_1_1_abstract_packet.html#ae949e8c13731dc4578f0b0319c6be107", null ],
-    [ "_type", "classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20", null ]
+    [ "_type", "classsa_1_1_abstract_packet.html#abda4e6323989b7c67c638ac5ac471d20", null ],
+    [ "HEADER_SIZE", "classsa_1_1_abstract_packet.html#aa5a1276099162ac429f75a5887cdc23f", null ]
 ];

@@ -1,0 +1,7 @@
+<map id="sa::UDPConnectionToClient" name="sa::UDPConnectionToClient">
+<area shape="rect" id="node1" title="Class representing a asio udp connection to a client." alt="" coords="460,69,643,95"/>
+<area shape="rect" id="node2" href="$classsa_1_1_connection_to_client.html" title="Class representing a connection to a client." alt="" coords="233,5,388,31"/>
+<area shape="rect" id="node3" href="$classsa_1_1_abstract_connection.html" title="A connection between a client/server or server/client." alt="" coords="5,5,161,31"/>
+<area shape="rect" id="node4" title=" " alt="" coords="209,55,412,109"/>
+<area shape="rect" id="node5" href="$classsa_1_1_abstract_u_d_p_protocol.html" title="Abstract class just for setting the max buffer size." alt="" coords="227,133,394,159"/>
+</map>

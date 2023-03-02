@@ -1,0 +1,6 @@
+<map id="sa::TCPConnectionToClient" name="sa::TCPConnectionToClient">
+<area shape="rect" id="node1" title="Class representing a asio tcp connection to a client." alt="" coords="93,181,274,207"/>
+<area shape="rect" id="node2" href="$classsa_1_1_connection_to_client.html" title="Class representing a connection to a client." alt="" coords="6,93,161,119"/>
+<area shape="rect" id="node3" href="$classsa_1_1_abstract_connection.html" title="A connection between a client/server or server/client." alt="" coords="5,5,161,31"/>
+<area shape="rect" id="node4" title=" " alt="" coords="185,79,385,133"/>
+</map>

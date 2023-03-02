@@ -1,0 +1,7 @@
+<map id="sa::ex::PacketHandlerAlreadyExistsException" name="sa::ex::PacketHandlerAlreadyExistsException">
+<area shape="rect" id="node1" title="Thrown when a packet handler already exists." alt="" coords="5,257,196,297"/>
+<area shape="rect" id="node2" href="$classsa_1_1ex_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="42,183,159,208"/>
+<area shape="rect" id="node3" title=" " alt="" coords="29,95,130,120"/>
+<area shape="rect" id="node4" title=" " alt="" coords="155,95,233,120"/>
+<area shape="rect" id="node5" title=" " alt="" coords="132,5,256,45"/>
+</map>

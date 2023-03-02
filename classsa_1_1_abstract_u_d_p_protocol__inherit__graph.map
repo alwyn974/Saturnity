@@ -1,0 +1,6 @@
+<map id="sa::AbstractUDPProtocol" name="sa::AbstractUDPProtocol">
+<area shape="rect" id="node1" title="Abstract class just for setting the max buffer size." alt="" coords="140,5,307,31"/>
+<area shape="rect" id="node2" href="$classsa_1_1_u_d_p_client.html" title="Implementation of a UDP client By default the udp client will read only a maximum of 1024 bytes." alt="" coords="5,79,108,104"/>
+<area shape="rect" id="node3" href="$classsa_1_1_u_d_p_connection_to_client.html" title="Class representing a asio udp connection to a client." alt="" coords="132,79,315,104"/>
+<area shape="rect" id="node4" href="$classsa_1_1_u_d_p_server.html" title="UDP server implementation with boost::asio." alt="" coords="339,79,447,104"/>
+</map>

@@ -1,6 +1,6 @@
 <map id="sa::PacketRegistry::PacketNotRegisteredException" name="sa::PacketRegistry::PacketNotRegisteredException">
 <area shape="rect" id="node1" title="Thrown when a packet is not registered." alt="" coords="5,257,213,297"/>
-<area shape="rect" id="node2" href="$classsa_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="60,183,159,208"/>
+<area shape="rect" id="node2" href="$classsa_1_1ex_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="51,183,168,208"/>
 <area shape="rect" id="node3" title=" " alt="" coords="37,95,139,120"/>
 <area shape="rect" id="node4" title=" " alt="" coords="163,95,242,120"/>
 <area shape="rect" id="node5" title=" " alt="" coords="141,5,265,45"/>

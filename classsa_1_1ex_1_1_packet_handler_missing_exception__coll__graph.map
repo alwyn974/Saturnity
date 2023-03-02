@@ -1,0 +1,7 @@
+<map id="sa::ex::PacketHandlerMissingException" name="sa::ex::PacketHandlerMissingException">
+<area shape="rect" id="node1" title="Thrown when a packet handler is missing." alt="" coords="5,257,197,297"/>
+<area shape="rect" id="node2" href="$classsa_1_1ex_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="43,183,160,208"/>
+<area shape="rect" id="node3" title=" " alt="" coords="29,95,131,120"/>
+<area shape="rect" id="node4" title=" " alt="" coords="155,95,234,120"/>
+<area shape="rect" id="node5" title=" " alt="" coords="133,5,257,45"/>
+</map>

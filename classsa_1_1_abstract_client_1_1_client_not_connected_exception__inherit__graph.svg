@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title="Throwed when the client is not connected to the server.">
+<g id="a_node1"><a xlink:title="Thrown when the client is not connected to the server.">
 <polygon fill="#999999" stroke="#666666" points="150,-30 0,-30 0,0 150,0 150,-30"/>
 <text text-anchor="start" x="8" y="-18" font-family="Helvetica,sans-Serif" font-size="10.00">sa::AbstractClient</text>
 <text text-anchor="middle" x="75" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">::ClientNotConnectedException</text>
@@ -21,9 +21,9 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsa_1_1_exception.html" target="_top" xlink:title="The base exception class for Saturnity.">
-<polygon fill="white" stroke="#666666" points="112,-85 38,-85 38,-66 112,-66 112,-85"/>
-<text text-anchor="middle" x="75" y="-73" font-family="Helvetica,sans-Serif" font-size="10.00">sa::Exception</text>
+<g id="a_node2"><a xlink:href="classsa_1_1ex_1_1_exception.html" target="_top" xlink:title="The base exception class for Saturnity.">
+<polygon fill="white" stroke="#666666" points="119,-85 31,-85 31,-66 119,-66 119,-85"/>
+<text text-anchor="middle" x="75" y="-73" font-family="Helvetica,sans-Serif" font-size="10.00">sa::ex::Exception</text>
 </a>
 </g>
 </g>

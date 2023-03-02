@@ -1,5 +1,5 @@
 <map id="sa::AbstractClient::ClientNotConnectedException" name="sa::AbstractClient::ClientNotConnectedException">
-<area shape="rect" id="node1" title="Throwed when the client is not connected to the server." alt="" coords="5,152,205,192"/>
-<area shape="rect" id="node2" href="$classsa_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="56,79,155,104"/>
+<area shape="rect" id="node1" title="Thrown when the client is not connected to the server." alt="" coords="5,152,205,192"/>
+<area shape="rect" id="node2" href="$classsa_1_1ex_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="47,79,164,104"/>
 <area shape="rect" id="node3" title=" " alt="" coords="55,5,156,31"/>
 </map>

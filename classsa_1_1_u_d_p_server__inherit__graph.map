@@ -1,0 +1,6 @@
+<map id="sa::UDPServer" name="sa::UDPServer">
+<area shape="rect" id="node1" title="UDP server implementation with boost::asio." alt="" coords="133,167,241,192"/>
+<area shape="rect" id="node2" href="$classsa_1_1_abstract_server.html" title="The base class for a server." alt="" coords="37,93,166,119"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,197,45"/>
+<area shape="rect" id="node4" href="$classsa_1_1_abstract_u_d_p_protocol.html" title="Abstract class just for setting the max buffer size." alt="" coords="190,93,357,119"/>
+</map>

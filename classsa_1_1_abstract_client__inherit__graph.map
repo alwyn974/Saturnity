@@ -1,4 +1,6 @@
 <map id="sa::AbstractClient" name="sa::AbstractClient">
-<area shape="rect" id="node1" title="The base class for a client." alt="" coords="5,5,129,31"/>
-<area shape="rect" id="node2" href="$classsa_1_1_t_c_p_client.html" title=" " alt="" coords="17,79,118,104"/>
+<area shape="rect" id="node1" title="The base class for a client." alt="" coords="57,93,181,119"/>
+<area shape="rect" id="node3" href="$classsa_1_1_t_c_p_client.html" title="Implementation of a TCP client with boost::asio." alt="" coords="5,167,107,192"/>
+<area shape="rect" id="node4" href="$classsa_1_1_u_d_p_client.html" title="Implementation of a UDP client By default the udp client will read only a maximum of 1024 bytes." alt="" coords="131,167,234,192"/>
+<area shape="rect" id="node2" title=" " alt="" coords="25,5,212,45"/>
 </map>

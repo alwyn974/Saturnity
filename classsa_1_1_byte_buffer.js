@@ -5,6 +5,7 @@ var classsa_1_1_byte_buffer =
     [ "ByteBuffer", "classsa_1_1_byte_buffer.html#a479270441b8dec070f812e28305723aa", null ],
     [ "ByteBuffer", "classsa_1_1_byte_buffer.html#aff8eefb76292716f6d9da46e89046020", null ],
     [ "ByteBuffer", "classsa_1_1_byte_buffer.html#ab9bd871472225091e6d2e2d137b2048d", null ],
+    [ "~ByteBuffer", "classsa_1_1_byte_buffer.html#ab4e3691b2e65033f0ebb19fada897677", null ],
     [ "capacity", "classsa_1_1_byte_buffer.html#a2f34c269ae02a338f2c6bf86fed17d94", null ],
     [ "clear", "classsa_1_1_byte_buffer.html#a8677dc403b56c27682da98d69909ff16", null ],
     [ "clone", "classsa_1_1_byte_buffer.html#a48e02e8604550b1a0aa32bee20965aa2", null ],

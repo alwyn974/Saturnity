@@ -41,7 +41,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.ico"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Saturnity
-   &#160;<span id="projectnumber">0.0.1.0</span>
+   &#160;<span id="projectnumber">1.0.1.0</span>
    </div>
    <div id="projectbrief">Saturnity is a library to handle networking</div>
   </td>
@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('classsa_1_1_abstract_connection.html',
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle"><div class="title">sa::AbstractConnection Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
@@ -120,7 +121,7 @@ $(document).ready(function(){initNavTree('classsa_1_1_abstract_connection.html',
 <div class="dynheader">
 Inheritance diagram for sa::AbstractConnection:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsa_1_1_abstract_connection__inherit__graph.svg" width="350" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsa_1_1_abstract_connection__inherit__graph.svg" width="466" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -142,15 +143,21 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractConnectio
 <tr class="memitem:aa5fb12dcbc143acd1ccacb64fb7fb100"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_connection.html#aa5fb12dcbc143acd1ccacb64fb7fb100">disconnect</a> ()=0</td></tr>
 <tr class="memdesc:aa5fb12dcbc143acd1ccacb64fb7fb100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect the connection.  <a href="classsa_1_1_abstract_connection.html#aa5fb12dcbc143acd1ccacb64fb7fb100">More...</a><br /></td></tr>
 <tr class="separator:aa5fb12dcbc143acd1ccacb64fb7fb100"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a63eb368d8689b55979c2419b2adbad"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_connection.html#a7a63eb368d8689b55979c2419b2adbad">disconnect</a> (const std::string &amp;reason)=0</td></tr>
-<tr class="memdesc:a7a63eb368d8689b55979c2419b2adbad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect the connection with a reason.  <a href="classsa_1_1_abstract_connection.html#a7a63eb368d8689b55979c2419b2adbad">More...</a><br /></td></tr>
-<tr class="separator:a7a63eb368d8689b55979c2419b2adbad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78e7054918f6d350b07a4ee2e8e7fb7b"><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_connection.html#a78e7054918f6d350b07a4ee2e8e7fb7b">getId</a> () const =0</td></tr>
 <tr class="memdesc:a78e7054918f6d350b07a4ee2e8e7fb7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Id of the connection.  <a href="classsa_1_1_abstract_connection.html#a78e7054918f6d350b07a4ee2e8e7fb7b">More...</a><br /></td></tr>
 <tr class="separator:a78e7054918f6d350b07a4ee2e8e7fb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a291e5e8cc13d1d5af4a21769ffb92c9a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_connection.html#a291e5e8cc13d1d5af4a21769ffb92c9a">send</a> (<a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &amp;packet)=0</td></tr>
 <tr class="memdesc:a291e5e8cc13d1d5af4a21769ffb92c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to the connection.  <a href="classsa_1_1_abstract_connection.html#a291e5e8cc13d1d5af4a21769ffb92c9a">More...</a><br /></td></tr>
 <tr class="separator:a291e5e8cc13d1d5af4a21769ffb92c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1b892e8353ae3e85c8267415a07412"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_connection.html#a3e1b892e8353ae3e85c8267415a07412">send</a> (const std::shared_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;packet)</td></tr>
+<tr class="memdesc:a3e1b892e8353ae3e85c8267415a07412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to the connection.  <a href="classsa_1_1_abstract_connection.html#a3e1b892e8353ae3e85c8267415a07412">More...</a><br /></td></tr>
+<tr class="separator:a3e1b892e8353ae3e85c8267415a07412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d80a1b3ce6405f56d8f9005575f4667"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_connection.html#a1d80a1b3ce6405f56d8f9005575f4667">send</a> (const std::unique_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;packet)</td></tr>
+<tr class="memdesc:a1d80a1b3ce6405f56d8f9005575f4667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to the connection.  <a href="classsa_1_1_abstract_connection.html#a1d80a1b3ce6405f56d8f9005575f4667">More...</a><br /></td></tr>
+<tr class="separator:a1d80a1b3ce6405f56d8f9005575f4667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
 <tr class="memitem:ad04e07270565911fe1ff577c80bbe1d8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_connection.html#ad04e07270565911fe1ff577c80bbe1d8">send</a> (<a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;buffer)=0</td></tr>
 <tr class="memdesc:ad04e07270565911fe1ff577c80bbe1d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a byte buffer to the connection.  <a href="classsa_1_1_abstract_connection.html#ad04e07270565911fe1ff577c80bbe1d8">More...</a><br /></td></tr>
 <tr class="separator:ad04e07270565911fe1ff577c80bbe1d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -201,7 +208,7 @@ std::shared_ptr&lt; <a class="el" href="classsa_1_1_packet_registry.html">Packet
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa5fb12dcbc143acd1ccacb64fb7fb100" name="aa5fb12dcbc143acd1ccacb64fb7fb100"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5fb12dcbc143acd1ccacb64fb7fb100">&#9670;&#160;</a></span>disconnect() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5fb12dcbc143acd1ccacb64fb7fb100">&#9670;&#160;</a></span>disconnect()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,43 +232,7 @@ std::shared_ptr&lt; <a class="el" href="classsa_1_1_packet_registry.html">Packet
 
 <p>Disconnect the connection. </p>
 
-<p>Implemented in <a class="el" href="classsa_1_1_connection_to_client.html#ae54c4f58b10ac5c3453c8ca9536b5f23">sa::ConnectionToClient</a>, and <a class="el" href="classsa_1_1_connection_to_server.html#a5cb26deef4dc812aaadc01505dd3440e">sa::ConnectionToServer</a>.</p>
-
-</div>
-</div>
-<a id="a7a63eb368d8689b55979c2419b2adbad" name="a7a63eb368d8689b55979c2419b2adbad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a63eb368d8689b55979c2419b2adbad">&#9670;&#160;</a></span>disconnect() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void sa::AbstractConnection::disconnect </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>reason</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Disconnect the connection with a reason. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reason</td><td>the reason. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classsa_1_1_connection_to_client.html#ac001ba2a2ea8316a05ea7d8fdc76bebd">sa::ConnectionToClient</a>, and <a class="el" href="classsa_1_1_connection_to_server.html#a6abfcc429f6560da48bad92c5dee0ea3">sa::ConnectionToServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_connection_to_client.html#ae5d653d82cf8fb4128e2885aaaac324b">sa::TCPConnectionToClient</a>, <a class="el" href="classsa_1_1_u_d_p_connection_to_client.html#a451eb736f12633203e0051901399b01b">sa::UDPConnectionToClient</a>, <a class="el" href="classsa_1_1_connection_to_server.html#a5cb26deef4dc812aaadc01505dd3440e">sa::ConnectionToServer</a>, and <a class="el" href="classsa_1_1_connection_to_client.html#ae54c4f58b10ac5c3453c8ca9536b5f23">sa::ConnectionToClient</a>.</p>
 
 </div>
 </div>
@@ -291,12 +262,12 @@ std::shared_ptr&lt; <a class="el" href="classsa_1_1_packet_registry.html">Packet
 <p>Get the Id of the connection. </p>
 <dl class="section return"><dt>Returns</dt><dd>The Id of the connection. </dd></dl>
 
-<p>Implemented in <a class="el" href="classsa_1_1_connection_to_client.html#aff5a9b9ed603349f043059710f688724">sa::ConnectionToClient</a>, and <a class="el" href="classsa_1_1_connection_to_server.html#abc82b983874bf7fd06fdc5c676597bed">sa::ConnectionToServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_connection_to_server.html#abc82b983874bf7fd06fdc5c676597bed">sa::ConnectionToServer</a>, and <a class="el" href="classsa_1_1_connection_to_client.html#aff5a9b9ed603349f043059710f688724">sa::ConnectionToClient</a>.</p>
 
 </div>
 </div>
 <a id="a291e5e8cc13d1d5af4a21769ffb92c9a" name="a291e5e8cc13d1d5af4a21769ffb92c9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a291e5e8cc13d1d5af4a21769ffb92c9a">&#9670;&#160;</a></span>send() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a291e5e8cc13d1d5af4a21769ffb92c9a">&#9670;&#160;</a></span>send() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -333,12 +304,12 @@ std::shared_ptr&lt; <a class="el" href="classsa_1_1_packet_registry.html">Packet
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classsa_1_1_connection_to_client.html#ac77e30c2dc8b64a231e3b17ed0f9b75a">sa::ConnectionToClient</a>, and <a class="el" href="classsa_1_1_connection_to_server.html#a0e03e1c6070d324319cbacd9829562bc">sa::ConnectionToServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_connection_to_client.html#ad62985e4682eda31f6d216422c52ea59">sa::TCPConnectionToClient</a>, <a class="el" href="classsa_1_1_u_d_p_connection_to_client.html#ae3548d40e64610540264212e6c33f211">sa::UDPConnectionToClient</a>, <a class="el" href="classsa_1_1_connection_to_server.html#a0e03e1c6070d324319cbacd9829562bc">sa::ConnectionToServer</a>, and <a class="el" href="classsa_1_1_connection_to_client.html#ac77e30c2dc8b64a231e3b17ed0f9b75a">sa::ConnectionToClient</a>.</p>
 
 </div>
 </div>
 <a id="ad04e07270565911fe1ff577c80bbe1d8" name="ad04e07270565911fe1ff577c80bbe1d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad04e07270565911fe1ff577c80bbe1d8">&#9670;&#160;</a></span>send() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad04e07270565911fe1ff577c80bbe1d8">&#9670;&#160;</a></span>send() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -356,7 +327,7 @@ std::shared_ptr&lt; <a class="el" href="classsa_1_1_packet_registry.html">Packet
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -368,8 +339,93 @@ std::shared_ptr&lt; <a class="el" href="classsa_1_1_packet_registry.html">Packet
   </table>
   </dd>
 </dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000007">Deprecated:</a></b></dt><dd>Use <a class="el" href="classsa_1_1_abstract_connection.html#a291e5e8cc13d1d5af4a21769ffb92c9a" title="Send a packet to the connection.">send(AbstractPacket &amp;packet)</a> instead. </dd></dl>
 
-<p>Implemented in <a class="el" href="classsa_1_1_connection_to_client.html#aed435df6e0075230cb162858c4dad360">sa::ConnectionToClient</a>, and <a class="el" href="classsa_1_1_connection_to_server.html#a8971fa6814e804f6c0e5ce38a71ac43c">sa::ConnectionToServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_connection_to_client.html#ae843fe59845962e731732af5a25c59cc">sa::TCPConnectionToClient</a>, <a class="el" href="classsa_1_1_u_d_p_connection_to_client.html#abb675fb1b376c6beb3b79bbf2d7ce5f1">sa::UDPConnectionToClient</a>, <a class="el" href="classsa_1_1_connection_to_server.html#a8971fa6814e804f6c0e5ce38a71ac43c">sa::ConnectionToServer</a>, and <a class="el" href="classsa_1_1_connection_to_client.html#aed435df6e0075230cb162858c4dad360">sa::ConnectionToClient</a>.</p>
+
+</div>
+</div>
+<a id="a3e1b892e8353ae3e85c8267415a07412" name="a3e1b892e8353ae3e85c8267415a07412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e1b892e8353ae3e85c8267415a07412">&#9670;&#160;</a></span>send() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void sa::AbstractConnection::send </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send a packet to the connection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td>the packet to send. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_connection_to_client.html#a3b1311f253184a00f8a1de2b3a135f06">sa::TCPConnectionToClient</a>, <a class="el" href="classsa_1_1_u_d_p_connection_to_client.html#aebbaf6db9948c695eada2e7250fd6cc0">sa::UDPConnectionToClient</a>, <a class="el" href="classsa_1_1_connection_to_server.html#a4a4760b10e401d19ad3cbc9208e37e94">sa::ConnectionToServer</a>, and <a class="el" href="classsa_1_1_connection_to_client.html#a4ef1130cac22f4f9ff1510eeafa06ba1">sa::ConnectionToClient</a>.</p>
+
+</div>
+</div>
+<a id="a1d80a1b3ce6405f56d8f9005575f4667" name="a1d80a1b3ce6405f56d8f9005575f4667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d80a1b3ce6405f56d8f9005575f4667">&#9670;&#160;</a></span>send() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void sa::AbstractConnection::send </td>
+          <td>(</td>
+          <td class="paramtype">const std::unique_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send a packet to the connection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td>the packet to send. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_connection_to_client.html#a01ecdca543ea670cfcb18ac84390cd53">sa::TCPConnectionToClient</a>, <a class="el" href="classsa_1_1_u_d_p_connection_to_client.html#aade118d48c2560e2b006d34386ac0ab8">sa::UDPConnectionToClient</a>, <a class="el" href="classsa_1_1_connection_to_server.html#a36dfee5ec33e08251c5bb9c075945f44">sa::ConnectionToServer</a>, and <a class="el" href="classsa_1_1_connection_to_client.html#a57a8420ff1c5705b8506b7431a6f755b">sa::ConnectionToClient</a>.</p>
 
 </div>
 </div>

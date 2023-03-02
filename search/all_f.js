@@ -26,8 +26,11 @@ var searchData=
   ['registerhandler_23',['registerHandler',['../classsa_1_1_abstract_client.html#a156230ea9ec9959a57b7980039cc964a',1,'sa::AbstractClient::registerHandler()'],['../classsa_1_1_abstract_server.html#a30e1c60d1e10740f2a1168767955031e',1,'sa::AbstractServer::registerHandler()']]],
   ['registerpacket_24',['registerPacket',['../classsa_1_1_packet_registry.html#a7f72176b115e1ac6ddc9e76c22e43d64',1,'sa::PacketRegistry']]],
   ['remainingbytes_25',['remainingBytes',['../classsa_1_1_byte_buffer.html#ac0a107e22875d5551d25d27294714628',1,'sa::ByteBuffer']]],
-  ['replaceat_26',['replaceAt',['../classsa_1_1_byte_buffer.html#a4b67680b1d9a03b76e00dadd846e2c27',1,'sa::ByteBuffer::replaceAt(std::uint32_t offset, const std::vector&lt; byte_t &gt; &amp;bytes)'],['../classsa_1_1_byte_buffer.html#ac25c438293bf89c0f0a49254a013a26b',1,'sa::ByteBuffer::replaceAt(std::uint32_t offset, const T &amp;value)']]],
-  ['resetreaderindex_27',['resetReaderIndex',['../classsa_1_1_byte_buffer.html#af5e6b7d5cc0d3e62665898f7c74830c8',1,'sa::ByteBuffer']]],
-  ['resetwriterindex_28',['resetWriterIndex',['../classsa_1_1_byte_buffer.html#a30ae764e96799b04c275091bcd69ee12',1,'sa::ByteBuffer']]],
-  ['resize_29',['resize',['../classsa_1_1_byte_buffer.html#af9aae222949211ebb155b79cb5377f60',1,'sa::ByteBuffer']]]
+  ['removeobserver_26',['removeObserver',['../classsa_1_1_t_s_queue.html#a987445ebedd7a1b9c5da98c235e22b10',1,'sa::TSQueue']]],
+  ['replaceat_27',['replaceAt',['../classsa_1_1_byte_buffer.html#a4b67680b1d9a03b76e00dadd846e2c27',1,'sa::ByteBuffer::replaceAt(std::uint32_t offset, const std::vector&lt; byte_t &gt; &amp;bytes)'],['../classsa_1_1_byte_buffer.html#ac25c438293bf89c0f0a49254a013a26b',1,'sa::ByteBuffer::replaceAt(std::uint32_t offset, const T &amp;value)']]],
+  ['resetreaderindex_28',['resetReaderIndex',['../classsa_1_1_byte_buffer.html#af5e6b7d5cc0d3e62665898f7c74830c8',1,'sa::ByteBuffer']]],
+  ['resetwriterindex_29',['resetWriterIndex',['../classsa_1_1_byte_buffer.html#a30ae764e96799b04c275091bcd69ee12',1,'sa::ByteBuffer']]],
+  ['resize_30',['resize',['../classsa_1_1_byte_buffer.html#af9aae222949211ebb155b79cb5377f60',1,'sa::ByteBuffer']]],
+  ['run_31',['run',['../classsa_1_1_t_c_p_client.html#a4828ed0364cde90dd5f13fec9a05b5e4',1,'sa::TCPClient::run()'],['../classsa_1_1_t_c_p_server.html#a9f6e2b1b4241ac730e771b48566b7e71',1,'sa::TCPServer::run()'],['../classsa_1_1_u_d_p_client.html#a7fd2a751901643efc511769a8095ffbc',1,'sa::UDPClient::run()'],['../classsa_1_1_u_d_p_server.html#aa5997737e1fb748cda2deb6aa2e072dc',1,'sa::UDPServer::run()'],['../classsa_1_1_abstract_client.html#a375bb348d7eec340fb0c68951a034a4d',1,'sa::AbstractClient::run()'],['../classsa_1_1_abstract_server.html#a047b5fcc4d7dd84366bc1b54cb09eb86',1,'sa::AbstractServer::run()']]],
+  ['running_32',['running',['../classsa_1_1_abstract_client.html#a21f894eadd29d67511f7f6c13c124f44',1,'sa::AbstractClient::running()'],['../classsa_1_1_abstract_server.html#af1d557ad734812a12df1290d6ef12c94',1,'sa::AbstractServer::running()']]]
 ];

@@ -1,0 +1,5 @@
+<map id="sa::ex::IOContextDeadException" name="sa::ex::IOContextDeadException">
+<area shape="rect" id="node1" title="Thrown when the ioContext used is dead." alt="" coords="5,152,211,177"/>
+<area shape="rect" id="node2" href="$classsa_1_1ex_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="49,79,167,104"/>
+<area shape="rect" id="node3" title=" " alt="" coords="57,5,159,31"/>
+</map>

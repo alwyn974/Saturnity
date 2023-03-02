@@ -21,9 +21,9 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsa_1_1_exception.html" target="_top" xlink:title="The base exception class for Saturnity.">
-<polygon fill="white" stroke="#666666" points="123.5,-85 49.5,-85 49.5,-66 123.5,-66 123.5,-85"/>
-<text text-anchor="middle" x="86.5" y="-73" font-family="Helvetica,sans-Serif" font-size="10.00">sa::Exception</text>
+<g id="a_node2"><a xlink:href="classsa_1_1ex_1_1_exception.html" target="_top" xlink:title="The base exception class for Saturnity.">
+<polygon fill="white" stroke="#666666" points="130.5,-85 42.5,-85 42.5,-66 130.5,-66 130.5,-85"/>
+<text text-anchor="middle" x="86.5" y="-73" font-family="Helvetica,sans-Serif" font-size="10.00">sa::ex::Exception</text>
 </a>
 </g>
 </g>

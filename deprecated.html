@@ -41,7 +41,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.ico"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Saturnity
-   &#160;<span id="projectnumber">0.0.1.0</span>
+   &#160;<span id="projectnumber">1.0.1.0</span>
    </div>
    <div id="projectbrief">Saturnity is a library to handle networking</div>
   </td>
@@ -110,12 +110,28 @@ $(document).ready(function(){initNavTree('deprecated.html',''); initResizable();
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
+<dt>Global <a class="el" href="classsa_1_1_abstract_client.html#a1b40cb9ac4fcd8897cfc287d69d4e0d9">sa::AbstractClient::send</a>  (const <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer)=0</dt>
+<dd><a class="anchor" id="_deprecated000008"></a>Use <a class="el" href="classsa_1_1_abstract_client.html#ae1b975d0cf572c56e5b956a942696556" title="Send a packet to the server.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
+<dt>Global <a class="el" href="classsa_1_1_abstract_connection.html#ad04e07270565911fe1ff577c80bbe1d8">sa::AbstractConnection::send</a>  (<a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer)=0</dt>
+<dd><a class="anchor" id="_deprecated000007"></a>Use <a class="el" href="classsa_1_1_abstract_connection.html#a291e5e8cc13d1d5af4a21769ffb92c9a" title="Send a packet to the connection.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
 <dt>Global <a class="el" href="classsa_1_1_abstract_server.html#a7322627f2a842b8c7ff122f3eeb47fe4">sa::AbstractServer::sendTo</a>  (int id, <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer)=0</dt>
-<dd><a class="anchor" id="_deprecated000001"></a>use <a class="el" href="classsa_1_1_abstract_server.html#a368601bdab390186138cbf21b9ccc629" title="Send a packet to a client.">sendTo(int id, AbstractPacket &amp;packet)</a> instead.  </dd>
+<dd><a class="anchor" id="_deprecated000010"></a>use <a class="el" href="classsa_1_1_abstract_server.html#a368601bdab390186138cbf21b9ccc629" title="Send a packet to a client.">sendTo(int id, AbstractPacket &amp;packet)</a> instead.  </dd>
 <dt>Global <a class="el" href="classsa_1_1_connection_to_client.html#aed435df6e0075230cb162858c4dad360">sa::ConnectionToClient::send</a>  (<a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer) override</dt>
-<dd><a class="anchor" id="_deprecated000002"></a>Use <a class="el" href="classsa_1_1_connection_to_client.html#ac77e30c2dc8b64a231e3b17ed0f9b75a" title="Send a packet to the client.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
+<dd><a class="anchor" id="_deprecated000011"></a>Use <a class="el" href="classsa_1_1_connection_to_client.html#ac77e30c2dc8b64a231e3b17ed0f9b75a" title="Send a packet to the client.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
 <dt>Global <a class="el" href="classsa_1_1_connection_to_server.html#a8971fa6814e804f6c0e5ce38a71ac43c">sa::ConnectionToServer::send</a>  (<a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer) override</dt>
-<dd><a class="anchor" id="_deprecated000003"></a>Use <a class="el" href="classsa_1_1_connection_to_server.html#a0e03e1c6070d324319cbacd9829562bc" title="Send a packet to the server.">send(AbstractPacket &amp;packet)</a> instead. </dd>
+<dd><a class="anchor" id="_deprecated000009"></a>Use <a class="el" href="classsa_1_1_connection_to_server.html#a0e03e1c6070d324319cbacd9829562bc" title="Send a packet to the server.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
+<dt>Global <a class="el" href="classsa_1_1_t_c_p_client.html#a49e583180f718f88b576399a60361a1c">sa::TCPClient::send</a>  (const <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer) override</dt>
+<dd><a class="anchor" id="_deprecated000001"></a>use <a class="el" href="classsa_1_1_t_c_p_client.html#a3ade5dfcec6bdaa9c5c9f0ba8fce3275" title="Send a packet to the server.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
+<dt>Global <a class="el" href="classsa_1_1_t_c_p_connection_to_client.html#ae843fe59845962e731732af5a25c59cc">sa::TCPConnectionToClient::send</a>  (<a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer) override</dt>
+<dd><a class="anchor" id="_deprecated000002"></a>use <a class="el" href="classsa_1_1_t_c_p_connection_to_client.html#ad62985e4682eda31f6d216422c52ea59" title="Send a packet to the client.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
+<dt>Global <a class="el" href="classsa_1_1_t_c_p_server.html#a774ed3c898a3c67cebf4606b52f93bf2">sa::TCPServer::sendTo</a>  (int id, <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer) override</dt>
+<dd><a class="anchor" id="_deprecated000003"></a>use <a class="el" href="classsa_1_1_t_c_p_server.html#ab4baecff2a188613d851608ba3562f2b" title="Send a packet to a client.">sendTo(int, AbstractPacket &amp;)</a> instead.  </dd>
+<dt>Global <a class="el" href="classsa_1_1_u_d_p_client.html#aabc44ad1544d7d1256c809cf667624c1">sa::UDPClient::send</a>  (const <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer) override</dt>
+<dd><a class="anchor" id="_deprecated000004"></a>use <a class="el" href="classsa_1_1_u_d_p_client.html#a6294d28b2951c1079dc42f0941ed96ee" title="Send a packet to the server.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
+<dt>Global <a class="el" href="classsa_1_1_u_d_p_connection_to_client.html#abb675fb1b376c6beb3b79bbf2d7ce5f1">sa::UDPConnectionToClient::send</a>  (<a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer) override</dt>
+<dd><a class="anchor" id="_deprecated000005"></a>use <a class="el" href="classsa_1_1_u_d_p_connection_to_client.html#ae3548d40e64610540264212e6c33f211" title="Send a packet to the client.">send(AbstractPacket &amp;packet)</a> instead.  </dd>
+<dt>Global <a class="el" href="classsa_1_1_u_d_p_server.html#a377568b30c500e7fc1d96e96ba850d64">sa::UDPServer::sendTo</a>  (int id, <a class="el" href="classsa_1_1_byte_buffer.html" title="A byte buffer class, limited to UINT32_MAX bytes.">ByteBuffer</a> &amp;buffer) override</dt>
+<dd><a class="anchor" id="_deprecated000006"></a>use <a class="el" href="classsa_1_1_u_d_p_server.html#a367553f99bad6eb1a6c22e69f3e70829" title="Send a packet to a client.">sendTo(int, AbstractPacket &amp;)</a> instead. </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

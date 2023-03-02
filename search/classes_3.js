@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exception_0',['Exception',['../classsa_1_1_exception.html',1,'sa']]]
+  ['exception_0',['Exception',['../classsa_1_1ex_1_1_exception.html',1,'sa::ex']]]
 ];

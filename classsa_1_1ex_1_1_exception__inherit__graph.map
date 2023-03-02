@@ -1,0 +1,16 @@
+<map id="sa::ex::Exception" name="sa::ex::Exception">
+<area shape="rect" id="node1" title="The base exception class for Saturnity." alt="" coords="155,377,272,402"/>
+<area shape="rect" id="node3" href="$classsa_1_1_abstract_client_1_1_client_cannot_connect_exception.html" title="Thrown when the client cannot connect to the server." alt="" coords="332,5,539,45"/>
+<area shape="rect" id="node4" href="$classsa_1_1_abstract_client_1_1_client_not_connected_exception.html" title="Thrown when the client is not connected to the server." alt="" coords="335,69,535,109"/>
+<area shape="rect" id="node5" href="$classsa_1_1_byte_buffer_1_1_read_only_exception.html" title="Thrown when trying to write in a read only buffer." alt="" coords="353,133,517,173"/>
+<area shape="rect" id="node6" href="$classsa_1_1_byte_buffer_1_1_variable_length_too_big_exception.html" title="Thrown when a variable length type is too big." alt="" coords="356,197,515,237"/>
+<area shape="rect" id="node7" href="$classsa_1_1_packet_registry_1_1_packet_already_registered_exception.html" title="Thrown when a packet is already registered." alt="" coords="320,261,551,301"/>
+<area shape="rect" id="node8" href="$classsa_1_1_packet_registry_1_1_packet_missing_empty_constructor_exception.html" title="Thrown when a packet is missing an empty constructor." alt="" coords="327,326,544,381"/>
+<area shape="rect" id="node9" href="$classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered." alt="" coords="331,405,539,445"/>
+<area shape="rect" id="node10" href="$classsa_1_1ex_1_1_already_running_exception.html" title="Thrown when the client is already running." alt="" coords="332,470,539,495"/>
+<area shape="rect" id="node11" href="$classsa_1_1ex_1_1_callback_not_set_exception.html" title="Thrown when a callback is not set." alt="" coords="331,519,539,545"/>
+<area shape="rect" id="node12" href="$classsa_1_1ex_1_1_i_o_context_dead_exception.html" title="Thrown when the ioContext used is dead." alt="" coords="333,569,538,594"/>
+<area shape="rect" id="node13" href="$classsa_1_1ex_1_1_packet_handler_already_exists_exception.html" title="Thrown when a packet handler already exists." alt="" coords="340,619,531,659"/>
+<area shape="rect" id="node14" href="$classsa_1_1ex_1_1_packet_handler_missing_exception.html" title="Thrown when a packet handler is missing." alt="" coords="339,683,531,723"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,377,107,402"/>
+</map>

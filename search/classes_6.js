@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['tcpclient_0',['TCPClient',['../classsa_1_1_t_c_p_client.html',1,'sa']]],
-  ['tcpserver_1',['TCPServer',['../classsa_1_1_t_c_p_server.html',1,'sa']]]
+  ['readonlyexception_0',['ReadOnlyException',['../classsa_1_1_byte_buffer_1_1_read_only_exception.html',1,'sa::ByteBuffer']]]
 ];

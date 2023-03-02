@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['packetalreadyregisteredexception_0',['PacketAlreadyRegisteredException',['../classsa_1_1_packet_registry_1_1_packet_already_registered_exception.html#ab18a1ea8deb26d22a3c0bac1f661b32c',1,'sa::PacketRegistry::PacketAlreadyRegisteredException']]],
-  ['packethandleralreadyexistsexception_1',['PacketHandlerAlreadyExistsException',['../classsa_1_1_packet_handler_already_exists_exception.html#a5697e261409eb628b0ef11d3aa070b38',1,'sa::PacketHandlerAlreadyExistsException']]],
-  ['packethandlermissingexception_2',['PacketHandlerMissingException',['../classsa_1_1_packet_handler_missing_exception.html#a95fb3a0616affd76b783ab4c2143825a',1,'sa::PacketHandlerMissingException']]],
-  ['packetmissingemptyconstructorexception_3',['PacketMissingEmptyConstructorException',['../classsa_1_1_packet_registry_1_1_packet_missing_empty_constructor_exception.html#af417addfa0722d36a778636083a8aad7',1,'sa::PacketRegistry::PacketMissingEmptyConstructorException']]],
-  ['packetnotregisteredexception_4',['PacketNotRegisteredException',['../classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html#add53ece3339ba6ff16bd53bce2bde230',1,'sa::PacketRegistry::PacketNotRegisteredException']]]
+  ['operator_21_3d_0',['operator!=',['../classsa_1_1_byte_buffer.html#a19cf950412e0e55aa74877c27889628c',1,'sa::ByteBuffer']]],
+  ['operator_3d_3d_1',['operator==',['../classsa_1_1_byte_buffer.html#a3352d462ba2cedae61215356ae7e7b18',1,'sa::ByteBuffer']]]
 ];

@@ -1,0 +1,7 @@
+<map id="sa::AbstractClient::ClientCannotConnectException" name="sa::AbstractClient::ClientCannotConnectException">
+<area shape="rect" id="node1" title="Thrown when the client cannot connect to the server." alt="" coords="5,257,212,297"/>
+<area shape="rect" id="node2" href="$classsa_1_1ex_1_1_exception.html" title="The base exception class for Saturnity." alt="" coords="50,183,167,208"/>
+<area shape="rect" id="node3" title=" " alt="" coords="37,95,138,120"/>
+<area shape="rect" id="node4" title=" " alt="" coords="163,95,241,120"/>
+<area shape="rect" id="node5" title=" " alt="" coords="140,5,264,45"/>
+</map>

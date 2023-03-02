@@ -1,4 +1,5 @@
 <map id="sa::TCPClient" name="sa::TCPClient">
-<area shape="rect" id="node1" title=" " alt="" coords="17,79,118,104"/>
-<area shape="rect" id="node2" href="$classsa_1_1_abstract_client.html" title="The base class for a client." alt="" coords="5,5,129,31"/>
+<area shape="rect" id="node1" title="Implementation of a TCP client with boost::asio." alt="" coords="48,167,149,192"/>
+<area shape="rect" id="node2" href="$classsa_1_1_abstract_client.html" title="The base class for a client." alt="" coords="37,93,161,119"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,192,45"/>
 </map>

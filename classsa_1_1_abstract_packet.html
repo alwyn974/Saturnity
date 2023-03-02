@@ -41,7 +41,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.ico"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Saturnity
-   &#160;<span id="projectnumber">0.0.1.0</span>
+   &#160;<span id="projectnumber">1.0.1.0</span>
    </div>
    <div id="projectbrief">Saturnity is a library to handle networking</div>
   </td>
@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('classsa_1_1_abstract_packet.html','');
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle"><div class="title">sa::AbstractPacket Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
@@ -151,6 +152,13 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractPacket</b
 <tr class="memdesc:ae949e8c13731dc4578f0b0319c6be107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize the packet into bytes.  <a href="classsa_1_1_abstract_packet.html#ae949e8c13731dc4578f0b0319c6be107">More...</a><br /></td></tr>
 <tr class="separator:ae949e8c13731dc4578f0b0319c6be107"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:aa5a1276099162ac429f75a5887cdc23f"><td class="memItemLeft" align="right" valign="top"><a id="aa5a1276099162ac429f75a5887cdc23f" name="aa5a1276099162ac429f75a5887cdc23f"></a>
+static const constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>HEADER_SIZE</b> = sizeof(std::uint16_t) * 2</td></tr>
+<tr class="memdesc:aa5a1276099162ac429f75a5887cdc23f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the packet header. <br /></td></tr>
+<tr class="separator:aa5a1276099162ac429f75a5887cdc23f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:abda4e6323989b7c67c638ac5ac471d20"><td class="memItemLeft" align="right" valign="top"><a id="abda4e6323989b7c67c638ac5ac471d20" name="abda4e6323989b7c67c638ac5ac471d20"></a>
@@ -178,7 +186,7 @@ Private Attributes</h2></td></tr>
 <div class="ttc" id="aclasssa_1_1_byte_buffer_html"><div class="ttname"><a href="classsa_1_1_byte_buffer.html">sa::ByteBuffer</a></div><div class="ttdoc">A byte buffer class, limited to UINT32_MAX bytes.</div><div class="ttdef"><b>Definition:</b> ByteBuffer.hpp:49</div></div>
 <div class="ttc" id="aclasssa_1_1_byte_buffer_html_a9cc5453be851186c18c1f388b2c0b88b"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#a9cc5453be851186c18c1f388b2c0b88b">sa::ByteBuffer::writeString</a></div><div class="ttdeci">void writeString(const std::string &amp;str)</div><div class="ttdoc">Write a string in the buffer (increase the write position by the 2 + size of the string)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:364</div></div>
 <div class="ttc" id="aclasssa_1_1_byte_buffer_html_adc72a6de314afb9db9dc3ad039b2df86"><div class="ttname"><a href="classsa_1_1_byte_buffer.html#adc72a6de314afb9db9dc3ad039b2df86">sa::ByteBuffer::readString</a></div><div class="ttdeci">std::string readString()</div><div class="ttdoc">Read a string from the buffer (increase the read position by 2 + the size of the string)</div><div class="ttdef"><b>Definition:</b> ByteBuffer.cpp:193</div></div>
-<div class="ttc" id="anamespacesa_html"><div class="ttname"><a href="namespacesa.html">sa</a></div><div class="ttdoc">The Saturnity namespace.</div><div class="ttdef"><b>Definition:</b> TCPClient.cpp:10</div></div>
+<div class="ttc" id="anamespacesa_html"><div class="ttname"><a href="namespacesa.html">sa</a></div><div class="ttdoc">TCP client implementation.</div><div class="ttdef"><b>Definition:</b> TCPClient.cpp:10</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="aa8dcba65fd30d07f2255ada10df819e1" name="aa8dcba65fd30d07f2255ada10df819e1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa8dcba65fd30d07f2255ada10df819e1">&#9670;&#160;</a></span>EnumPacketType</h2>
@@ -389,7 +397,7 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/github/workspace/include/saturnity/core/<a class="el" href="_abstract_packet_8hpp_source.html">AbstractPacket.hpp</a></li>
+<li>/github/workspace/include/saturnity/core/packet/<a class="el" href="_abstract_packet_8hpp_source.html">AbstractPacket.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

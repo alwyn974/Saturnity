@@ -41,7 +41,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.ico"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Saturnity
-   &#160;<span id="projectnumber">0.0.1.0</span>
+   &#160;<span id="projectnumber">1.0.1.0</span>
    </div>
    <div id="projectbrief">Saturnity is a library to handle networking</div>
   </td>
@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('classsa_1_1_abstract_server.html','');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Data Fields</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle"><div class="title">sa::AbstractServer Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
@@ -120,13 +121,13 @@ $(document).ready(function(){initNavTree('classsa_1_1_abstract_server.html','');
 <div class="dynheader">
 Inheritance diagram for sa::AbstractServer:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsa_1_1_abstract_server__inherit__graph.svg" width="140" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsa_1_1_abstract_server__inherit__graph.svg" width="251" height="198"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for sa::AbstractServer:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsa_1_1_abstract_server__coll__graph.svg" width="1107" height="364"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsa_1_1_abstract_server__coll__graph.svg" width="1107" height="394"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -145,6 +146,18 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractServer</b
 <tr class="memitem:ad416440c46dbeb449812a1048e3ff42a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#ad416440c46dbeb449812a1048e3ff42a">broadcast</a> (<a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &amp;packet, int idToIgnore)=0</td></tr>
 <tr class="memdesc:ad416440c46dbeb449812a1048e3ff42a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to all clients.  <a href="classsa_1_1_abstract_server.html#ad416440c46dbeb449812a1048e3ff42a">More...</a><br /></td></tr>
 <tr class="separator:ad416440c46dbeb449812a1048e3ff42a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a823a7eb13e5268708bac01ba92545ce9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a823a7eb13e5268708bac01ba92545ce9">broadcast</a> (const std::shared_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;packet)</td></tr>
+<tr class="memdesc:a823a7eb13e5268708bac01ba92545ce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to all clients.  <a href="classsa_1_1_abstract_server.html#a823a7eb13e5268708bac01ba92545ce9">More...</a><br /></td></tr>
+<tr class="separator:a823a7eb13e5268708bac01ba92545ce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84eef5c0528789446f46c8575b989513"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a84eef5c0528789446f46c8575b989513">broadcast</a> (const std::shared_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;packet, int idToIgnore)</td></tr>
+<tr class="memdesc:a84eef5c0528789446f46c8575b989513"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to all clients.  <a href="classsa_1_1_abstract_server.html#a84eef5c0528789446f46c8575b989513">More...</a><br /></td></tr>
+<tr class="separator:a84eef5c0528789446f46c8575b989513"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2024df0efaf02dcc099753f8c84a438"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#ae2024df0efaf02dcc099753f8c84a438">broadcast</a> (const std::unique_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;packet)</td></tr>
+<tr class="memdesc:ae2024df0efaf02dcc099753f8c84a438"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to all clients.  <a href="classsa_1_1_abstract_server.html#ae2024df0efaf02dcc099753f8c84a438">More...</a><br /></td></tr>
+<tr class="separator:ae2024df0efaf02dcc099753f8c84a438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc47c5a4e4e5c00bb21c3a6f537221d7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#adc47c5a4e4e5c00bb21c3a6f537221d7">broadcast</a> (const std::unique_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;packet, int idToIgnore)</td></tr>
+<tr class="memdesc:adc47c5a4e4e5c00bb21c3a6f537221d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to all clients.  <a href="classsa_1_1_abstract_server.html#adc47c5a4e4e5c00bb21c3a6f537221d7">More...</a><br /></td></tr>
+<tr class="separator:adc47c5a4e4e5c00bb21c3a6f537221d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6362ee2c755e3bdf18dfb903515df9a5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a6362ee2c755e3bdf18dfb903515df9a5">disconnect</a> (int id)=0</td></tr>
 <tr class="memdesc:a6362ee2c755e3bdf18dfb903515df9a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect a client.  <a href="classsa_1_1_abstract_server.html#a6362ee2c755e3bdf18dfb903515df9a5">More...</a><br /></td></tr>
 <tr class="separator:a6362ee2c755e3bdf18dfb903515df9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -157,6 +170,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractServer</b
 <tr class="memitem:a98315b5b4b84f35910b06824b3228d68"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a98315b5b4b84f35910b06824b3228d68">getHost</a> () const</td></tr>
 <tr class="memdesc:a98315b5b4b84f35910b06824b3228d68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the server host.  <a href="classsa_1_1_abstract_server.html#a98315b5b4b84f35910b06824b3228d68">More...</a><br /></td></tr>
 <tr class="separator:a98315b5b4b84f35910b06824b3228d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a24b762180d2f1216337fbc02b36e08"><td class="memItemLeft" align="right" valign="top">spdlog::logger &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a0a24b762180d2f1216337fbc02b36e08">getLogger</a> ()</td></tr>
+<tr class="memdesc:a0a24b762180d2f1216337fbc02b36e08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the server logger.  <a href="classsa_1_1_abstract_server.html#a0a24b762180d2f1216337fbc02b36e08">More...</a><br /></td></tr>
+<tr class="separator:a0a24b762180d2f1216337fbc02b36e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb836c081a053d08b76f8a0feca41c9"><td class="memItemLeft" align="right" valign="top">const spdlog::logger &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#afcb836c081a053d08b76f8a0feca41c9">getLogger</a> () const</td></tr>
+<tr class="memdesc:afcb836c081a053d08b76f8a0feca41c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the server logger.  <a href="classsa_1_1_abstract_server.html#afcb836c081a053d08b76f8a0feca41c9">More...</a><br /></td></tr>
+<tr class="separator:afcb836c081a053d08b76f8a0feca41c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a329889c686020da598e1d4a6c33f742c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a329889c686020da598e1d4a6c33f742c">getPort</a> () const</td></tr>
 <tr class="memdesc:a329889c686020da598e1d4a6c33f742c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the server port.  <a href="classsa_1_1_abstract_server.html#a329889c686020da598e1d4a6c33f742c">More...</a><br /></td></tr>
 <tr class="separator:a329889c686020da598e1d4a6c33f742c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,6 +186,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractServer</b
 <tr class="memitem:a30e1c60d1e10740f2a1168767955031e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a30e1c60d1e10740f2a1168767955031e">registerHandler</a> (std::function&lt; void(std::shared_ptr&lt; <a class="el" href="classsa_1_1_connection_to_client.html">ConnectionToClient</a> &gt; &amp;server, T &amp;packet)&gt; handler)</td></tr>
 <tr class="memdesc:a30e1c60d1e10740f2a1168767955031e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a packet handler.  <a href="classsa_1_1_abstract_server.html#a30e1c60d1e10740f2a1168767955031e">More...</a><br /></td></tr>
 <tr class="separator:a30e1c60d1e10740f2a1168767955031e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a047b5fcc4d7dd84366bc1b54cb09eb86"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a047b5fcc4d7dd84366bc1b54cb09eb86">run</a> ()=0</td></tr>
+<tr class="memdesc:a047b5fcc4d7dd84366bc1b54cb09eb86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the server.  <a href="classsa_1_1_abstract_server.html#a047b5fcc4d7dd84366bc1b54cb09eb86">More...</a><br /></td></tr>
+<tr class="separator:a047b5fcc4d7dd84366bc1b54cb09eb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a368601bdab390186138cbf21b9ccc629"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a368601bdab390186138cbf21b9ccc629">sendTo</a> (int id, <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &amp;packet)</td></tr>
 <tr class="memdesc:a368601bdab390186138cbf21b9ccc629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to a client.  <a href="classsa_1_1_abstract_server.html#a368601bdab390186138cbf21b9ccc629">More...</a><br /></td></tr>
 <tr class="separator:a368601bdab390186138cbf21b9ccc629"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,12 +212,33 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractServer</b
 <tr class="memdesc:a836d65bdae7e6d6225c311d2bdcaa2e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregister a packet handler.  <a href="classsa_1_1_abstract_server.html#a836d65bdae7e6d6225c311d2bdcaa2e4">More...</a><br /></td></tr>
 <tr class="separator:a836d65bdae7e6d6225c311d2bdcaa2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:aeafab0d485a91df14571dd448eeef5fb"><td class="memItemLeft" align="right" valign="top">std::function&lt; bool(ConnectionToClientPtr &amp;client)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#aeafab0d485a91df14571dd448eeef5fb">onClientConnect</a></td></tr>
+<tr class="memdesc:aeafab0d485a91df14571dd448eeef5fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on client connect callback, this callback is used to accept or reject a client connection.  <a href="classsa_1_1_abstract_server.html#aeafab0d485a91df14571dd448eeef5fb">More...</a><br /></td></tr>
+<tr class="separator:aeafab0d485a91df14571dd448eeef5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4db32ae020bb041d0eb325adb4649540"><td class="memItemLeft" align="right" valign="top"><a id="a4db32ae020bb041d0eb325adb4649540" name="a4db32ae020bb041d0eb325adb4649540"></a>
+std::function&lt; void(ConnectionToClientPtr &amp;client)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>onClientConnected</b></td></tr>
+<tr class="memdesc:a4db32ae020bb041d0eb325adb4649540"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on client connected callback. <br /></td></tr>
+<tr class="separator:a4db32ae020bb041d0eb325adb4649540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fecd29007d92c87da34a5d23584e143"><td class="memItemLeft" align="right" valign="top"><a id="a8fecd29007d92c87da34a5d23584e143" name="a8fecd29007d92c87da34a5d23584e143"></a>
+std::function&lt; void(ConnectionToClientPtr &amp;client)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>onClientDisconnected</b></td></tr>
+<tr class="memdesc:a8fecd29007d92c87da34a5d23584e143"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on client disconnected callback. <br /></td></tr>
+<tr class="separator:a8fecd29007d92c87da34a5d23584e143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3074b565f9dbfc1806be5aa9079b70f0"><td class="memItemLeft" align="right" valign="top">std::function&lt; void(ConnectionToClientPtr &amp;client, std::uint16_t packetId, uint16_t packetSize, <a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;buffer)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a3074b565f9dbfc1806be5aa9079b70f0">onServerDataReceived</a></td></tr>
+<tr class="memdesc:a3074b565f9dbfc1806be5aa9079b70f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on server data received callback.  <a href="classsa_1_1_abstract_server.html#a3074b565f9dbfc1806be5aa9079b70f0">More...</a><br /></td></tr>
+<tr class="separator:a3074b565f9dbfc1806be5aa9079b70f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ae7fed481ffe9da79cb240f48321e6"><td class="memItemLeft" align="right" valign="top"><a id="a34ae7fed481ffe9da79cb240f48321e6" name="a34ae7fed481ffe9da79cb240f48321e6"></a>
+std::function&lt; void(ConnectionToClientPtr &amp;client, <a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;buffer)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>onServerDataSent</b></td></tr>
+<tr class="memdesc:a34ae7fed481ffe9da79cb240f48321e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on server data sent callback. <br /></td></tr>
+<tr class="separator:a34ae7fed481ffe9da79cb240f48321e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a3d95c2dba2713ee0225f2d31b1b3fc28"><td class="memItemLeft" align="right" valign="top"><a id="a3d95c2dba2713ee0225f2d31b1b3fc28" name="a3d95c2dba2713ee0225f2d31b1b3fc28"></a>
-std::unordered_map&lt; uint16_t, ConnectionToClientPtr &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>connections</b></td></tr>
-<tr class="memdesc:a3d95c2dba2713ee0225f2d31b1b3fc28"><td class="mdescLeft">&#160;</td><td class="mdescRight">The connections to the clients. <br /></td></tr>
-<tr class="separator:a3d95c2dba2713ee0225f2d31b1b3fc28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefc528f1e5d981d31a62fb1346f87597"><td class="memItemLeft" align="right" valign="top"><a id="aefc528f1e5d981d31a62fb1346f87597" name="aefc528f1e5d981d31a62fb1346f87597"></a>
+std::unordered_map&lt; int, ConnectionToClientPtr &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>connections</b></td></tr>
+<tr class="memdesc:aefc528f1e5d981d31a62fb1346f87597"><td class="mdescLeft">&#160;</td><td class="mdescRight">The connections to the clients. <br /></td></tr>
+<tr class="separator:aefc528f1e5d981d31a62fb1346f87597"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fe2b190ccee7b6d935a701fe9a09b7e"><td class="memItemLeft" align="right" valign="top"><a id="a4fe2b190ccee7b6d935a701fe9a09b7e" name="a4fe2b190ccee7b6d935a701fe9a09b7e"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>host</b></td></tr>
 <tr class="memdesc:a4fe2b190ccee7b6d935a701fe9a09b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The host. <br /></td></tr>
@@ -204,6 +247,10 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>host</b></td><
 spdlog::logger&#160;</td><td class="memItemRight" valign="bottom"><b>logger</b></td></tr>
 <tr class="memdesc:afabbaa8d251d09c85f5e789b1cc0f952"><td class="mdescLeft">&#160;</td><td class="mdescRight">The logger. <br /></td></tr>
 <tr class="separator:afabbaa8d251d09c85f5e789b1cc0f952"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0b7f26458a4cdfeb24562bfdcb7be73"><td class="memItemLeft" align="right" valign="top"><a id="ac0b7f26458a4cdfeb24562bfdcb7be73" name="ac0b7f26458a4cdfeb24562bfdcb7be73"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>nextId</b></td></tr>
+<tr class="memdesc:ac0b7f26458a4cdfeb24562bfdcb7be73"><td class="mdescLeft">&#160;</td><td class="mdescRight">The next id. <br /></td></tr>
+<tr class="separator:ac0b7f26458a4cdfeb24562bfdcb7be73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa16ff49a8e4362912cfc517b3aecc30"><td class="memItemLeft" align="right" valign="top"><a id="afa16ff49a8e4362912cfc517b3aecc30" name="afa16ff49a8e4362912cfc517b3aecc30"></a>
 std::unordered_map&lt; uint16_t, std::function&lt; void(ConnectionToClientPtr &amp;server, <a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;buffer)&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>packetHandlers</b></td></tr>
 <tr class="memdesc:afa16ff49a8e4362912cfc517b3aecc30"><td class="mdescLeft">&#160;</td><td class="mdescRight">The packet handlers. <br /></td></tr>
@@ -216,6 +263,10 @@ std::shared_ptr&lt; <a class="el" href="classsa_1_1_packet_registry.html">Packet
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr>
 <tr class="memdesc:acc4b535b3844ff38e78d08ad621650c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The port. <br /></td></tr>
 <tr class="separator:acc4b535b3844ff38e78d08ad621650c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1d557ad734812a12df1290d6ef12c94"><td class="memItemLeft" align="right" valign="top"><a id="af1d557ad734812a12df1290d6ef12c94" name="af1d557ad734812a12df1290d6ef12c94"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>running</b></td></tr>
+<tr class="memdesc:af1d557ad734812a12df1290d6ef12c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">The running state. <br /></td></tr>
+<tr class="separator:af1d557ad734812a12df1290d6ef12c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >The base class for a server. </p>
@@ -274,7 +325,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5279c34ae3da9154ec0d2163a06a2f37" name="a5279c34ae3da9154ec0d2163a06a2f37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5279c34ae3da9154ec0d2163a06a2f37">&#9670;&#160;</a></span>broadcast() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5279c34ae3da9154ec0d2163a06a2f37">&#9670;&#160;</a></span>broadcast() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -304,13 +355,19 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#abdf9ee507ebbee3dd45e4e674a5d1977">sa::TCPServer</a>.</p>
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#abdf9ee507ebbee3dd45e4e674a5d1977">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#acb3f4a91cfa5ce2f81356a296c6f7872">sa::UDPServer</a>.</p>
 
 </div>
 </div>
 <a id="ad416440c46dbeb449812a1048e3ff42a" name="ad416440c46dbeb449812a1048e3ff42a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad416440c46dbeb449812a1048e3ff42a">&#9670;&#160;</a></span>broadcast() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad416440c46dbeb449812a1048e3ff42a">&#9670;&#160;</a></span>broadcast() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -346,13 +403,209 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr
 <p>Send a packet to all clients. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">packet</td><td>sthe packet. </td></tr>
+    <tr><td class="paramname">idToIgnore</td><td>the client id to ignore. (-1 to ignore no one) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a068a7f2f4232cabd843b924e5be00249">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a0e35c7aab7f8fb85187c82c1965277e0">sa::UDPServer</a>.</p>
+
+</div>
+</div>
+<a id="a823a7eb13e5268708bac01ba92545ce9" name="a823a7eb13e5268708bac01ba92545ce9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a823a7eb13e5268708bac01ba92545ce9">&#9670;&#160;</a></span>broadcast() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void sa::AbstractServer::broadcast </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send a packet to all clients. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td>the packet. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a806d4e37dd0a295c1c68677338c4cf61">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a7589cc92c1a634ee70a3ba0a2593389c">sa::UDPServer</a>.</p>
+
+</div>
+</div>
+<a id="a84eef5c0528789446f46c8575b989513" name="a84eef5c0528789446f46c8575b989513"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84eef5c0528789446f46c8575b989513">&#9670;&#160;</a></span>broadcast() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void sa::AbstractServer::broadcast </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>idToIgnore</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send a packet to all clients. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
     <tr><td class="paramname">packet</td><td>the packet. </td></tr>
     <tr><td class="paramname">idToIgnore</td><td>the client id to ignore. (-1 to ignore no one) </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a068a7f2f4232cabd843b924e5be00249">sa::TCPServer</a>.</p>
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a1721785e50da234c106fa9bb04b2455f">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a23118ac59fbb5f2f7f1bf7dc93a01550">sa::UDPServer</a>.</p>
+
+</div>
+</div>
+<a id="ae2024df0efaf02dcc099753f8c84a438" name="ae2024df0efaf02dcc099753f8c84a438"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2024df0efaf02dcc099753f8c84a438">&#9670;&#160;</a></span>broadcast() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void sa::AbstractServer::broadcast </td>
+          <td>(</td>
+          <td class="paramtype">const std::unique_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send a packet to all clients. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td>the packet. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#ad14acec698f73628eb333ae58180d0ca">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#ad48b9cd8e9922dcdbc27813c0d7b50ff">sa::UDPServer</a>.</p>
+
+</div>
+</div>
+<a id="adc47c5a4e4e5c00bb21c3a6f537221d7" name="adc47c5a4e4e5c00bb21c3a6f537221d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc47c5a4e4e5c00bb21c3a6f537221d7">&#9670;&#160;</a></span>broadcast() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void sa::AbstractServer::broadcast </td>
+          <td>(</td>
+          <td class="paramtype">const std::unique_ptr&lt; <a class="el" href="classsa_1_1_abstract_packet.html">AbstractPacket</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>packet</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>idToIgnore</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Send a packet to all clients. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td>the packet. </td></tr>
+    <tr><td class="paramname">idToIgnore</td><td>the client id to ignore. (-1 to ignore no one) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#adbc548b29022e48912c1d4f3652ca0ef">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a91ec3dc78de5c7e62c9dcbda3cdb6d7a">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -388,7 +641,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a0f826cbedfbf4211310e1bf8bc6e09f9">sa::TCPServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a0f826cbedfbf4211310e1bf8bc6e09f9">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a2b2da16547d2bf5ae640535b2237f45f">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -435,7 +688,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#aec332f2b412c00f2246af7bc1010621f">sa::TCPServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#aec332f2b412c00f2246af7bc1010621f">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a601ce168cce3e4ccde8e01305b2ee187">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -464,7 +717,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr
 
 <p>Disconnect all clients. </p>
 
-<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a7905d179748b2c08ae1abc29588ae742">sa::TCPServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a7905d179748b2c08ae1abc29588ae742">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a2d870d8b1c26e0b1c76ba1edc9feef54">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -493,6 +746,62 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr
 
 <p>Get the server host. </p>
 <dl class="section return"><dt>Returns</dt><dd>the host. </dd></dl>
+
+</div>
+</div>
+<a id="a0a24b762180d2f1216337fbc02b36e08" name="a0a24b762180d2f1216337fbc02b36e08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a24b762180d2f1216337fbc02b36e08">&#9670;&#160;</a></span>getLogger() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">spdlog::logger &amp; sa::AbstractServer::getLogger </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the server logger. </p>
+<dl class="section return"><dt>Returns</dt><dd>the logger. </dd></dl>
+
+</div>
+</div>
+<a id="afcb836c081a053d08b76f8a0feca41c9" name="afcb836c081a053d08b76f8a0feca41c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcb836c081a053d08b76f8a0feca41c9">&#9670;&#160;</a></span>getLogger() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const spdlog::logger &amp; sa::AbstractServer::getLogger </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the server logger. </p>
+<dl class="section return"><dt>Returns</dt><dd>the logger. </dd></dl>
 
 </div>
 </div>
@@ -548,8 +857,14 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>port</b></td></tr
 </div><div class="memdoc">
 
 <p>Initialize the server. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1ex_1_1_callback_not_set_exception.html" title="Thrown when a callback is not set.">sa::ex::CallbackNotSetException</a></td><td>if some callbacks are not set. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#af1f103c0b33019ab23bbe8bb54cc6b16">sa::TCPServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#af1f103c0b33019ab23bbe8bb54cc6b16">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#adff124b2c198130efd63fd003e58ba71">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -594,10 +909,39 @@ template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;Abst
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_handler_already_exists_exception.html" title="Thrown when a packet handler already exists.">PacketHandlerAlreadyExistsException</a></td><td>if a handler already exists for the packet. </td></tr>
+    <tr><td class="paramname"><a class="el" href="classsa_1_1ex_1_1_packet_handler_already_exists_exception.html" title="Thrown when a packet handler already exists.">ex::PacketHandlerAlreadyExistsException</a></td><td>if a handler already exists for the packet. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a047b5fcc4d7dd84366bc1b54cb09eb86" name="a047b5fcc4d7dd84366bc1b54cb09eb86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a047b5fcc4d7dd84366bc1b54cb09eb86">&#9670;&#160;</a></span>run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void sa::AbstractServer::run </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Run the server. </p>
+
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a9f6e2b1b4241ac730e771b48566b7e71">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#aa5997737e1fb748cda2deb6aa2e072dc">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -643,6 +987,14 @@ template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;Abst
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#ab4baecff2a188613d851608ba3562f2b">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a367553f99bad6eb1a6c22e69f3e70829">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -688,9 +1040,9 @@ template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;Abst
   </table>
   </dd>
 </dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>use <a class="el" href="classsa_1_1_abstract_server.html#a368601bdab390186138cbf21b9ccc629" title="Send a packet to a client.">sendTo(int id, AbstractPacket &amp;packet)</a> instead. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000010">Deprecated:</a></b></dt><dd>use <a class="el" href="classsa_1_1_abstract_server.html#a368601bdab390186138cbf21b9ccc629" title="Send a packet to a client.">sendTo(int id, AbstractPacket &amp;packet)</a> instead. </dd></dl>
 
-<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a774ed3c898a3c67cebf4606b52f93bf2">sa::TCPServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a774ed3c898a3c67cebf4606b52f93bf2">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a377568b30c500e7fc1d96e96ba850d64">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -736,6 +1088,14 @@ template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;Abst
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a3901fb27be1c47e091f9560b3d8734f1">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a90ec2cc44a2c0af7d2348c959ffc3339">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -781,6 +1141,14 @@ template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;Abst
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1_packet_registry_1_1_packet_not_registered_exception.html" title="Thrown when a packet is not registered.">sa::PacketRegistry::PacketNotRegisteredException</a></td><td>if the packet is not registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented in <a class="el" href="classsa_1_1_t_c_p_server.html#a9dea825b443cb33e2e36d1e8dcfbcf3c">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a528c8fb5d45acb3e3d4eae4e76d72113">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -809,7 +1177,7 @@ template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;Abst
 
 <p>Start the server. </p>
 
-<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#afbfd66d4bac70dc85b20e31aac129e34">sa::TCPServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#afbfd66d4bac70dc85b20e31aac129e34">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#a52b6c8ce8a01998fd861c76e970278ce">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -838,7 +1206,7 @@ template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;Abst
 
 <p>Stop the server. </p>
 
-<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#ad42e7e9adf8460ba5715b8ff06c479cf">sa::TCPServer</a>.</p>
+<p>Implemented in <a class="el" href="classsa_1_1_t_c_p_server.html#ad42e7e9adf8460ba5715b8ff06c479cf">sa::TCPServer</a>, and <a class="el" href="classsa_1_1_u_d_p_server.html#ab0609795925d75997842f2dce9059ca1">sa::UDPServer</a>.</p>
 
 </div>
 </div>
@@ -874,11 +1242,65 @@ template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;Abst
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classsa_1_1ex_1_1_packet_handler_missing_exception.html" title="Thrown when a packet handler is missing.">ex::PacketHandlerMissingException</a></td><td>if no handler exists for the packet. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="aeafab0d485a91df14571dd448eeef5fb" name="aeafab0d485a91df14571dd448eeef5fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeafab0d485a91df14571dd448eeef5fb">&#9670;&#160;</a></span>onClientConnect</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt;bool(ConnectionToClientPtr &amp;client)&gt; sa::AbstractServer::onClientConnect</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The on client connect callback, this callback is used to accept or reject a client connection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>the client. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3074b565f9dbfc1806be5aa9079b70f0" name="a3074b565f9dbfc1806be5aa9079b70f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3074b565f9dbfc1806be5aa9079b70f0">&#9670;&#160;</a></span>onServerDataReceived</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt;void(ConnectionToClientPtr &amp;client, std::uint16_t packetId, uint16_t packetSize, <a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;buffer)&gt; sa::AbstractServer::onServerDataReceived</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The on server data received callback. </p>
+<p >Will be called when the server receives a packet header &amp; body </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client</td><td>the client connection. </td></tr>
+    <tr><td class="paramname">packetId</td><td>the packet id. </td></tr>
+    <tr><td class="paramname">packetSize</td><td>the packet size. </td></tr>
+    <tr><td class="paramname">buffer</td><td>the packet buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/github/workspace/include/saturnity/core/network/<a class="el" href="_abstract_server_8hpp_source.html">AbstractServer.hpp</a></li>
+<li>/github/workspace/include/saturnity/core/network/server/<a class="el" href="_abstract_server_8hpp_source.html">AbstractServer.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
