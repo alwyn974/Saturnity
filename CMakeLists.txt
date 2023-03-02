@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 project(
         Saturnity
-        VERSION 0.0.1.0
+        VERSION 1.0.1.0
         DESCRIPTION "Saturnity is a library to handle networking"
         HOMEPAGE_URL "https://github.com/alwyn974/Saturnity"
         LANGUAGES CXX
@@ -32,10 +32,11 @@ add_library(${PROJECT_NAME}
         src/core/asio/udp/UDPClient.cpp
         src/core/asio/udp/UDPConnectionToClient.cpp
 )
-add_executable(${PROJECT_NAME}-server main-server.cpp) # TODO: remove this later
-add_executable(${PROJECT_NAME}-client main-client.cpp) # TODO: remove this later
+add_executable(${PROJECT_NAME}-server main-server.cpp ${CMAKE_CURRENT_SOURCE_DIR}/assets/app.rc) # TODO: remove this later
+add_executable(${PROJECT_NAME}-client main-client.cpp ${CMAKE_CURRENT_SOURCE_DIR}/assets/app.rc) # TODO: remove this later
 target_link_libraries(${PROJECT_NAME}-server PRIVATE ${PROJECT_NAME}) # TODO: remove this later
 target_link_libraries(${PROJECT_NAME}-client PRIVATE ${PROJECT_NAME}) # TODO: remove this later
+
 # Include all headers directories
 target_include_directories(${PROJECT_NAME}
         PRIVATE

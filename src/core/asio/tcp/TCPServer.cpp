@@ -10,9 +10,9 @@
 namespace sa {
     TCPServer::TCPServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &host, uint16_t port) :
         AbstractServer(packetRegistry, host, port),
+        _workGuard(_ioContext.get_executor()),
         _acceptor(_ioContext, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)),
         _socket(_ioContext),
-        _workGuard(_ioContext.get_executor()),
         _asyncRun(false)
     {
         this->logger = *spdlog::stdout_color_mt("TCPServer");

@@ -55,13 +55,11 @@ int main(int ac, char **av)
         spdlog::error("Error while connecting to server: {}", e.what());
         return 84;
     }
-
-    std::thread t([&]() { client->run(); });
-    t.detach();
+    client->asyncRun();
 
     auto packet = std::make_shared<MessagePacket>("Hello world!");
 
-    while (true && client->getState() != sa::AbstractClient::EnumClientState::DISCONNECTED) {
+    while (client->getState() != sa::AbstractClient::EnumClientState::DISCONNECTED) {
         if (client->isConnected()) {
             std::cout << "Enter message to send to server: ";
             std::string input;
@@ -70,7 +68,6 @@ int main(int ac, char **av)
             client->send(std::make_shared<MessagePacket>(input));
         }
     }
-
     client->disconnect();
     return 0;
 }
