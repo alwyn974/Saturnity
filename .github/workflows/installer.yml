@@ -57,28 +57,3 @@ jobs:
         with:
           path: |
             ./build/Saturnity*.exe
-
-  macosx_installer:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Configure CMake
-        shell: bash
-        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON
-
-      - name: Build Release
-        shell: bash
-        run: cmake --build ./build --config Release
-
-      - name: Create Installer
-        shell: bash
-        working-directory: ./build
-        run: cpack
-
-      - name: Upload Installer
-        uses: actions/upload-artifact@v2
-        with:
-          path: |
-            ./build/Saturnity*.dmg
