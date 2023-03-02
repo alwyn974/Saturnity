@@ -2,7 +2,8 @@ name: Installer Action
 
 on:
   push:
-    branches: [ 'v*' ]
+    branches:
+      - 'v*'
   workflow_dispatch:
 
 jobs:
