@@ -27,13 +27,6 @@ jobs:
         working-directory: ./build
         run: cpack -G "DEB;RPM"
 
-#      - name: Upload Installer
-#        uses: actions/upload-artifact@v2
-#        with:
-#          path: |
-#            ./build/Saturnity*.deb
-#            ./build/Saturnity*.rpm
-
       - uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
@@ -62,16 +55,10 @@ jobs:
         working-directory: ./build
         run: cpack -G "NSIS"
 
-#      - name: Upload Installer
-#        uses: actions/upload-artifact@v2
-#        with:
-#          path: |
-#            ./build/Saturnity*.exe
-
       - uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: "build/Release/Saturnity*.exe"
+          artifacts: "build/Saturnity*.exe"
           body: "Automated release of ${{ github.ref }}"
           generateReleaseNotes: true
           name: "Saturnity ${{ github.ref }}"

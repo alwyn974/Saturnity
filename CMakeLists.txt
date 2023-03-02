@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.17)
 project(
         Saturnity
-        VERSION 1.0.1.0
+        VERSION 1.0.1.1
         DESCRIPTION "Saturnity is a library to handle networking"
         HOMEPAGE_URL "https://github.com/alwyn974/Saturnity"
         LANGUAGES CXX
