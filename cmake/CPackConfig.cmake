@@ -35,7 +35,7 @@ endif ()
 include(CPackComponent)
 cpack_add_install_type(Full DISPLAY_NAME "Everything")
 cpack_add_install_type(Developer DISPLAY_NAME "Development")
-cpack_add_install_type(Application DISPLAY_NAME "Runtime")
+cpack_add_install_type(Software DISPLAY_NAME "Software")
 
 cpack_add_component(headers
         DISPLAY_NAME "Headers"
@@ -61,13 +61,13 @@ cpack_add_component(library
         DISPLAY_NAME "Library"
         DESCRIPTION "Shared library"
         GROUP "Software"
-        INSTALL_TYPES Developer Full Runtime
+        INSTALL_TYPES Developer Full Software
 )
 cpack_add_component(runtime
         DISPLAY_NAME "Runtime"
         DESCRIPTION "Runtime files"
         GROUP "Software"
-        INSTALL_TYPES Full Runtime
+        INSTALL_TYPES Full Software
 )
 cpack_add_component_group(Development
         EXPANDED
