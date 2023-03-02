@@ -14,6 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Cache libraries
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: ./build/_deps
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
+
       - name: Configure CMake
         shell: bash
         run: cmake -B ./build -S . -DSATURNITY_CPACK=ON
@@ -28,7 +35,7 @@ jobs:
         run: cpack -G "DEB;RPM"
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: linux_installer
           path: |
@@ -40,6 +47,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Cache libraries
+        id: cache-libraries
+        uses: actions/cache@v3
+        with:
+          path: ./build/_deps
+          key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
 
       - name: Configure CMake
         shell: bash
@@ -55,7 +69,7 @@ jobs:
         run: cpack -G "NSIS"
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: windows_installer
           path: build/Saturnity*.exe
@@ -66,20 +80,18 @@ jobs:
       - windows_installer
     runs-on: ubuntu-latest
     steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: |
-            linux_installer
-            windows_installer
+      - name: Download all artifacts
+        id: download_artifacts
+        uses: actions/download-artifact@v3
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           artifacts: |
-            ${{ steps.download_artifacts.outputs.linux_installer }}
-            ${{ steps.download_artifacts.outputs.windows_installer }}
+            ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/Saturnity*.deb
+            ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/Saturnity*.rpm
+            ${{ steps.download_artifacts.outputs.download-path }}/windows_installer/Saturnity*.exe
           body: "Automated release of ${{ github.ref }}"
           generateReleaseNotes: true
           name: "Saturnity ${{ github.ref }}"
