@@ -21,15 +21,28 @@ jobs:
           path: ./build/_deps
           key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
 
-      - name: Configure CMake
+      - name: Configure CMake (Shared)
         shell: bash
-        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON
+        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON -DBUILD_SHARED_LIBS=ON
 
-      - name: Build Release
+      - name: Build Shared Release
         shell: bash
         run: cmake --build ./build --config Release -j`nproc`
 
-      - name: Create Installer
+      - name: Create Shared Installer
+        shell: bash
+        working-directory: ./build
+        run: cpack -G "DEB;RPM"
+
+      - name: Configure CMake (Static)
+        shell: bash
+        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON -DBUILD_SHARED_LIBS=OFF
+
+      - name: Build Static Release
+        shell: bash
+        run: cmake --build ./build --config Release -j`nproc`
+
+      - name: Create Static Installer
         shell: bash
         working-directory: ./build
         run: cpack -G "DEB;RPM"
@@ -41,6 +54,7 @@ jobs:
           path: |
             build/Saturnity*.deb
             build/Saturnity*.rpm
+            build/*.sha256
 
   windows_installer:
     runs-on: windows-latest
@@ -55,15 +69,28 @@ jobs:
           path: ./build/_deps
           key: ${{ runner.os }}-libraries-${{ hashFiles('**/CMakeLists.txt') }}
 
-      - name: Configure CMake
+      - name: Configure CMake (Shared)
         shell: bash
-        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON
+        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON -DBUILD_SHARED_LIBS=ON
 
-      - name: Build Release
+      - name: Build Shared Release
         shell: pwsh
         run: cmake --build ./build --config Release -j"$env:NUMBER_OF_PROCESSORS"
 
-      - name: Create Installer
+      - name: Create Shared Installer
+        shell: pwsh
+        working-directory: ./build
+        run: cpack -G "NSIS"
+
+      - name: Configure CMake (Static)
+        shell: bash
+        run: cmake -B ./build -S . -DSATURNITY_CPACK=ON -DBUILD_SHARED_LIBS=OFF
+
+      - name: Build Static Release
+        shell: pwsh
+        run: cmake --build ./build --config Release -j"$env:NUMBER_OF_PROCESSORS"
+
+      - name: Create Static Installer
         shell: pwsh
         working-directory: ./build
         run: cpack -G "NSIS"
@@ -72,7 +99,9 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows_installer
-          path: build/Saturnity*.exe
+          path: |
+            build/Saturnity*.exe
+            *.sha256
 
   create_release:
     needs:
@@ -95,7 +124,9 @@ jobs:
           artifacts: |
             ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/Saturnity*.deb
             ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/Saturnity*.rpm
+            ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/*.sha256
             ${{ steps.download_artifacts.outputs.download-path }}/windows_installer/Saturnity*.exe
+            ${{ steps.download_artifacts.outputs.download-path }}/windows_installer/*.sha256
           bodyFile: body.md
           generateReleaseNotes: true
           tag: ${{ github.ref }}

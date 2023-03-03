@@ -8,7 +8,13 @@ set(CPACK_PACKAGE_VENDOR "Alwyn974")
 set(CPACK_PACKAGE_DESCRIPTION "Saturnity is a library in C++ to handle network easily, using tcp & udp packets. It is cross-platform and can be used on Windows, Linux, Mac OS X. It's a library that is easy to use and that can be used in any project.")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Saturnity is a library to handle networking")
 set(CPACK_PACKAGE_HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}")
-set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PROJECT_VERSION}-${CMAKE_SYSTEM_NAME}") # Default
+
+get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
+if (TARGET_TYPE STREQUAL STATIC_LIBRARY)
+    set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PROJECT_VERSION}-static-${CMAKE_SYSTEM_NAME}") # Static
+elseif (TARGET_TYPE STREQUAL SHARED_LIBRARY)
+    set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PROJECT_VERSION}-shared-${CMAKE_SYSTEM_NAME}") # Shared
+endif ()
 
 # Set the version information
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
@@ -25,7 +31,7 @@ set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME}") # Installation dire
 set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/logo.ico") # Location of an icon to display during the installation process
 set(CPACK_PACKAGE_CHECKSUM "SHA256") # Create a checksum for the package
 set(CPACK_MONOLITHIC_INSTALL OFF) # Install all components in one package, can be useful to force the installation of all components
-get_target_property(TARGET_TYPE ${PROJECT_NAME} TYPE)
+
 if (TARGET_TYPE STREQUAL "EXECUTABLE")
     set(CPACK_PACKAGE_EXECUTABLES "${PROJECT_NAME}" "${PROJECT_NAME}") # Set the executable name
     set(${PROJECT_NAME}_IS_EXECUTABLE ON)
