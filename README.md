@@ -181,7 +181,7 @@ Read the [contributing guide][contributing-url] to learn how to contribute to th
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See [LICENSE.txt][license-url] for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
