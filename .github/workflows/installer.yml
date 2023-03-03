@@ -83,7 +83,7 @@ jobs:
       - name: Setup the release version
         id: version
         run: |
-          echo "NAME=`echo ${{ github.ref }} | basename` >> $GITHUB_OUTPUT"
+          echo "NAME=`basename ${{ github.ref }}` >> $GITHUB_OUTPUT"
 
       - name: Download all artifacts
         id: download_artifacts
