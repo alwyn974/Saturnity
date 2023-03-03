@@ -101,7 +101,7 @@ jobs:
           name: windows_installer
           path: |
             build/Saturnity*.exe
-            *.sha256
+            build/*.sha256
 
   create_release:
     needs:
