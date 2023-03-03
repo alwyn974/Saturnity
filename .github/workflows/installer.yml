@@ -98,3 +98,4 @@ jobs:
             ${{ steps.download_artifacts.outputs.download-path }}/windows_installer/Saturnity*.exe
           bodyFile: body.md
           generateReleaseNotes: true
+          tag: ${{ github.ref }}
