@@ -69,9 +69,11 @@ namespace sa {
                 int clientId = this->getClientId(this->_remoteEndpoint);
                 if (ec) {
                     this->logger.error("Failed to read data: {}", ec.message());
-                    auto client = std::static_pointer_cast<UDPConnectionToClient>(this->connections[clientId]);
-                    if (clientId != -1) this->clientDisconnected(client);
-                    return;
+                    if (clientId != -1) {
+                        auto client = std::static_pointer_cast<UDPConnectionToClient>(this->connections[clientId]);
+                        this->clientDisconnected(client);
+                    }
+                    return this->asyncRead();
                 }
                 if (clientId == -1) {
                     auto server = std::static_pointer_cast<UDPServer>(this->shared_from_this());

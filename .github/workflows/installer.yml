@@ -84,6 +84,10 @@ jobs:
         id: download_artifacts
         uses: actions/download-artifact@v3
 
+      - name: Create body file
+        run: |
+          echo "Automated release of $GITHUB_REF_NAME" > body.md
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -92,7 +96,5 @@ jobs:
             ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/Saturnity*.deb
             ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/Saturnity*.rpm
             ${{ steps.download_artifacts.outputs.download-path }}/windows_installer/Saturnity*.exe
-          body: "Automated release of $GITHUB_REF_NAME"
+          bodyFile: body.md
           generateReleaseNotes: true
-          name: "Saturnity $GITHUB_REF_NAME"
-          tag: "${{ github.ref }}"
