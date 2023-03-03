@@ -80,11 +80,6 @@ jobs:
       - windows_installer
     runs-on: ubuntu-latest
     steps:
-      - name: Setup the release version
-        id: version
-        run: |
-          echo "NAME=`basename ${{ github.ref }}` >> $GITHUB_OUTPUT"
-
       - name: Download all artifacts
         id: download_artifacts
         uses: actions/download-artifact@v3
@@ -97,7 +92,7 @@ jobs:
             ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/Saturnity*.deb
             ${{ steps.download_artifacts.outputs.download-path }}/linux_installer/Saturnity*.rpm
             ${{ steps.download_artifacts.outputs.download-path }}/windows_installer/Saturnity*.exe
-          body: "Automated release of ${{ steps.version.outputs.NAME }}"
+          body: "Automated release of $GITHUB_REF_NAME"
           generateReleaseNotes: true
-          name: "Saturnity ${{ steps.version.outputs.NAME }}"
+          name: "Saturnity $GITHUB_REF_NAME"
           tag: "${{ github.ref }}"
