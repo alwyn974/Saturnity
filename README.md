@@ -43,7 +43,7 @@
   <p align="center">
     Saturnity is a C++ library to handle network communication between a client and a server. <br />
     <br />
-    <a href="https://alwyn974-rtype.gitbook.io/saturnity"><strong>Explore the source code docs »</strong></a>
+    <a href="https://alwyn974.github.io/Saturntiy"><strong>Explore the source code docs »</strong></a>
     <br />
     <a href="https://alwyn974-rtype.gitbook.io/saturnity"><strong>Explore the project docs »</strong></a>
     <br />
@@ -71,6 +71,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li><a href="#documentation">Documentation</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -155,7 +156,14 @@ Or you can use it as submodule:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
+<!-- Documentation -->
+## Documentation
+
+The documentation of this project can be found at:
+- Source code documentation: [https://alwyn974.github.io/Saturntiy][github.io-url]
+- Project documentation: [https://alwyn974-rtype.gitbook.io/saturnity][gitbook-url]
+
+<!-- USAGE -->
 ## Usage
 
 See the examples in the [source code documentation][github.io-url] or the [project documentation][gitbook-url].
