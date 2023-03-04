@@ -110,6 +110,9 @@ You can easily create a server and a client and communicate with them using pack
 ### Installation
 
 You can install Saturnity using the release package. <br />
+> **Warning**
+> It's not recommanded to use the release package, it's better to use the CMake installation method.
+
 You can also install Saturnity with CMake:
 
 - You will need to create a `FindSaturnity.cmake` file in your project, create it in a `cmake` directory, and add the following lines:
