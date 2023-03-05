@@ -19,7 +19,7 @@ namespace sa {
 
     void UDPClient::init()
     {
-        this->logger.info("Initializing UDP client");
+        this->logger.info("Initializing client");
         this->connection = std::make_shared<ConnectionToServer>(packetRegistry, this->shared_from_this(), "", 0);
     }
 

@@ -19,7 +19,7 @@ namespace sa {
 
     void sa::UDPServer::init()
     {
-        this->logger.info("Initializing UDP server");
+        this->logger.info("Initializing server");
         if (this->onClientConnect == nullptr) throw sa::ex::CallbackNotSetException("onClientConnect callback is not set");
     }
 
