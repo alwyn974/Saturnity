@@ -26,7 +26,11 @@ namespace sa {
          * @param ip The ip of the connection.
          * @param port The port of the connection.
          */
-        explicit AbstractConnection(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &ip, std::uint16_t port) : _packetRegistry(packetRegistry), _ip(ip), _port(port) {}
+        explicit AbstractConnection(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::string &ip, std::uint16_t port) :
+            _packetRegistry(packetRegistry),
+            _ip(ip),
+            _port(port)
+        {}
 
         /**
          * @brief Destroy the Connection object.

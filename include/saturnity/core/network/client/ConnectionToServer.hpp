@@ -28,7 +28,8 @@ namespace sa {
          * @param ip the ip of the server.
          * @param port the port of the server.
          */
-        explicit ConnectionToServer(const std::shared_ptr<PacketRegistry> &packetRegistry, const std::shared_ptr<AbstractClient> &client, const std::string &ip, std::uint16_t port);
+        explicit ConnectionToServer(
+            const std::shared_ptr<PacketRegistry> &packetRegistry, const std::shared_ptr<AbstractClient> &client, const std::string &ip, std::uint16_t port);
 
         /**
          * @brief Get the id of the connection.
