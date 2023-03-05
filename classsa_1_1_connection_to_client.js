@@ -1,6 +1,6 @@
 var classsa_1_1_connection_to_client =
 [
-    [ "ConnectionToClient", "classsa_1_1_connection_to_client.html#abd44a3c79e12a09f757fcfaad6182cb3", null ],
+    [ "ConnectionToClient", "classsa_1_1_connection_to_client.html#a09924dc2a95991ef04f15035d8f74db7", null ],
     [ "disconnect", "classsa_1_1_connection_to_client.html#ae54c4f58b10ac5c3453c8ca9536b5f23", null ],
     [ "disconnect", "classsa_1_1_connection_to_client.html#a682d4ba7e2ccfbe28eb0e490c3f6e3a3", null ],
     [ "getId", "classsa_1_1_connection_to_client.html#aff5a9b9ed603349f043059710f688724", null ],

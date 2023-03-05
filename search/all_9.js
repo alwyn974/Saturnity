@@ -7,7 +7,7 @@ var searchData=
   ['isconnected_4',['isConnected',['../classsa_1_1_abstract_client.html#a11990fccc34b99b336a6b4a90774d864',1,'sa::AbstractClient::isConnected()'],['../classsa_1_1_connection_to_client.html#a7ddeb4f496a682059368af568e48e131',1,'sa::ConnectionToClient::isConnected()']]],
   ['isempty_5',['isEmpty',['../classsa_1_1_byte_buffer.html#a0334e4d6695aa0372b45a4ab04e18fa6',1,'sa::ByteBuffer']]],
   ['isreadonly_6',['isReadOnly',['../classsa_1_1_byte_buffer.html#a5c2a5cdd46fd931bba10461d8488f527',1,'sa::ByteBuffer']]],
-  ['isrunning_7',['isRunning',['../classsa_1_1_abstract_client.html#aff3bca984c495e67e5c404e6105a8fed',1,'sa::AbstractClient']]],
+  ['isrunning_7',['isRunning',['../classsa_1_1_abstract_client.html#aff3bca984c495e67e5c404e6105a8fed',1,'sa::AbstractClient::isRunning()'],['../classsa_1_1_abstract_server.html#afe0bfe988f016f3a2706ce2c5301c490',1,'sa::AbstractServer::isRunning()']]],
   ['istcp_8',['isTCP',['../classsa_1_1_abstract_packet.html#a115dbfb97bba140095bae35703efbcfb',1,'sa::AbstractPacket']]],
   ['isudp_9',['isUDP',['../classsa_1_1_abstract_packet.html#a831c4f0b543cbeb1f41526d4cb8cb865',1,'sa::AbstractPacket']]]
 ];

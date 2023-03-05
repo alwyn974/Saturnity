@@ -41,7 +41,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.ico"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Saturnity
-   &#160;<span id="projectnumber">1.0.1.7</span>
+   &#160;<span id="projectnumber">1.0.1.8</span>
    </div>
    <div id="projectbrief">Saturnity is a library to handle networking</div>
   </td>
@@ -240,6 +240,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~AbstractServer</b
 <tr class="memitem:aeab79de52ea9df4be86deef681fbbb8d inherit pub_methods_classsa_1_1_abstract_server"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#aeab79de52ea9df4be86deef681fbbb8d">init</a> ()=0</td></tr>
 <tr class="memdesc:aeab79de52ea9df4be86deef681fbbb8d inherit pub_methods_classsa_1_1_abstract_server"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the server.  <a href="classsa_1_1_abstract_server.html#aeab79de52ea9df4be86deef681fbbb8d">More...</a><br /></td></tr>
 <tr class="separator:aeab79de52ea9df4be86deef681fbbb8d inherit pub_methods_classsa_1_1_abstract_server"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe0bfe988f016f3a2706ce2c5301c490 inherit pub_methods_classsa_1_1_abstract_server"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#afe0bfe988f016f3a2706ce2c5301c490">isRunning</a> () const</td></tr>
+<tr class="memdesc:afe0bfe988f016f3a2706ce2c5301c490 inherit pub_methods_classsa_1_1_abstract_server"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the server is running.  <a href="classsa_1_1_abstract_server.html#afe0bfe988f016f3a2706ce2c5301c490">More...</a><br /></td></tr>
+<tr class="separator:afe0bfe988f016f3a2706ce2c5301c490 inherit pub_methods_classsa_1_1_abstract_server"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30e1c60d1e10740f2a1168767955031e inherit pub_methods_classsa_1_1_abstract_server"><td class="memTemplParams" colspan="2">template&lt;typename T , typename  = std::enable_if_t&lt;std::is_base_of&lt;AbstractPacket, T&gt;::value, T&gt;&gt; </td></tr>
 <tr class="memitem:a30e1c60d1e10740f2a1168767955031e inherit pub_methods_classsa_1_1_abstract_server"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a30e1c60d1e10740f2a1168767955031e">registerHandler</a> (std::function&lt; void(std::shared_ptr&lt; <a class="el" href="classsa_1_1_connection_to_client.html">ConnectionToClient</a> &gt; &amp;server, T &amp;packet)&gt; handler)</td></tr>
 <tr class="memdesc:a30e1c60d1e10740f2a1168767955031e inherit pub_methods_classsa_1_1_abstract_server"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a packet handler.  <a href="classsa_1_1_abstract_server.html#a30e1c60d1e10740f2a1168767955031e">More...</a><br /></td></tr>
@@ -342,9 +345,9 @@ std::function&lt; void(ConnectionToClientPtr &amp;client)&gt;&#160;</td><td clas
 std::function&lt; void(ConnectionToClientPtr &amp;client)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>onClientDisconnected</b></td></tr>
 <tr class="memdesc:a8fecd29007d92c87da34a5d23584e143 inherit pub_attribs_classsa_1_1_abstract_server"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on client disconnected callback. <br /></td></tr>
 <tr class="separator:a8fecd29007d92c87da34a5d23584e143 inherit pub_attribs_classsa_1_1_abstract_server"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3074b565f9dbfc1806be5aa9079b70f0 inherit pub_attribs_classsa_1_1_abstract_server"><td class="memItemLeft" align="right" valign="top">std::function&lt; void(ConnectionToClientPtr &amp;client, std::uint16_t packetId, uint16_t packetSize, <a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;buffer)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#a3074b565f9dbfc1806be5aa9079b70f0">onServerDataReceived</a></td></tr>
-<tr class="memdesc:a3074b565f9dbfc1806be5aa9079b70f0 inherit pub_attribs_classsa_1_1_abstract_server"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on server data received callback.  <a href="classsa_1_1_abstract_server.html#a3074b565f9dbfc1806be5aa9079b70f0">More...</a><br /></td></tr>
-<tr class="separator:a3074b565f9dbfc1806be5aa9079b70f0 inherit pub_attribs_classsa_1_1_abstract_server"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af45df19d659667e135ff32e8d40c09c6 inherit pub_attribs_classsa_1_1_abstract_server"><td class="memItemLeft" align="right" valign="top">std::function&lt; void(ConnectionToClientPtr &amp;client, std::uint16_t packetId, std::uint16_t packetSize, <a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;buffer)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsa_1_1_abstract_server.html#af45df19d659667e135ff32e8d40c09c6">onServerDataReceived</a></td></tr>
+<tr class="memdesc:af45df19d659667e135ff32e8d40c09c6 inherit pub_attribs_classsa_1_1_abstract_server"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on server data received callback.  <a href="classsa_1_1_abstract_server.html#af45df19d659667e135ff32e8d40c09c6">More...</a><br /></td></tr>
+<tr class="separator:af45df19d659667e135ff32e8d40c09c6 inherit pub_attribs_classsa_1_1_abstract_server"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34ae7fed481ffe9da79cb240f48321e6 inherit pub_attribs_classsa_1_1_abstract_server"><td class="memItemLeft" align="right" valign="top"><a id="a34ae7fed481ffe9da79cb240f48321e6" name="a34ae7fed481ffe9da79cb240f48321e6"></a>
 std::function&lt; void(ConnectionToClientPtr &amp;client, <a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &amp;buffer)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>onServerDataSent</b></td></tr>
 <tr class="memdesc:a34ae7fed481ffe9da79cb240f48321e6 inherit pub_attribs_classsa_1_1_abstract_server"><td class="mdescLeft">&#160;</td><td class="mdescRight">The on server data sent callback. <br /></td></tr>

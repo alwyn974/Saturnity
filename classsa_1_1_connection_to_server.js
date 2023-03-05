@@ -1,6 +1,6 @@
 var classsa_1_1_connection_to_server =
 [
-    [ "ConnectionToServer", "classsa_1_1_connection_to_server.html#aec353d3ab7d38ab8186b7c73f840b3c3", null ],
+    [ "ConnectionToServer", "classsa_1_1_connection_to_server.html#a80d40b84554a9e6ab26cb3a562ddb17b", null ],
     [ "disconnect", "classsa_1_1_connection_to_server.html#a5cb26deef4dc812aaadc01505dd3440e", null ],
     [ "getId", "classsa_1_1_connection_to_server.html#abc82b983874bf7fd06fdc5c676597bed", null ],
     [ "send", "classsa_1_1_connection_to_server.html#a0e03e1c6070d324319cbacd9829562bc", null ],
