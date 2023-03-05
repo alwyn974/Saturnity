@@ -9,8 +9,8 @@
 #include "saturnity/core/network/server/AbstractServer.hpp"
 
 namespace sa {
-    ConnectionToClient::ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<AbstractServer> &server) :
-        AbstractConnection(packetRegistry),
+    ConnectionToClient::ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<AbstractServer> &server, const std::string &ip, std::uint16_t port) :
+        AbstractConnection(packetRegistry, ip, port),
         id(id),
         server(server)
     {

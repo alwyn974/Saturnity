@@ -228,6 +228,12 @@ namespace sa {
         spdlog::logger &getLogger() { return logger; }
 
         /**
+         * @brief Check if the server is running.
+         * @return true if the server is running, false otherwise.
+         */
+        bool isRunning() const { return running; }
+
+        /**
          * @brief The on client connect callback, this callback is used to accept or reject a client connection.
          * @param client the client.
          */
@@ -242,7 +248,7 @@ namespace sa {
          * @param packetSize the packet size.
          * @param buffer the packet buffer.
          */
-        std::function<void(ConnectionToClientPtr &client, std::uint16_t packetId, uint16_t packetSize, ByteBuffer &buffer)> onServerDataReceived;
+        std::function<void(ConnectionToClientPtr &client, std::uint16_t packetId, std::uint16_t packetSize, ByteBuffer &buffer)> onServerDataReceived;
         std::function<void(ConnectionToClientPtr &client, ByteBuffer &buffer)> onServerDataSent; /**< The on server data sent callback. */
 
     protected:

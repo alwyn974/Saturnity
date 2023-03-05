@@ -25,8 +25,11 @@ namespace sa {
          * @brief Construct a new Connection To Client object. (Used by the server).
          * @param packetRegistry the packet registry.
          * @param id the id of the connection.
+         * @param server the server.
+         * @param ip the ip of the client.
+         * @param port the port of the client.
          */
-        explicit ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<AbstractServer> &server);
+        explicit ConnectionToClient(const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<AbstractServer> &server, const std::string &ip, std::uint16_t port);
 
         /**
          * @brief Start the connection.

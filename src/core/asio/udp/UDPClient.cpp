@@ -20,7 +20,7 @@ namespace sa {
     void UDPClient::init()
     {
         this->logger.info("Initializing UDP client");
-        this->connection = std::make_shared<ConnectionToServer>(packetRegistry, this->shared_from_this());
+        this->connection = std::make_shared<ConnectionToServer>(packetRegistry, this->shared_from_this(), "", 0);
     }
 
     void UDPClient::run()
@@ -71,6 +71,8 @@ namespace sa {
         this->state = EnumClientState::CONNECTED;
         if (this->onClientConnected) this->onClientConnected(this->connection);
         this->logger.info("Connected to {} on port {}", host, port);
+        this->connection->setIp(host);
+        this->connection->setPort(port);
         this->asyncRead();
     }
 

@@ -12,11 +12,13 @@
 sa::UDPConnectionToClient::UDPConnectionToClient(
     const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<UDPServer> &server, boost::asio::ip::udp::socket *socket,
     boost::asio::ip::udp::endpoint &clientEndpoint) :
-    ConnectionToClient(packetRegistry, id, server),
+    ConnectionToClient(packetRegistry, id, server, "", 0),
     _udpServer(server),
     _socket(socket)
 {
     this->_endpoint = clientEndpoint;
+    this->setIp(this->_endpoint.address().to_string());
+    this->setPort(this->_endpoint.port());
 }
 
 void sa::UDPConnectionToClient::start()

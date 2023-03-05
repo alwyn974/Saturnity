@@ -11,12 +11,14 @@
 
 sa::TCPConnectionToClient::TCPConnectionToClient(
     const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket socket) :
-    ConnectionToClient(packetRegistry, id, server),
+    ConnectionToClient(packetRegistry, id, server, "", 0),
     _tcpServer(server),
     _socket(std::move(socket))
 {
     this->_endpoint = this->_socket.remote_endpoint();
     this->connected = this->_socket.is_open();
+    this->setIp(this->_endpoint.address().to_string());
+    this->setPort(this->_endpoint.port());
 }
 
 void sa::TCPConnectionToClient::start()
