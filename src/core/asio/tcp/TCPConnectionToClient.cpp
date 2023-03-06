@@ -91,7 +91,7 @@ void sa::TCPConnectionToClient::asyncSend()
     if (this->_sendQueue.empty()) return;
     if (this->_disconnected) return;
     auto &buffer = this->_sendQueue.front();
-    boost::asio::post(this->_ioContext, [this, &buffer, clientPtr = this->shared_from_this()]{
+    /*boost::asio::post(this->_ioContext, [this, &buffer, clientPtr = this->shared_from_this()]{
         if (this->_disconnected) return;
         try {
             std::size_t bytesTransferred = this->_socket.send(boost::asio::buffer(buffer.getBuffer()));
@@ -108,32 +108,32 @@ void sa::TCPConnectionToClient::asyncSend()
             this->disconnect();
             return;
         }
-    });
-    /*this->_socket.async_send(
+    });*/
+    this->_socket.async_send(
         boost::asio::buffer(buffer.getBuffer()),
-        [this, &buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
-            if (this->_disconnected) return;
+        [&buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (clientPtr->_disconnected) return;
             if (ec) {
-                this->server->getLogger().error("Failed to send data to client ({}): {}", this->id, ec.message());
-                this->disconnect();
+                clientPtr->server->getLogger().error("Failed to send data to client ({}): {}", clientPtr->id, ec.message());
+                clientPtr->disconnect();
                 return;
             }
             if (bytesTransferred != buffer.size()) {
-                this->server->getLogger().warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
+                clientPtr->server->getLogger().warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
                 return;
             }
             auto client = std::static_pointer_cast<ConnectionToClient>(clientPtr);
-            if (this->server->onServerDataSent) this->server->onServerDataSent(client, buffer);
-            if (!this->_sendQueue.pop()) this->server->getLogger().error("Failed to pop from send queue");
-            this->asyncSend();
-        });*/
+            if (clientPtr->server->onServerDataSent) clientPtr->server->onServerDataSent(client, buffer);
+            if (!clientPtr->_sendQueue.pop()) clientPtr->server->getLogger().error("Failed to pop from send queue");
+            clientPtr->asyncSend();
+        });
 }
 
 void sa::TCPConnectionToClient::asyncReadPacketHeader()
 {
     if (this->_disconnected) return;
     auto header = std::shared_ptr<byte_t>(new byte_t[AbstractPacket::HEADER_SIZE], std::default_delete<byte_t[]>()); // NOLINT
-    boost::asio::post([this, header]{
+    /*boost::asio::post([this, header]{
         if (this->_disconnected) return;
         try {
             std::size_t bytesTransferred = this->_socket.receive(boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE));
@@ -152,31 +152,31 @@ void sa::TCPConnectionToClient::asyncReadPacketHeader()
             this->disconnect();
             return;
         }
-    });
+    });*/
 
-    /*this->_socket.async_read_some(
-        boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE), [this, header](boost::system::error_code ec, std::size_t bytesTransferred) {
-            if (this->_disconnected) return;
+    this->_socket.async_read_some(
+        boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE), [header, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (clientPtr->_disconnected) return;
             if (ec) {
-                this->server->getLogger().error("Failed to read packet header from client ({}): {}", this->getId(), ec.message());
-                this->disconnect();
+                clientPtr->server->getLogger().error("Failed to read packet header from client ({}): {}", clientPtr->getId(), ec.message());
+                clientPtr->disconnect();
                 return;
             }
-            if (bytesTransferred == 0) return this->asyncReadPacketHeader();
+            if (bytesTransferred == 0) return clientPtr->asyncReadPacketHeader();
             if (bytesTransferred != AbstractPacket::HEADER_SIZE) {
-                this->server->getLogger().error(
-                    "Failed to read packet header from client ({}): {} bytes read instead of {}", this->getId(), bytesTransferred, AbstractPacket::HEADER_SIZE);
-                return this->asyncReadPacketHeader();
+                clientPtr->server->getLogger().error(
+                    "Failed to read packet header from client ({}): {} bytes read instead of {}", clientPtr->getId(), bytesTransferred, AbstractPacket::HEADER_SIZE);
+                return clientPtr->asyncReadPacketHeader();
             }
             std::uint16_t packetId = 0, packetSize = 0;
             std::memcpy(&packetId, header.get(), sizeof(std::uint16_t));
             std::memcpy(&packetSize, header.get() + sizeof(std::uint16_t), sizeof(std::uint16_t));
             if (packetId == 0 || packetSize == 0) {
-                this->server->getLogger().warn("Failed to read packet header from client ({}): packetId or packetSize is 0", this->getId());
-                return this->asyncReadPacketHeader();
+                clientPtr->server->getLogger().warn("Failed to read packet header from client ({}): packetId or packetSize is 0", clientPtr->getId());
+                return clientPtr->asyncReadPacketHeader();
             }
-            this->asyncReadPacketBody(packetId, packetSize);
-        });*/
+            clientPtr->asyncReadPacketBody(packetId, packetSize);
+        });
 }
 
 void sa::TCPConnectionToClient::asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize)
@@ -185,7 +185,7 @@ void sa::TCPConnectionToClient::asyncReadPacketBody(std::uint16_t packetId, std:
     this->server->getLogger().info("Reading packet {} body of size {}", packetId, packetSize);
     auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
 
-    boost::asio::post([this, packetSize, packetId, body, clientPtr = this->shared_from_this()]{
+    /*boost::asio::post([this, packetSize, packetId, body, clientPtr = this->shared_from_this()]{
         if (this->_disconnected) return;
         try {
             std::size_t bytesTransferred = this->_socket.receive(boost::asio::buffer(body.get(), packetSize));
@@ -205,27 +205,27 @@ void sa::TCPConnectionToClient::asyncReadPacketBody(std::uint16_t packetId, std:
             this->disconnect();
             return;
         }
-    });
+    });*/
 
-    /*this->_socket.async_read_some(
+    this->_socket.async_read_some(
         boost::asio::buffer(body.get(), packetSize),
-        [this, packetSize, packetId, body, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
-            if (this->_disconnected) return;
+        [packetSize, packetId, body, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (clientPtr->_disconnected) return;
             if (ec) {
-                this->server->getLogger().error("Failed to read packet body from server: {}", ec.message());
-                this->disconnect();
+                clientPtr->server->getLogger().error("Failed to read packet body from server: {}", ec.message());
+                clientPtr->disconnect();
                 return;
             }
             if (bytesTransferred != packetSize) {
-                this->server->getLogger().error("Failed to read packet body from server: {} bytes read instead of {}", bytesTransferred, packetSize);
-                this->disconnect();
+                clientPtr->server->getLogger().error("Failed to read packet body from server: {} bytes read instead of {}", bytesTransferred, packetSize);
+                clientPtr->disconnect();
                 return;
             }
-            this->server->getLogger().info("Received packet {} of size {}", packetId, packetSize);
+            clientPtr->server->getLogger().info("Received packet {} of size {}", packetId, packetSize);
             auto buffer = ByteBuffer(body.get(), packetSize);
             auto client = std::static_pointer_cast<ConnectionToClient>(clientPtr);
-            if (this->server->onServerDataReceived) this->server->onServerDataReceived(client, packetId, packetSize, buffer);
-            this->_tcpServer->clientSentPacket(clientPtr, packetId, buffer);
-            this->asyncReadPacketHeader();
-        });*/
+            if (clientPtr->server->onServerDataReceived) clientPtr->server->onServerDataReceived(client, packetId, packetSize, buffer);
+            clientPtr->_tcpServer->clientSentPacket(clientPtr, packetId, buffer);
+            clientPtr->asyncReadPacketHeader();
+        });
 }
