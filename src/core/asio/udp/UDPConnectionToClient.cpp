@@ -77,19 +77,20 @@ void sa::UDPConnectionToClient::asyncSend()
     auto &buffer = this->_sendQueue.front();
     this->_socket->async_send_to(
         boost::asio::buffer(buffer.getBuffer()), this->_endpoint,
-        [this, &buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+        [&buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (!this->connected) return;
             if (ec) {
-                this->server->getLogger().error("Failed to send data to client ({}): {}", this->id, ec.message());
-                this->disconnect();
+                clientPtr->server->getLogger().error("Failed to send data to client ({}): {}", clientPtr->id, ec.message());
+                clientPtr->disconnect();
                 return;
             }
             if (bytesTransferred != buffer.size()) {
-                this->server->getLogger().warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
+                clientPtr->server->getLogger().warn("Failed to send all data to server: {} bytes sent instead of {}", bytesTransferred, buffer.size());
                 return;
             }
             auto client = std::static_pointer_cast<ConnectionToClient>(clientPtr);
-            if (this->server->onServerDataSent) this->server->onServerDataSent(client, buffer);
-            if (!this->_sendQueue.pop()) this->server->getLogger().error("Failed to pop from send queue");
-            this->asyncSend();
+            if (clientPtr->server->onServerDataSent) clientPtr->server->onServerDataSent(client, buffer);
+            if (!clientPtr->_sendQueue.pop()) clientPtr->server->getLogger().error("Failed to pop from send queue");
+            clientPtr->asyncSend();
         });
 }
