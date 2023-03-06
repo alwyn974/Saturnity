@@ -88,8 +88,7 @@ void sa::TCPConnectionToClient::asyncSend()
     if (!this->connected) return;
     auto &buffer = this->_sendQueue.front();
     this->_socket.async_send(
-        boost::asio::buffer(buffer.getBuffer()),
-        [&buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+        boost::asio::buffer(buffer.getBuffer()), [&buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
             if (!clientPtr->connected) return;
             if (ec) {
                 clientPtr->server->getLogger().error("Failed to send data to client ({}): {}", clientPtr->id, ec.message());
@@ -113,7 +112,8 @@ void sa::TCPConnectionToClient::asyncReadPacketHeader()
     auto header = std::shared_ptr<byte_t>(new byte_t[AbstractPacket::HEADER_SIZE], std::default_delete<byte_t[]>()); // NOLINT
 
     this->_socket.async_read_some(
-        boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE), [header, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+        boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE),
+        [header, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
             if (!clientPtr->connected) return;
             if (ec) {
                 clientPtr->server->getLogger().error("Failed to read packet header from client ({}): {}", clientPtr->getId(), ec.message());
@@ -123,7 +123,8 @@ void sa::TCPConnectionToClient::asyncReadPacketHeader()
             if (bytesTransferred == 0) return clientPtr->asyncReadPacketHeader();
             if (bytesTransferred != AbstractPacket::HEADER_SIZE) {
                 clientPtr->server->getLogger().error(
-                    "Failed to read packet header from client ({}): {} bytes read instead of {}", clientPtr->getId(), bytesTransferred, AbstractPacket::HEADER_SIZE);
+                    "Failed to read packet header from client ({}): {} bytes read instead of {}", clientPtr->getId(), bytesTransferred,
+                    AbstractPacket::HEADER_SIZE);
                 return clientPtr->asyncReadPacketHeader();
             }
             std::uint16_t packetId = 0, packetSize = 0;
