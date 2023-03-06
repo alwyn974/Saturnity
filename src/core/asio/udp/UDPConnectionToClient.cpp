@@ -78,7 +78,7 @@ void sa::UDPConnectionToClient::asyncSend()
     this->_socket->async_send_to(
         boost::asio::buffer(buffer.getBuffer()), this->_endpoint,
         [&buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
-            if (!this->connected) return;
+            if (!clientPtr->connected) return;
             if (ec) {
                 clientPtr->server->getLogger().error("Failed to send data to client ({}): {}", clientPtr->id, ec.message());
                 clientPtr->disconnect();
