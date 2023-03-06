@@ -99,10 +99,13 @@ namespace sa {
         }
 
     private:
+        boost::asio::io_context _ioContext; /**< The io context */
+        boost::asio::executor_work_guard<boost::asio::io_context::executor_type> _workGuard; /**< The asio work guard, to force the idle of ioContext */
         std::shared_ptr<TCPServer> _tcpServer; /**< The server */
         boost::asio::ip::tcp::socket _socket; /**< The socket of the client */
         boost::asio::ip::tcp::endpoint _endpoint; /**< The endpoint of the client */
         TSQueue<ByteBuffer> _sendQueue; /**< The queue of data to send */
+        bool _disconnected; /**< If the client is disconnected */
 
         /**
          * @brief Construct a new TCPConnection To Client object.

@@ -12,13 +12,15 @@
 sa::TCPConnectionToClient::TCPConnectionToClient(
     const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket socket) :
     ConnectionToClient(packetRegistry, id, server, "", 0),
+    _workGuard(_ioContext.get_executor()),
     _tcpServer(server),
-    _socket(std::move(socket))
+    _socket(_ioContext, socket.remote_endpoint())
 {
     this->_endpoint = this->_socket.remote_endpoint();
     this->connected = this->_socket.is_open();
     this->setIp(this->_endpoint.address().to_string());
     this->setPort(this->_endpoint.port());
+    this->_disconnected = false;
 }
 
 void sa::TCPConnectionToClient::start()
@@ -55,6 +57,7 @@ void sa::TCPConnectionToClient::disconnect()
 
 void sa::TCPConnectionToClient::disconnect(const std::string &reason)
 {
+    this->_disconnected = true;
     boost::system::error_code ec;
     this->_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
     if (ec) this->server->getLogger().error("Error when trying to disconnect client: {}", ec.message());
@@ -63,6 +66,8 @@ void sa::TCPConnectionToClient::disconnect(const std::string &reason)
     this->connected = false;
     if (!reason.empty()) this->server->getLogger().info("Client disconnected for: {}", reason);
     this->_sendQueue.clear();
+    this->_workGuard.reset();
+    this->_ioContext.stop();
     this->_tcpServer->clientDisconnected(this->shared_from_this());
 }
 
@@ -84,10 +89,12 @@ const sa::TSQueue<sa::ByteBuffer> &sa::TCPConnectionToClient::getSendQueue() con
 void sa::TCPConnectionToClient::asyncSend()
 {
     if (this->_sendQueue.empty()) return;
+    if (this->_disconnected) return;
     auto &buffer = this->_sendQueue.front();
     this->_socket.async_send(
         boost::asio::buffer(buffer.getBuffer()),
         [this, &buffer, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (this->_disconnected) return;
             if (ec) {
                 this->server->getLogger().error("Failed to send data to client ({}): {}", this->id, ec.message());
                 this->disconnect();
@@ -106,9 +113,11 @@ void sa::TCPConnectionToClient::asyncSend()
 
 void sa::TCPConnectionToClient::asyncReadPacketHeader()
 {
+    if (this->_disconnected) return;
     auto header = std::shared_ptr<byte_t>(new byte_t[AbstractPacket::HEADER_SIZE], std::default_delete<byte_t[]>()); // NOLINT
     this->_socket.async_read_some(
         boost::asio::buffer(header.get(), AbstractPacket::HEADER_SIZE), [this, header](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (this->_disconnected) return;
             if (ec) {
                 this->server->getLogger().error("Failed to read packet header from client ({}): {}", this->getId(), ec.message());
                 this->disconnect();
@@ -133,11 +142,13 @@ void sa::TCPConnectionToClient::asyncReadPacketHeader()
 
 void sa::TCPConnectionToClient::asyncReadPacketBody(std::uint16_t packetId, std::uint16_t packetSize)
 {
+    if (this->_disconnected) return;
     this->server->getLogger().info("Reading packet {} body of size {}", packetId, packetSize);
     auto body = std::shared_ptr<byte_t>(new byte_t[packetSize], std::default_delete<byte_t[]>()); // NOLINT
     this->_socket.async_read_some(
         boost::asio::buffer(body.get(), packetSize),
         [this, packetSize, packetId, body, clientPtr = this->shared_from_this()](boost::system::error_code ec, std::size_t bytesTransferred) {
+            if (this->_disconnected) return;
             if (ec) {
                 this->server->getLogger().error("Failed to read packet body from server: {}", ec.message());
                 this->disconnect();
