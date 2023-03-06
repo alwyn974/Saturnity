@@ -12,7 +12,7 @@
 sa::TCPConnectionToClient::TCPConnectionToClient(
     const std::shared_ptr<PacketRegistry> &packetRegistry, int id, const std::shared_ptr<TCPServer> &server, boost::asio::ip::tcp::socket socket) :
     ConnectionToClient(packetRegistry, id, server, "", 0),
-    _workGuard(_ioContext.get_executor()),
+//    _workGuard(_ioContext.get_executor()),
     _tcpServer(server),
     _socket(std::move(socket))
 {
@@ -66,8 +66,8 @@ void sa::TCPConnectionToClient::disconnect(const std::string &reason)
     this->connected = false;
     if (!reason.empty()) this->server->getLogger().info("Client disconnected for: {}", reason);
     this->_sendQueue.clear();
-    this->_workGuard.reset();
-    this->_ioContext.stop();
+//    this->_workGuard.reset();
+//    this->_ioContext.stop();
     this->_tcpServer->clientDisconnected(this->shared_from_this());
 }
 
