@@ -15,7 +15,6 @@ var classsa_1_1_t_c_p_connection_to_client =
     [ "send", "classsa_1_1_t_c_p_connection_to_client.html#a3b1311f253184a00f8a1de2b3a135f06", null ],
     [ "send", "classsa_1_1_t_c_p_connection_to_client.html#a01ecdca543ea670cfcb18ac84390cd53", null ],
     [ "start", "classsa_1_1_t_c_p_connection_to_client.html#af332ea01c26ffe5882e876d7c055e506", null ],
-    [ "_disconnected", "classsa_1_1_t_c_p_connection_to_client.html#a0674e3d416d007219bb86e2e56122838", null ],
     [ "_endpoint", "classsa_1_1_t_c_p_connection_to_client.html#a1c96652400d6567eb60f2d1b0413ba0f", null ],
     [ "_sendQueue", "classsa_1_1_t_c_p_connection_to_client.html#acbb4f1e38409ca38f5e402e1ae16a3c0", null ],
     [ "_socket", "classsa_1_1_t_c_p_connection_to_client.html#a9cc58cbb082a7df5905212254e281c9c", null ],
