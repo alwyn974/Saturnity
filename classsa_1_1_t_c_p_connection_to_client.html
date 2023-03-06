@@ -259,10 +259,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>asyncSend</b> ()</td>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a0674e3d416d007219bb86e2e56122838"><td class="memItemLeft" align="right" valign="top"><a id="a0674e3d416d007219bb86e2e56122838" name="a0674e3d416d007219bb86e2e56122838"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>_disconnected</b></td></tr>
+<tr class="memdesc:a0674e3d416d007219bb86e2e56122838"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the client is disconnected. <br /></td></tr>
+<tr class="separator:a0674e3d416d007219bb86e2e56122838"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c96652400d6567eb60f2d1b0413ba0f"><td class="memItemLeft" align="right" valign="top"><a id="a1c96652400d6567eb60f2d1b0413ba0f" name="a1c96652400d6567eb60f2d1b0413ba0f"></a>
 boost::asio::ip::tcp::endpoint&#160;</td><td class="memItemRight" valign="bottom"><b>_endpoint</b></td></tr>
 <tr class="memdesc:a1c96652400d6567eb60f2d1b0413ba0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The endpoint of the client. <br /></td></tr>
 <tr class="separator:a1c96652400d6567eb60f2d1b0413ba0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cbff16270687767e623ed1e9897ca09"><td class="memItemLeft" align="right" valign="top"><a id="a9cbff16270687767e623ed1e9897ca09" name="a9cbff16270687767e623ed1e9897ca09"></a>
+boost::asio::io_context&#160;</td><td class="memItemRight" valign="bottom"><b>_ioContext</b></td></tr>
+<tr class="memdesc:a9cbff16270687767e623ed1e9897ca09"><td class="mdescLeft">&#160;</td><td class="mdescRight">The io context. <br /></td></tr>
+<tr class="separator:a9cbff16270687767e623ed1e9897ca09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbb4f1e38409ca38f5e402e1ae16a3c0"><td class="memItemLeft" align="right" valign="top"><a id="acbb4f1e38409ca38f5e402e1ae16a3c0" name="acbb4f1e38409ca38f5e402e1ae16a3c0"></a>
 <a class="el" href="classsa_1_1_t_s_queue.html">TSQueue</a>&lt; <a class="el" href="classsa_1_1_byte_buffer.html">ByteBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_sendQueue</b></td></tr>
 <tr class="memdesc:acbb4f1e38409ca38f5e402e1ae16a3c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The queue of data to send. <br /></td></tr>
@@ -275,6 +283,10 @@ boost::asio::ip::tcp::socket&#160;</td><td class="memItemRight" valign="bottom">
 std::shared_ptr&lt; <a class="el" href="classsa_1_1_t_c_p_server.html">TCPServer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_tcpServer</b></td></tr>
 <tr class="memdesc:a760d68ebd93e5e6ffaf052867ca6b7df"><td class="mdescLeft">&#160;</td><td class="mdescRight">The server. <br /></td></tr>
 <tr class="separator:a760d68ebd93e5e6ffaf052867ca6b7df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad16d44f2ea8a12ba243c463b6869e104"><td class="memItemLeft" align="right" valign="top"><a id="ad16d44f2ea8a12ba243c463b6869e104" name="ad16d44f2ea8a12ba243c463b6869e104"></a>
+boost::asio::executor_work_guard&lt; boost::asio::io_context::executor_type &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_workGuard</b></td></tr>
+<tr class="memdesc:ad16d44f2ea8a12ba243c463b6869e104"><td class="mdescLeft">&#160;</td><td class="mdescRight">The asio work guard, to force the idle of ioContext. <br /></td></tr>
+<tr class="separator:ad16d44f2ea8a12ba243c463b6869e104"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

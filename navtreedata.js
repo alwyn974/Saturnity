@@ -53,7 +53,7 @@ var NAVTREEINDEX =
 "_abstract_client_8hpp_source.html",
 "classsa_1_1_byte_buffer.html#a002ce8ce79c3503c0062ad0eb4638890",
 "classsa_1_1_packet_registry.html#a769bb12618ec73ec7d755b3e94da1150",
-"classsa_1_1_u_d_p_client.html#abf376a04cfa199d3ed2af2427e64bb2a"
+"classsa_1_1_u_d_p_client.html#a9c977f2fe8fe6aa82eea2af7c52d03bf"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
