@@ -130,10 +130,6 @@ void sa::TCPConnectionToClient::asyncReadPacketHeader()
             std::uint16_t packetId = 0, packetSize = 0;
             std::memcpy(&packetId, header.get(), sizeof(std::uint16_t));
             std::memcpy(&packetSize, header.get() + sizeof(std::uint16_t), sizeof(std::uint16_t));
-            if (packetId == 0 || packetSize == 0) {
-                clientPtr->server->getLogger().warn("Failed to read packet header from client ({}): packetId or packetSize is 0", clientPtr->getId());
-                return clientPtr->asyncReadPacketHeader();
-            }
             clientPtr->asyncReadPacketBody(packetId, packetSize);
         });
 }

@@ -91,10 +91,6 @@ namespace sa {
                 std::uint16_t packetId = 0, packetSize = 0;
                 std::memcpy(&packetId, buffer.get(), sizeof(std::uint16_t));
                 std::memcpy(&packetSize, buffer.get() + sizeof(std::uint16_t), sizeof(std::uint16_t));
-                if (packetId == 0 || packetSize == 0) {
-                    this->logger.warn("Failed to read packet header from server: packetId or packetSize is 0");
-                    return this->asyncRead();
-                }
                 auto &client = this->connections[clientId];
                 ByteBuffer byteBuffer(buffer.get() + (sizeof(std::uint16_t) * 2), packetSize);
                 if (this->onServerDataReceived) this->onServerDataReceived(client, packetId, packetSize, byteBuffer);
